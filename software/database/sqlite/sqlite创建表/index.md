@@ -1,6 +1,6 @@
 ---
 title: "sqlite创建表"
-date: 2025-06-02T11:05:00+08:00
+date: 2025-06-20T17:25:00+08:00
 summary: "sqlite 创建表的语法"
 ---
 
@@ -64,14 +64,15 @@ CREATE TABLE t_user (id INTEGER, name TEXT);
 
 对于约束，有两种：列约束和表约束，这里先介绍列约束，sqlite 支持的约束如下：
 
-PRIMARY KEY：主键约束，唯一且非空
-UNIQUE：值唯一
-NOT NULL：禁止列值为 NULL
-DEFAULT：设置默认值
-CHECK：自定义逻辑限制
-FOREIGN KEY：外键约束，sqlite 的外键约束是默认关闭的，需要额外的命令手动开启
+- PRIMARY KEY：主键约束，唯一且非空
+- UNIQUE：值唯一
+- NOT NULL：禁止列值为 NULL
+- DEFAULT：设置默认值
+- CHECK：自定义逻辑限制
+- FOREIGN KEY：外键约束，sqlite 的外键约束是默认关闭的，需要额外的命令手动开启
 
 以下用一个简单的示例，覆盖以上所说的约束类型。
+
 创建一个新表 t_user，主键是 id，用户姓名非空，年龄的值要比 0 大，email 值唯一，薪水默认为 0，创建时间默认为当前日期时间，用户地址为字符串。
 
 ```sql
