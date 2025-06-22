@@ -145,6 +145,8 @@ def main():
 
 可以看到，这种写法，导致 redis 客户端重复发送了密码验证，以及客户端信息，还有 TCP 的握手和挥手。
 
+连接池创建了又销毁，销毁了又创建，性能自然很低下。
+
 接下来，用复用连接池的方式，看一下性能差异：
 
 ```python
@@ -256,15 +258,75 @@ max_connections = max_connections or 2**31
 
 所以在生产环境下，尤其是多线程模式下，最好指定最大连接数（提前预估）。
 
-### 归还连接
-
-
-
 ### 线程安全
 
+ConnectionPool 的实现，是线程安全的，也就是说多个 redis 客户端实例共用一个相同的连接池是安全的。
+
+所以，一个应用中，只需要构建一个 ConnectionPool 的实例即可，其他所有的 redis 客户端共享该实例。
+
+那么在一个客户端中应该保持有多少个 redis 实例？频繁的创建销毁是否会影响性能？
+
+考虑下面两种写法，第一种：
+
+```python
+redis_pool = redis.ConnectionPool(
+    host='192.168.0.201',
+    port=6379,
+    password='123456',
+    db=0,
+    max_connections=10
+)
+redis_client = redis.Redis(
+    connection_pool=redis_pool,
+)
+
+def task():
+    # 使用上面的全局的 redis_client
+```
+
+第二种：
+
+```python
+redis_pool = redis.ConnectionPool(
+    host='192.168.0.201',
+    port=6379,
+    password='123456',
+    db=0,
+    max_connections=10
+)
 
 
+def task():
+    redis_client = redis.Redis(connection_pool=redis_pool)
+    # 使用函数内的 redis_client
+    
+def main():
+    with ThreadPoolExecutor(max_worker=10) as executor:
+        for i in range(10):
+            executor.submit(task)
+```
 
+两种区别在于，第一种所有线程都使用同一个 redis 客户端对象，而第二种中的每一个线程都会新建一个线程内的 redis 客户端对象。
+
+无论哪一种，底层的连接池都是共享的，并且连接池是线程安全的，这个没有区别。
+
+问题在于 redis 客户端实例是否也是线程安全的，这一点暂时没有测试出来，不同的资料和 AI 给的结论也不相同，只能看源码了，这里先不下定论。
+
+### Gunicorn
+
+在 Gunicorn + Flask 的环境下，如果指定了多个 Worker 的情况下，由于 Gunicorn 是多进程模型，每个 worker 是一个独立的 Python 进程，这就导致了多进程下的多个连接池的存在。
+
+虽然连接池对象在模块级是全局的，每个 worker 进程都有自己独立的内存空间。redis_pool 在每个进程中是完全独立的对象，但每个 Gunicorn worker 都会执行一次模块加载过程，所以最终最大的应用连接数 = max_connections * worker 数量。
+
+假设 max_connect = m，worker = n：
+
+n = 1，max_connect = 10 的性能会比 n = 10，max_connect = 1 的性能更好，更不容易出现以下的异常：
+
+```
+redis.exceptions.ConnectionError: Too many connections
+```
+
+所以在频繁 Redis 使用的场景下，优先考虑增加单个 worker 的连接池最大连接数量，再去有限制的去增加 worker 的数量会更好，worker 的数量一般是 CPU * 2 + 1 个。
 
 ---
 
