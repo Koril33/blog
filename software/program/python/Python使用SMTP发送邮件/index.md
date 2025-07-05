@@ -1,6 +1,7 @@
 ---
 title: "Python使用SMTP发送邮件"
 date: 2025-07-02T11:26:00+08:00
+summary: "Python使用SMTP发邮件的配置和代码示例"
 ---
 
 ## 前言
