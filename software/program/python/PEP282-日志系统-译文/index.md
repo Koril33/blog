@@ -358,5 +358,104 @@ Formatters 使用 % 来格式化日志信息。格式化字符串应该包含 `%
 
 formatter 使用一个类属性 "converter"，以表明如何将时间从秒转换为元组。默认情况下，"converter "的值是 "time.localtime"。如果需要，可以在单个 formatter 实例上设置一个不同的转换器（例如 "time.gmtime"），或者改变类属性以影响所有 formatter 实例。
 
+---
 
+### Filters
 
+当基于日志级别的过滤不够用的时候，Logger 或 Handler 可以调用 Filter 来决定是否应该输出 LogRecord。Logger 和 Handlers 可以配置多个 Filters，其中的任何一个 Filter 都可以否决掉正在输出 LogRecord。
+
+```python
+class Filter:
+    def filter(self, record):
+        """
+        Return a value indicating true if the record is to be
+        processed.  Possibly modify the record, if deemed
+        appropriate by the filter.
+        """
+```
+
+默认行为允许使用 Logger 名称初始化 Filter。这将仅允许通过使用指定名称的 Logger 或其任何子 Logger 生成的事件。例如，使用“A.B”初始化的 Filter 将允许由“A.B”、“A.B.C”、“A.B.C.D”、“A.B.D”等 Logger 记录的事件，但不允许“A.BB”、“B.A.B”等 Logger 记录的事件。如果使用空字符串进行初始化，则 Filter 将允许所有事件通过。这种 Filter 行为在希望将注意力集中在应用程序的某个特定区域时非常有用；只需更改附加到根 Logger 的 Filter 即可更改关注点。
+
+在[6]中提供了许多 Filter 的示例。
+
+---
+
+### 配置
+
+此类日志系统的主要优势在于，无需更改应用程序的源代码，即可控制从应用程序获取的日志输出量和内容。因此，虽然可以通过日志 API 进行配置，但也必须能够在不更改应用程序的情况下更改日志配置。对于像 Zope 这样的长期运行程序，应该能够在程序运行时更改日志配置。 
+
+配置包括以下内容：
+
+- Logger 或 Handler 应该关注哪个日志级别。 
+- 哪些 Handler 应该附加到哪些 Logger 。 
+- 哪些 Filter 应该附加到哪些 Handler 和 Logger。
+-  指定特定于某些 Handler 和 Filter 的属性。
+
+一般来说，每个应用程序对于用户如何配置日志输出都有各自的要求。但是，每个应用程序都会通过标准机制向日志系统指定所需的配置。 
+
+最简单的配置是将单个 Handler 附加到根 Logger，该 Handler 将日志信息写入 stderr。导入日志模块后，通过调用 basicConfig() 函数来设置此配置。
+
+```python
+def basicConfig(): ...
+```
+
+对于更复杂的配置，本 PEP 未提出具体建议，原因如下： 
+
+- 具体建议可能被视为规范性的。
+-  如果没有 Python 社区的广泛实践经验，就无法判断任何给定的配置方法是否可行。这种做法只有在使用日志模块后才能真正实现，也就是说，只有在 Python 2.3 发布后才能实现。
+- 不同类型的应用程序可能需要不同的配置方法，因此没有“一刀切”的方案。
+
+参考实现 [6] 有一个可用的配置文件格式，其实现旨在证明概念并提出一种可能的替代方案。可能会创建单独的扩展模块（不属于核心 Python 发行版），用于日志配置和日志查看、补充处理程序以及其他社区中大多数人不感兴趣的功能。
+
+---
+
+### 线程安全性
+
+日志系统应该支持线程安全操作，而无需用户采取任何特殊操作。
+
+---
+
+### 模块级别的方法
+
+为了支持在短脚本和小型应用程序中使用日志记录机制，日志库提供了模块级函数 debug()、info()、warn()、error()、critical() 和 exception()。这些函数的工作方式与 Logger 中相应名称的方法相同——实际上，它们委托给根 Logger 上的相应方法。这些函数的另一个便利之处在于，如果尚未进行任何配置，则会自动调用 basicConfig()。
+
+在应用程序退出时，可以通过调用以下函数刷新所有处理程序：
+
+```python
+def shutdown(): ...
+```
+
+该方法会刷新和关闭所有 Handlers。
+
+---
+
+### 实现
+
+参考实现是 Vinay Sajip 的日志模块[6]。
+
+---
+
+### 打包
+
+参考实现以单个模块的形式实现。这提供了最简单的界面——用户只需 import logging ，即可使用所有可用的功能。
+
+---
+
+### 参考
+
+1. java.util.logging http://java.sun.com/j2se/1.4/docs/guide/util/logging/
+2. log4j: a Java logging package https://logging.apache.org/log4j/
+3. Protomatter’s Syslog http://protomatter.sourceforge.net/1.1.6/index.html http://protomatter.sourceforge.net/1.1.6/javadoc/com/protomatter/syslog/syslog-whitepaper.html
+4. MAL mentions his mx.Log logging module: https://mail.python.org/pipermail/python-dev/2002-February/019767.html
+5. Jeff Bauer’s Mr. Creosote http://starship.python.net/crew/jbauer/creosote/
+6. Vinay Sajip’s logging module. https://old.red-dove.com/python_logging.html
+
+---
+
+### 版权 
+
+本文档已置于公共领域。 
+
+来源：https://github.com/python/peps/blob/main/peps/pep-0282.rst 
+
+最后修改时间：[2025-02-01 08:55:40 GMT](https://github.com/python/peps/commits/main/peps/pep-0282.rst)
