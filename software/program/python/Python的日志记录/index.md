@@ -1,7 +1,7 @@
 ---
-title: "Myers差分算法"
-date: 2025-06-01T10:44:00+08:00
-summary: "Myers 算法的原理，可视化，代码实现与应用"
+title: "Python的日志记录"
+date: 2024-10-01T10:00:00+08:00
+summary: "Python 标准库的 logging 系统"
 ---
 
 ## 目录
