@@ -1,5 +1,5 @@
 ---
-title: "Flask实现简单的登录功能"
+title: "Flask实现简单的登陆功能"
 date: 2025-07-27T08:43:00+08:00
 summary: "使用 Flask 的 cookie 和 session 实现登陆"
 ---
