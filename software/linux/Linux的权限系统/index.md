@@ -114,6 +114,12 @@ useradd -m alice
 
 执行`ls /home`可以看到 home 下多了一个 alice 目录，这是默认的用户主目录，alice 一登录系统，就进入到这个目录下。
 
+有些系统默认用 sh 而不是 bash 作为用户默认的 shell（可以查看 /etc/default/useradd 里面的 SHELL 变量），可以通过 -s 指定 bash：
+
+```
+useradd -m -s /bin/bash alice
+```
+
 ### 设置密码
 
 添加了新账号下一步就是设置密码，不然没法使用这个账号登录：
@@ -460,6 +466,9 @@ groups koril
 # 查看 science 的群组拥有多少个用户，最后一个冒号后面就是包含的用户
 cat /etc/group | grep "science"
 # 返回：science:x:1003:koril,bob
+
+# -a 和 -G 可以合并，这样写起来短一些，比如添加 koril 到 sudo 中
+usermod -aG sudo koril
 ```
 
 除了 usermod -a -G 之外，添加用户到某个组还可以使用 gpasswd -a 命令：
