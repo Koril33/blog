@@ -81,9 +81,9 @@ python -m script.main
 
 ## 包
 
-如果传入的参数不是模块，而是一个包名，那么 python 会尝试运行包下的 __main__.py（如果存在的话）。
+如果传入的参数不是模块，而是一个包名，那么 python 会尝试运行包下的 `__main__.py`（如果存在的话）。
 
-在 /home/koril/Desktop/project/script 下，编写 __main__.py:
+在 /home/koril/Desktop/project/script 下，编写 `__main__.py`:
 
 ```python
 print('this is __main__')
