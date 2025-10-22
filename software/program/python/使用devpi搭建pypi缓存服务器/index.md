@@ -58,6 +58,7 @@ sudo cp gen-config/devpi.service /etc/systemd/system/
 systemctl 开机自启、启动服务、查看状态：
 
 ```
+sudo systemctl daemon-reload
 sudo systemctl enable devpi.service
 sudo systemctl start devpi.service
 sudo systemctl status devpi.service
