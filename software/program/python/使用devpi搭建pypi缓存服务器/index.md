@@ -132,6 +132,13 @@ koril@ali-djhx-debian:~$ curl localhost:3141
 python -m pip install -i http://mirror.yourdomian.com/root/pypi/+simple/ --trusted-host mirror.yourdomain.com requests
 ```
 
+服务器的缓存目录，默认放在了 ~/.devpi/server/ 下面：
+
+```shell
+koril@ali-djhx-debian:~$ ls ~/.devpi/server/
++files
+```
+
 ---
 
 ## 参考
