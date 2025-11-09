@@ -21,6 +21,8 @@ summary: "为了不要把所有代码都堆在一个文件了，我们有了模�
 3. 可重用性，具有独立功能的模块和包可以很方便的进行分发，以及作为别的项目的依赖，进行代码重用。
 4. 作用域，模块和包提供了独立的命名空间，可以防止变量、对象、函数名重复。
 
+我觉得，模块和包是给人类看的，就像域名解析系统一样，对于机器而言，这些都不是必须的。
+
 ---
 
 ## 模块
@@ -109,8 +111,8 @@ Linux：
 
 这里可以通过以下几种方式修改 sys.path
 
-1. 
-2. 
+1. 制定环境变量 PYTHONPATH
+2. 使用虚拟环境
 3. 手动修改 sys.path
 
 第一种，指定环境变量 PYTHONPATH，以设置一个自定义目录为例：
@@ -352,6 +354,159 @@ ImportError: cannot import name 'xxx' from 'math' (unknown location)
 ---
 
 ## 包
+
+在开发简单脚本的情况下，一个py文件足矣，稍稍复杂一些的项目，也许会编写多个模块，然后在 main 中调用多个模块的变量、函数或者对象。那么更进一步，更大型，更复杂的项目可能会有几十上百个模块。单一扁平化的结构就不适用了，同样的，和文件系统类似，Python 引入了包（Package）的概念，对模块进行分层管理。
+
+和模块一样，包的概念提供了命名空间（namespace），这种命名空间以点（dot）分隔，类似域名系统。
+
+创建包很直观，如果说模块等同于文件，那么包就是目录。
+
+### 导入包
+
+假设目录结构如下：
+
+```
+-pkg
+  |-mod1.py
+  |-mod2.py
+```
+文件内容如下：
+
+```
+mod1.py:
+
+def foo():
+    print('[mod1] foo()')
+
+class Foo:
+    pass
+
+
+mod2.py:
+
+def bar():
+    print('[mod2] bar()')
+
+class Bar:
+    pass
+
+```
+
+如果 pkg 目录位于 sys.path 列表中某一个目录下可以找到的位置，那么就可以使用点符号 import 到代码中：
+
+```python
+import pkg.mod1, pkg.mod2
+
+print(pkg.mod1())
+
+x = pkg.mod2.Bar()
+print(x)
+```
+
+上面的写法是导入了模块，也可以导入模块中的元素：
+
+```python
+from pkg.mod1 import Foo as F
+
+foo = F()
+
+print(foo)
+```
+
+### 和导入模块不同的点
+
+当我们导入一个模块，那么通过点符号就可以获得模块下的元素，但是当我们导入一个包，却并不能通过点符号导入包下的元素。
+
+```python
+
+import pkg
+
+print(pkg)
+
+print(pkg.mod1)
+```
+
+尝试获取 pkg 下的元素 mod1 会爆出错误：
+
+```
+AttributeError: module 'pkg' has no attribute 'mod1'
+```
+
+所以，单纯的导入一个包，并没有太多用处。
+
+### 包的初始化
+
+如果我们在 pkg 包下面，放置一个`__init__.py`文件，那么该文件代码会在 pkg 包被导入的时候被调用，一般会在该文件中放置一些初始化代码。
+
+例如，目录结构如下：
+
+```
+-pkg
+  |-__init__.py
+  |-mod1.py
+  |-mod2.py
+
+```
+
+文件内容如下:
+
+```python
+print(f'Invoking __init__.py for {__name__}')
+A = ['quux', 'corge', 'grault']
+```
+
+包一旦被导入，`__init__.py`代码就会被执行：
+
+```
+>>> import pkg
+Invoking __init__.py for pkg
+>>> pkg.A
+['quux', 'corge', 'grault']
+
+```
+
+除了初始化的功能外，一般会在`__init__.py`放置一些包下的全局变量，比如这个 A 列表，可以被 mod1 和 mod2 导入。
+
+mod1.py:
+
+```python
+
+def foo():
+    from pkg import A
+    print('[mod1] foo() / A = ', A)
+
+class Foo:
+    pass
+
+在上一小节提到，导入 pkg 并不能调用 pkg.mod1，但是如果在`__init__.py`中提前导入，就可以了：
+
+
+```python
+print(f'Invoking __init__.py for {__name__}')
+import pkg.mod1, pkg.mod2
+```
+
+### 包下的 init 文件
+
+很多教程都说，在 Python 中，要把一个目录作为一个包，那么该目录下一定要有个`__init__.py`文件，但这是很早之前的事情了，在 Python3.3 之后，引入了 Namespace Package 的概念，不需要`__init__.py`文件，也可以把该目录作为 Python 包。
+
+### import * 在包中的使用
+
+如果我们在 module 中使用了`import *`，那么模块下的所有非下划线开头的元素都会被导入到当前命名空间中，这是个不好的实践方式，那如果在 package 使用`import *` 呢？
+
+实际上，在包内导入所有元素是没有任何效果的：
+
+```python
+
+```
+
+
+
+
+
+
+
+
 
 ---
 
