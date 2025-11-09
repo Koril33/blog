@@ -496,15 +496,56 @@ import pkg.mod1, pkg.mod2
 
 实际上，在包内导入所有元素是没有任何效果的：
 
-```python
-
+```
+>>> dir()
+['__annotations__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__']
+>>> from pkg import *
+>>> dir()
+['__annotations__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__']
 ```
 
+可以看到，前后两次 dir 没有任何变化，Python 的 module 和 package 在`import *`上表现的不一致，我猜测主要是 package 不可控，一个 package 可能包含大量的嵌套和初始化代码逻辑，可能会对性能造成很大的问题。
+
+想要使得 package 也可以`import *`，python 提供了一个约定，在`__init__.py`中定义一个列表元素：`__all__`，该列表包含了 package 下需要导入的子模块。
+
+假设 pkg 下有两个子模块：mod1.py 和 mod2.py，在`__init__.py`定义：
+
+```python
+# pkg/__init__.py
+
+__all__ = ['mod1',]
+
+```
+那么在使用`from pkg import *`的时候，则只会导入 mod1 这个子模块。
+
+```
+>>> dir()
+['__annotations__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__']
+>>> from pkg import *
+>>> dir()
+['__annotations__', '__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'mod1']
+>>> mod1.foo()
+foo
+>>> 
+```
+
+### 子包
+
+类似域名系统和文件系统，python 的包是可以包含多个层级的。
+
+
+---
 
 
 
+## 关于模块和包的 import * 总结
 
+上面没有提到的是，`__all__`如果定义在 module 中也是有着约束导入的效果的，和 package 是一样的，所以如果不想要`from mod1 import *`导入所有元素，那么可以在 mod1 模块中定义`__all__`。
 
+总的来说：
+
+- 对于包而言，如果没有定义`__all__`，则`import *`什么子模块也不会导入。
+- 对于模块而言，如果没有定义`__all__`，则`import *`会导入除了下划线开头的所有元素。
 
 
 
@@ -514,4 +555,4 @@ import pkg.mod1, pkg.mod2
 
 1. https://realpython.com/python-modules-packages/#python-modules-overview
 2. https://docs.python.org/3/tutorial/modules.html
-3. https://docs.python.org/3/library/sys_path_init.html#sys-path-init
+3. https://docs.python.org/3/library/sys\_path\_init.html#sys-path-init
