@@ -533,10 +533,45 @@ foo
 
 类似域名系统和文件系统，python 的包是可以包含多个层级的。
 
+比如上述的 pkg 示例可以扩展，添加子包：
+
+```
+-pkg
+  |-sub_pkg1
+  |    |-mod1.py
+  |    |-mod2.py
+  |
+  |-sub_pkg2
+       |-mod3.py
+       |-mod4.py
+```
+
+在包含多个层次的包路径导入中，使用点符号来进行包和子包之间的分隔：
+
+```python
+import pkg.sub_pkg1.mod1
+from pkg.sub_pkg1 import mod2
+from pkg.sub_pkg2.mod3 import baz
+from pkg.sub_pkg2.mod4 import qux as grault
+```
+
+这种导入方式是绝对路径导入，以 pkg 为根，然后写出了完整的导入路径，还有一种方式是相对路径导入。
+
+比如在 sub\_pkg2 的 mod3 模块中需要导入 mod1 里的元素，可以写成：
+
+```python
+# 导入父级目录下的其他包
+from .. import sub_pkg1
+
+# 导入父级目录下其他包的模块
+from ..sub_pkg1 import mod1
+
+# 导入父级目录下的其他包下的模块中的元素
+
+from ..sub_pkg1.mod1 import foo as foooo
+```
 
 ---
-
-
 
 ## 关于模块和包的 import * 总结
 
@@ -547,6 +582,15 @@ foo
 - 对于包而言，如果没有定义`__all__`，则`import *`什么子模块也不会导入。
 - 对于模块而言，如果没有定义`__all__`，则`import *`会导入除了下划线开头的所有元素。
 
+---
+
+## 小结
+
+不管是哪个语言，包的机制有时候包含了很多隐性规则，导致各种奇奇怪怪的导入问题，解决的方法就是保持一个或者几个使用包的固定规范。
+
+要避免万行代码塞在一个模块，也要避免过度设计下的包的嵌套和循环依赖问题。
+
+包的实质是模块化代码，方便依赖管理，提供了命名空间避免变量、函数、类在全局空间中互相覆盖污染。
 
 
 ---
