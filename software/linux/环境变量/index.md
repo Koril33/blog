@@ -109,17 +109,44 @@ unset APP_NAME
 
 ## 作用域
 
----
+对于变量而言，一个很重要的概念就是作用域，shell 的变量和环境变量也有作用域，不过相比于其他语言来说更简单一些。
 
-## Shell子进程
+编写以下 sh 脚本：
 
+```shell
+# echo_my_name.sh
+echo $MY_NAME
+```
+
+首先是普通变量，如果单纯只是在 shell 中对一个变量赋值，那么只有当前 shell 可以访问到改变量，其他进程或者子进程是无法访问到这个变量的。
+
+```shell
+MY_NAME=djhx
+# 输出 djhx，说明当前 shell 可以访问改变量
+echo $MY_NAME
+
+# 运行 shell 脚本，没有输出，子shell进程是无法访问到普通变量的
+sh ./echo_my_name.sh
+```
+
+普通变量不会传递给子进程，只能在当前 shell 进程中访问。
+
+如果想要子进程可以访问，那么需要把变量改成环境变量，之前没有提到的一点是，如果你已经定义了一个普通变量（比如上面的 MY\_NAME），那么可以通过 export 把改变量变成环境变量：
+
+```shell
+export MY_NAME
+# 把 MY_NAME 从普通变量变成环境变量后，子shell进程就可以访问了
+sh ./echo_my_name.sh
+```
+
+不光是 shell 的子 shell 进程，其他程序（Python/Go/Java/MySQL/PostgreSQL等等）作为当前 shell 进程的子进程，也可以通过这样的方式来传递环境变量。
 
 ---
 
 ## 参考
 
 1. https://www.cherryservers.com/blog/how-to-set-list-and-manage-linux-environment-variables
-2. https://wiki.archlinux.org/title/Environment_variables
+2. https://wiki.archlinux.org/title/Environment\_variables
 3. https://www.runoob.com/linux/linux-shell-variable.html
 4. https://www.digitalocean.com/community/tutorials/how-to-view-and-update-the-linux-path-environment-variable
 5. https://12factor.net/config
