@@ -1,11 +1,10 @@
 ---
 title: "about"
-featured_image: "images/about_page_background.jpg"
 date: 2025-01-01T20:00:00+08:00
 summary: "个人简介"
 ---
 
-## 关于我
+![](./images/avatar.png)
 
 🏙坐标宁波，职业程序员
 
