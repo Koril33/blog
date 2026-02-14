@@ -19,6 +19,16 @@ Vagrantfile 是 vagrant 的配置文件，可以用来批量创建虚拟机环�
 
 ## 初始化
 
+### VirtualBox 和 Vagrant 的关系
+
+VirtualBox 是一个虚拟机软件（Hypervisor），作用是在宿主机上真正创建虚拟机，提供 CPU / 内存 / 磁盘 / 网络，负责启动、暂停、关闭虚拟机。
+
+Vagrant 是一个虚拟机自动化管理工具，它本身不会创建虚拟机，而是通过配置文件（Vagrantfile）自动调用 VirtualBox / VMware 等 provider 批量创建 VM。
+
+Vagrant 不负责模拟硬件，而是负责管理 VirtualBox。
+
+### 步骤
+
 vagrant 的项目（或者说虚拟机）需要一个空目录，类似 git，所以初始化工作包含：创建目录以及初始化命令的执行：
 
 比如我在本篇文章中，想要用 vagrant 快速创建一个 debian 的集群：
@@ -152,8 +162,23 @@ end
 
 ## 基础操作
 
+### 启动虚拟机
+
+创建好 Vagrantfile 后，可以通过以下命令创建和启动虚拟机：
+
+```shell
+vagrant up
+```
+
+启动成功后，可以在 virtualbox 中看到：
+
+![](./images/1.jpg)
+
+
 ### SSH
 vagrant 创建的虚拟机会有一个默认的 sudo 用户——vagrant，可以通过 vagrant 命令连接虚拟机：
+
+
 
 ```shell
 vagrant ssh test-debian-1
