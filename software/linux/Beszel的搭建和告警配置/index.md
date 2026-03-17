@@ -37,11 +37,11 @@ Agent：https://www.beszel.dev/zh/guide/agent-installation
 
 ## 告警
 
-这里以邮件告警为示例，其他的告警方式可以参考官方文档。
-
-![](./images/3.jpg)
+Beszel 支持邮件告警和 Webhook 推送通知，这里介绍下 SMTP 的配置和 Webhook 的使用。
 
 ### 配置 SMTP
+
+![](./images/3.jpg)
 
 把自己开通的 SMTP 服务器的地址，端口，用户名和密钥填写在 Mail setttings 中：
 
@@ -54,6 +54,48 @@ Agent：https://www.beszel.dev/zh/guide/agent-installation
 可以对不同的指标进行告警配置：
 
 ![](./images/6.jpg)
+
+### Webhook
+
+Beszel 中的通知使用 Shoutrrr URL 模式定义，详细信息参考：https://beszel.dev/zh/guide/notifications/
+
+Beszel 支持常见的推送目标（比如：telegram、ntfy、bark、discord等等），这里以通用通知（generic）为例。
+
+> 通用服务可用于任何 Shoutrrr 未明确支持的目标，只要它支持通过 POST 请求接收消息即可。
+> 有时这需要在接收端进行自定义以解析 payload，或使用中间代理来修改 payload。
+> generic://example.com
+
+这里准备一台可以接收到消息的服务器，然后通过（Spring Boot、Flask 之类的web框架）提供 webhook 接口：
+
+```python
+@app.post("/beszel-notify")
+async def beszel_notify(request: Request):
+    """
+    接收 Beszel 发送的通知
+    Body JSON:
+    {
+        "title": "通知标题",
+        "message": "通知正文",
+        "tags": ["tag1","tag2"],
+        "level": "info"  // 或 error, warn, debug
+    }
+    """
+    data = await request.json()
+    title = data.get("title", "No Title")
+    message = data.get("message", "No Message")
+    level = data.get("level", "info")
+    tags = data.get("tags", [])
+
+    print(f"[{level.upper()}] {title}: {message} (tags: {tags})")
+
+    return {"status": "ok"}
+```
+
+beszel hub 一旦触发告警，就会往这个 webhook 接口发送告警信息。
+
+beszel hub 配置好 URL 即可：
+
+![](./images/7.jpg)
 
 ---
 
