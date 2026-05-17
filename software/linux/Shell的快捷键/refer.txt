@@ -1,0 +1,244 @@
+有，而且这类东西一旦用顺手，会明显提升你在 shell 里的“幸福感”。你现在问的其实是 **Bash/Readline 快捷键体系 + 一点点终端技巧**。
+
+我按“最实用优先级”帮你整理一套（基于 GNU Bash / Readline）👇
+
+---
+
+# 🧠 一、光标快速移动（最重要）
+
+## 🔹 移动到行首 / 行尾
+
+```text id="h7kq1a"
+Ctrl + A → 行首
+Ctrl + E → 行尾
+```
+
+👉 这是最高频使用组合
+
+---
+
+## 🔹 按单词跳跃（非常爽）
+
+```text id="q3n1pd"
+Alt + B → 向左跳一个单词
+Alt + F → 向右跳一个单词
+```
+
+例子：
+
+```bash id="s9x0kc"
+git commit -m "fix user login bug"
+```
+
+光标可以快速跳：
+
+* fix → user → login → bug
+
+---
+
+# ✂️ 二、删除操作（提速核心）
+
+## 🔹 删除整行
+
+```text id="x8p1ta"
+Ctrl + U → 删除光标前全部内容
+Ctrl + K → 删除光标后全部内容
+```
+
+👉 超高频
+
+---
+
+## 🔹 删除一个单词
+
+```text id="2m8q6w"
+Ctrl + W → 删除前一个单词
+```
+
+---
+
+## 🔹 删除光标处字符
+
+```text id="k0w9dd"
+Ctrl + D → 删除当前字符（或退出空行）
+```
+
+---
+
+# 📋 三、复制 / 粘贴（shell 里的“剪贴板系统”）
+
+bash 有自己的“kill ring”机制：
+
+---
+
+## 🔹 复制（其实叫 kill）
+
+```text id="d2p8qe"
+Ctrl + W → 剪切一个单词
+Ctrl + U → 剪切整行前半
+Ctrl + K → 剪切整行后半
+```
+
+---
+
+## 🔹 粘贴
+
+```text id="n8wq3a"
+Ctrl + Y → 粘贴最近一次剪切内容
+```
+
+---
+
+## 🔥 组合技巧（很爽）
+
+```bash id="z3m8kp"
+rm -rf /some/very/long/path/you/type/wrong
+```
+
+👉 用：
+
+* Ctrl + U 一键清空重写
+* Ctrl + W 回退单词级修改
+
+---
+
+# 🔁 四、历史命令（生产力提升最大）
+
+## 🔹 搜索历史
+
+```text id="v1x7ld"
+Ctrl + R → 反向搜索历史命令
+```
+
+👉 输入关键词：
+
+```text id="p9s2oa"
+git
+```
+
+会自动匹配历史：
+
+```text id="u2q0nf"
+git commit -m ...
+```
+
+---
+
+## 🔹 上一条命令
+
+```text id="k8n4cc"
+↑ / ↓
+```
+
+---
+
+# 🧪 五、终端“魔法级技巧”
+
+## 🔹 重复执行最后一个参数
+
+```text id="xq9l2w"
+Alt + .（点）
+```
+
+例子：
+
+```bash id="b7m2kp"
+mkdir test_dir
+cd Alt+.
+```
+
+👉 自动变成：
+
+```bash id="h3q8ld"
+cd test_dir
+```
+
+---
+
+## 🔹 交换光标左右字符
+
+```text id="t5p1ee"
+Ctrl + T
+```
+
+👉 修 typo 超好用
+
+---
+
+# 🚀 六、真正“幸福感爆炸”的几个
+
+如果只记 6 个，我建议这些👇
+
+```text id="w2k9aa"
+Ctrl + A → 行首
+Ctrl + E → 行尾
+Ctrl + W → 删除单词
+Ctrl + U → 删除整行前半
+Ctrl + R → 搜索历史
+Ctrl + Y → 粘贴
+```
+
+---
+
+# 🧭 七、进阶建议（很关键）
+
+## 🔹 用 zsh 会更爽
+
+比如 Zsh：
+
+* 更强补全
+* 更好历史搜索
+* 插件生态（oh-my-zsh）
+
+---
+
+## 🔹 加装插件（推荐）
+
+* zsh-autosuggestions（自动提示历史命令）
+* zsh-syntax-highlighting（语法高亮）
+
+---
+
+# 🧠 八、一个实战例子（你会立刻感受到提升）
+
+原来你可能这样：
+
+```bash id="r2n9cc"
+cd /project/blog/software/database/postgresql/创建数据库、模式和表
+```
+
+输错了 → 全删重打 😵
+
+---
+
+现在：
+
+* Ctrl + A → 到开头
+* Ctrl + W → 删除一段
+* Alt + B / F → 精准跳词
+* Ctrl + R → 直接找历史
+
+👉 效率提升非常明显
+
+---
+
+# 🧾 总结一句话
+
+> 🔥 shell 的“幸福感”本质来自：**不用重新输入，只做局部编辑**
+
+---
+
+如果你愿意，我可以再给你升级一版：
+
+👉 **“Linux shell 生产力进阶 20 个隐藏技巧（比快捷键更爽）”**
+
+包括：
+
+* 命令替换
+* xargs
+* !! / !$
+* 管道调试技巧
+* 快速回滚命令
+
+这套会让你从“会用 shell”变成“用得很爽”。
+
