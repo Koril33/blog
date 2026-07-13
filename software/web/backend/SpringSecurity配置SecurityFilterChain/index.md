@@ -192,6 +192,324 @@ configure()
 
 ```
 
+所以想要知道可以配置哪些内容，查看对应的 Configurer，比如 formLogin 对应的 FormLoginConfigurer。
+
+此时，我们仅仅配置了 formLogin，并没有显示启用任何保护，所以访问接口不会跳转到登陆页面。
+
+但是相关的登录页都已准备好，请求 http://localhost:8080/login 可以看到 Spring Security 提供的默认登录页。
+
+### securityMatcher
+
+HttpSecurity 的 securityMatcher 是用来决定请求是否会进入到当前配置的 SecurityFilterChain，如果不配置，这条 SecurityFilterChain 默认匹配所有请求，相当于：
+
+```java
+
+http.securityMatcher("/**")
+
+```
+
+大部分简单的应用只需要配置一条 SecurityFilterChain，所以不需要配置 securityMatcher，但是如果是复杂的应用，需要 FilterChainProxy 使用不同规则匹配应用不用的 SecurityFilterChain 的时候，就需要配置 securityMatcher 了。
+
+例如，对于 /api/** 和除了 /api/** 之外，需要应用两个不同的 SecurityFilterChain，可以这么写：
+
+```java
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    @Order(1)
+    SecurityFilterChain apiSecurity(HttpSecurity http) throws Exception {
+        http
+            .securityMatcher("/api/**") // 只处理 /api/** 的请求
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/public/**").permitAll()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+            )
+            .httpBasic(Customizer.withDefaults());
+
+        return http.build();
+    }
+
+    @Bean
+    @Order(2)
+    SecurityFilterChain webSecurity(HttpSecurity http) throws Exception {
+        http
+            // 未写 securityMatcher：可匹配其余任意请求
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/login", "/css/**").permitAll()
+                .anyRequest().authenticated()
+            )
+            .formLogin(Customizer.withDefaults());
+
+        return http.build();
+    }
+}
+
+```
+
+系统仅会调用第一个匹配的 SecurityFilterChain，比如 /api/message 就会匹配到 apiSecurity 这个 SecurityFilterChain，而 /other 无法匹配 /api/** 的规则，FilterChainProxy 会按照 @Order 的顺序继续往下找，这里就匹配到了 webSecurity。
+
+关于多个 SecurityFilterChain 的解释可以参考[文档](https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-multi-securityfilterchain-figure)。
+
+最佳时间是，如果有多个 SecurityFilterChain，那么 @Order 的顺序应该是从小范围的具体匹配到最后的最大范围的兜底。
+
+因为 @Order 越小优先级越高，匹配到了第一个，就不会执行剩余的，所以越具体的匹配要放到最前面，最终一定要有一个兜底的匹配（就是不配置 securityMatcher），来匹配除了前面所有条件之外的剩余的请求：
+
+```
+
+/api/**
+↓
+/admin/**
+↓
+/actuator/**
+↓
+最后要有个兜底
+/**
+
+```
+
+```java
+
+@Bean
+@Order(100) // 放在最后，兜底用
+SecurityFilterChain defaultChain(HttpSecurity http) {
+
+    http
+        .authorizeHttpRequests(auth ->
+            auth.anyRequest().authenticated());
+
+    return http.build();
+}
+
+```
+
+一旦使用了 securityMatcher，就一定要划分清楚每个 SecurityFilterChain 的匹配范围。
+
+### authorizeHttpRequests
+
+如果说 securityMatcher 是决定一个请求是否进入当前 SecurityFilterChain 的，那么 authorizeHttpRequests 就是决定进入了当前 Chain 以后，这个请求是否允许访问。
+
+一个最简单的例子，我们在上面仅仅配置了 formLogin 的基础上，再配置 authorizeHttpRequests：
+
+```java
+
+@Configuration
+public class WebSecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+        http.formLogin(Customizer.withDefaults());
+        return http.build();
+    }
+}
+
+```
+重启应用，访问任意接口，发现会跳转到登录页，因为这一行的配置意思是：所有请求必须登录。
+
+我们可以通过一些方式来配置哪些 URL 需要哪些权限才可以访问或者拒绝访问，HttpSecurity 的 authorizeHttpRequests 如下：
+
+```java
+
+	public HttpSecurity authorizeHttpRequests(
+			Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> authorizeHttpRequestsCustomizer) {
+		ApplicationContext context = getContext();
+		authorizeHttpRequestsCustomizer
+			.customize(getOrApply(new AuthorizeHttpRequestsConfigurer<>(context)).getRegistry());
+		return HttpSecurity.this;
+	}
+
+```
+
+AuthorizationManagerRequestMatcherRegistry 继承自 AbstractRequestMatcherRegistry，AbstractRequestMatcherRegistry 中有个方法：
+
+```java
+
+	public C requestMatchers(String... patterns) {
+		return requestMatchers(null, patterns);
+	}
+
+```
+
+还有其他几个重载方法：
+
+```java
+
+requestMatchers(String... patterns) // 只按路径匹配
+requestMatchers(HttpMethod method, String... patterns) // HTTP 方法 + 路径
+requestMatchers(HttpMethod method) // 只按 HTTP 方法，不限制路径
+requestMatchers(RequestMatcher... requestMatchers) // 你自己提供匹配器，规则可任意复杂
+
+```
+
+本是就是一个匹配器，匹配到的请求进行下一步判定——AuthorizeHttpRequestsConfigurer 中的各种权限规则方法：
+
+- permitAll()：无条件允许，不要求认证
+- denyAll()：无条件拒绝
+- hasRole("ADMIN")：必须拥有 ROLE_ADMIN
+- hasAnyRole("ADMIN", "USER")：拥有 ROLE_ADMIN 或 ROLE_USER 中任意一个
+- hasAllRoles("ADMIN", "USER")：必须同时拥有 ROLE_ADMIN 和 ROLE_USER
+- hasAuthority("article:read")：必须拥有精确权限 article:read
+- hasAnyAuthority("read", "write")：拥有 read 或 write 中任意一个
+- hasAllAuthorities("read", "write")：必须同时拥有 read 和 write
+- authenticated()：只要已认证即可，包括 remember-me 认证
+- fullyAuthenticated()：必须完整认证，不接受 remember-me 认证
+- rememberMe()：只允许通过 remember-me 认证的用户
+- anonymous()：只允许匿名用户，已登录用户不符合
+- access()：支持自定义的 AuthorizationManager
+
+一个简单的示例如下：
+
+```java
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
+        http.authorizeHttpRequests(
+                auth ->
+                        auth
+                                .requestMatchers("/open/**").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER")
+                                .anyRequest().authenticated());
+        http.formLogin(Customizer.withDefaults());
+        return http.build();
+    }
+
+```
+
+写法就是指定一个匹配器再指定匹配的权限判定规则。
+
+上面的示例所作出的权限限制：
+
+1. 匹配到 /open/** 的请求，全部放行，无需登录。
+2. 匹配到 /admin/** 的请求，需要登陆且用户需要具有 ROLE_ADMIN 角色，才能访问。
+3. 匹配到 /user/** 的请求，需要登录且用户需要具有 ROLE_ADMIN 或者 ROLE_USER 角色之一，才能访问。
+4. 除以上匹配条件之外的请求，需要登录才能访问
+
+---
+
+## 用户管理
+
+为了测试刚刚的 HttpSecurity 配置，这里简单提下 Spring Security 的用户管理部分。
+
+Spring Boot 自动配置用户的配置类是：UserDetailsServiceAutoConfiguration：
+
+```java
+
+	@Bean
+	InMemoryUserDetailsManager inMemoryUserDetailsManager(SecurityProperties properties,
+			ObjectProvider<PasswordEncoder> passwordEncoder) {
+		SecurityProperties.User user = properties.getUser();
+		List<String> roles = user.getRoles();
+		return new InMemoryUserDetailsManager(User.withUsername(user.getName())
+			.password(getOrDeducePassword(user, passwordEncoder.getIfAvailable()))
+			.roles(StringUtils.toStringArray(roles))
+			.build());
+	}
+
+```
+
+默认使用的 UserDetailsManager 是 InMemoryUserDetailsManager 即将用户存储在内存中，可以在 SecurityProperties 中看到默认的用户名是 user，密码是一个随机生成的 UUID 值：
+
+```java
+
+	public static class User {
+
+		/**
+		 * Default user name.
+		 */
+		private String name = "user";
+
+		/**
+		 * Password for the default user name.
+		 */
+		private String password = UUID.randomUUID().toString();
+
+		/**
+		 * Granted roles for the default user name.
+		 */
+		private List<String> roles = new ArrayList<>();
+	}
+
+```
+
+我们可以通过自己提供 UserDetailsSerivce 来覆盖 Spring 的默认配置，出于演示的目的，为了不引入额外的数据库依赖，依然使用 InMemoryUserDetailsManager，往里面加入三个自定义的用户：
+
+```java
+
+@Configuration
+public class CustomUserConfig {
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
+    @Bean
+    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        UserDetails alice = User.withUsername("Alice").password(passwordEncoder.encode("123")).roles("ADMIN").build();
+        UserDetails bob = User.withUsername("Bob").password(passwordEncoder.encode("123")).roles("USER").build();
+        UserDetails cindy = User.withUsername("Cindy").password(passwordEncoder.encode("123")).build();
+        manager.createUser(alice);
+        manager.createUser(bob);
+        manager.createUser(cindy);
+        return manager;
+    }
+}
+
+```
+
+三个用户主要区别在于角色，Alice 具有 ROLE_ADMIN 角色，Bob 具有 ROLE_USER 角色，Cindy 没有任何角色。
+
+对应的测试 controller：
+
+```java
+
+@RestController
+public class HomeController {
+
+    @GetMapping("/")
+    public String home(Authentication authentication) {
+        return "Hello World: " + authentication.getName() + "\n";
+    }
+
+    @GetMapping("/open")
+    public String open(Authentication authentication) {
+        String username = Objects.nonNull(authentication) ? authentication.getName() : "Anonymous";
+        return "Open API: " + username + "\n";
+    }
+
+    @GetMapping("/admin")
+    public String admin(Authentication authentication) {
+        return "Hello Admin: " + authentication.getName() + "\n";
+    }
+
+
+    @GetMapping("/user")
+    public String user(Authentication authentication) {
+        return "Hello User: " + authentication.getName() + "\n";
+    }
+}
+
+```
+
+- / 匹配到的规则是 `.anyRequest().authenticated())`，只有登陆的用户才可以访问 /
+- /open 匹配到的规则是 `.requestMatchers("/open/**").permitAll()`，登陆或者不登陆都可以访问 /open
+- /admin 匹配到的规则是 `.requestMatchers("/admin/**").hasRole("ADMIN")`，只有拥有角色 ROLE_ADMIN 的用户能访问 /admin
+- /user 匹配到的规则是 `.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER")` 拥有角色 ROLE_ADMIN 或者 ROLE_USER 之一的角色能访问 /user
+
+最终呈现的结果是
+
+- Alice 能访问所有接口
+- Bob 能访问 /, /open, /user 三个接口
+- Cindy 能访问 /, /open 两个接口
+- 未登录用户仅能访问 /open 一个接口
+
 ---
 
 ## 参考

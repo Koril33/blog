@@ -176,6 +176,9 @@ public MyService myService(Database db) {
 简单使用各个注解创建一个示例，演示 IOC/DI 的思想。
 
 > IOC（Inversion of Control，控制反转）是思想
+
+> 
+
 > DI（Dependency Injection，依赖注入）是实现 IOC 的一种方式。
 
 以简单的 controller -> service -> repository 三层模式为例，没有 Spring IOC 的情况需要在代码手动创建各个依赖对象：
