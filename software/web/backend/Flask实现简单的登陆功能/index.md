@@ -12,7 +12,7 @@ summary: "使用 Flask 的 cookie 和 session 实现登陆"
 
 ## 前言
 
-Flask 的登陆功能依赖于 session 机制，Flask 的 session 是服务端无状态的，类似于 JWT，本文通过一个简单的 demo 来解释如何使用 Flask 自带的 session 实现登陆功能。
+Flask 的登陆功能依赖于 session 机制，Flask 的 session 是服务端无状态的，类似于 JWT，本文通过一个简单的 demo 来解释如何使用 Flask 自带的 `session` 实现登陆功能。
 
 ---
 
@@ -184,7 +184,7 @@ app.permanent_session_lifetime = datetime.timedelta(minutes=3)
 
 大意是：当 `session.permanent` 为 true 时，`SESSION_REFRESH_EACH_REQUEST` 这个参数可以控制是否每次响应都发送 cookie。每次都发送 cookie（默认设置）可以更可靠地防止会话过期，但会占用更多带宽。非永久会话不受影响。
 
-如果不希望每次刷新新的 cookie （不想延长会话过期），那么可以把该参数手动指定为 False：
+如果不希望每次刷新新的 cookie （不想延长会话过期），那么可以把该参数手动指定为 `False`：
 
 ```python
 app.config["SESSION_REFRESH_EACH_REQUEST"] = False

@@ -133,7 +133,7 @@ def main():
     print(f'It spends {time.time() - start_time} seconds')
 ```
 
-只要把上面单线程的 main 函数改一下，就可以了，这里用的是传统方法，用列表 threads 来保存由 `threading.Thread` 创建的线程，然后遍历 join()。
+只要把上面单线程的 `main` 函数改一下，就可以了，这里用的是传统方法，用列表 threads 来保存由 `threading.Thread` 创建的线程，然后遍历 join()。
 
 下载速度：
 
@@ -141,7 +141,7 @@ def main():
 
 十倍的速度有木有！超级快。
 
-当然，`concurrent.futures` 提供了更加优雅的写法，那就是 ThreadPoolExecutor，它是 Python 提供给我们的线程池模块。
+当然，`concurrent.futures` 提供了更加优雅的写法，那就是 `ThreadPoolExecutor`，它是 Python 提供给我们的线程池模块。
 
 ```python
 def main():

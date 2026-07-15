@@ -280,7 +280,7 @@ public class HelloController {
 }
 ```
 
-Sensor 是 DHT11 的类
+`Sensor` 是 DHT11 的类
 
 ```java
 package com.example.raspberry.entity;

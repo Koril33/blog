@@ -22,11 +22,11 @@ toc: true
 
 Java 的排序对不同类型的元素采取了不同的算法策略：
 
-1. 如果容器是存储了基本类型（Primitive Type）的数组，底层采用“双枢轴快速排序（DualPivotQuicksort）”。
+1. 如果容器是存储了基本类型（Primitive Type）的数组，底层采用“双枢轴快速排序（`DualPivotQuicksort`）”。
 
-2. 如果容器存储的是非自然排序的引用类型元素（即未实现 `Comparable` 接口），底层采用 “TimSort”。
+2. 如果容器存储的是非自然排序的引用类型元素（即未实现 `Comparable` 接口），底层采用 “`TimSort`”。
 
-3. 如果容器存储的是自然排序的引用类型元素（实现了 `Comparable` 接口），底层采用“ComparableTimSort”。
+3. 如果容器存储的是自然排序的引用类型元素（实现了 `Comparable` 接口），底层采用“`ComparableTimSort`”。
 
 基本类型的元素本身就是可排序的，而引用类型则需要自定义排序规则，这个自定义要么实现 `Comparable` 接口，要么给排序的算法函数传递一个实现了 `Comparator` 接口的比较器。
 
@@ -185,7 +185,7 @@ Ints.asList(a).sort(Comparator.reverseOrder());
 
 引用类型就是除了基本类型之外的，平时使用的各种对象，对于这些对象而言，有些是可以比较的，有些是不能够比较的。对于希望实现比较功能的类，我们在创造这个类的时候必须赋予它自然排序（natural ordering）的能力。
 
-Java 中实现对象间的比较方式主要是实现 Comparable 接口或 Comparator 接口。这两个接口存在语义上的差别，Comparable 强调的是某个类型是可比较的；而 Comparator 是一个比较器，放入两个对象，返回比较的结果。就像你可以说扔掉的可乐瓶是可回收的（Recyclable）东西，但不能说它是一个可回收器（ Recycler）。
+Java 中实现对象间的比较方式主要是实现 `Comparable` 接口或 `Comparator` 接口。这两个接口存在语义上的差别，`Comparable` 强调的是某个类型是可比较的；而 `Comparator` 是一个比较器，放入两个对象，返回比较的结果。就像你可以说扔掉的可乐瓶是可回收的（Recyclable）东西，但不能说它是一个可回收器（ Recycler）。
 
 ### 自然排序
 
@@ -326,7 +326,7 @@ public static int compare(int x, int y) {
 
 可以看出，`Number` 类型的 `compareTo` 都很直观，比较值的大小即可。但其他的类，就需要人为的定义规则了，比如日期是按照年、月、日顺序依次排序，字符串是按照字符（`String` 的底层是数组，JDK1.8 以及之前都是 char 数组，JDK1.9 之后是 byte 数组）逐个比较。
 
-### 继承 Comparable 接口定义排序规则
+### 继承 `Comparable` 接口定义排序规则
 
 上面简单了解了下 Java 中的常用类是如何实现 `Comparable` 接口的，接下来就自己尝试实现一个带有自然排序规则的类。
 
@@ -418,7 +418,7 @@ public static <T> void sort(List<T> list, Comparator<? super T> c) {
 }
 ```
 
-看得出来，重载是为了让比较器可以默认为 null，然后调用 `List.sort()`，`List.sort()` 是一个默认接口方法（default 方法，JDK1.8 的新特性，可以在接口里实现一个默认方法，实现接口的类可以直接调用），所以上面的代码还可以写成：
+看得出来，重载是为了让比较器可以默认为 null，然后调用 `List.sort()`，`List.sort()` 是一个默认接口方法（`default` 方法，JDK1.8 的新特性，可以在接口里实现一个默认方法，实现接口的类可以直接调用），所以上面的代码还可以写成：
 
 ```java
 Collections.sort(people);
@@ -512,9 +512,9 @@ public static void sort(Object[] a, int fromIndex, int toIndex) {
 
 现在，我们已经看到了三个排序算法类，它们分别服务于不同的模型。
 
-1. DualPivotQuicksort：处理基本类型的排序。
-2. ComparableTimSort：处理没有传入比较器，但实现了 `Comparable` 接口的类。
-3. TimSort：处理额外传入比较器的类。
+1. `DualPivotQuicksort`：处理基本类型的排序。
+2. `ComparableTimSort`：处理没有传入比较器，但实现了 `Comparable` 接口的类。
+3. `TimSort`：处理额外传入比较器的类。
 
 关于为什么需要分别采用不同的算法来对基本类型和引用类型进行排序的问题，可以参考：
 
@@ -562,7 +562,7 @@ people.sort(new DescNameComparator());
 
 可以看到，这回没有按照年龄排序，而是按照姓名降序排列。
 
-这回，由于传入了比较器，走的是 TimSort 类排序：
+这回，由于传入了比较器，走的是 `TimSort` 类排序：
 
 ```java
 public static <T> void sort(T[] a, Comparator<? super T> c) {
@@ -814,9 +814,9 @@ Comparator<Student> comparator =
 Collections.sort(students, comparator);
 ```
 
-接下来的内容主要涉及逆序比较器和自然排序比较器的源码，这些代码主要位于 Comparator 接口、Comparators 类、Collections 类之中。
+接下来的内容主要涉及逆序比较器和自然排序比较器的源码，这些代码主要位于 `Comparator` 接口、`Comparators` 类、`Collections` 类之中。
 
-#### ReverseComparator
+#### `ReverseComparator`
 
 点开 `reverseOrder()` 的源码，可以看到：
 
@@ -855,7 +855,7 @@ private static class ReverseComparator
 
 通过 `return c2.compareTo(c1)` 可以看到，该方法的作用返回一个与自然排序相反（降序）的比较器。
 
-#### NaturalOrderComparator
+#### `NaturalOrderComparator`
 
 点开 `naturalOrder` 的源码：
 
@@ -865,7 +865,7 @@ public static <T extends Comparable<? super T>> Comparator<T> naturalOrder() {
 }
 ```
 
-和 `reverseOrder` 类似，返回一个单例对象，不过这回这个对象不是定义在 Collections 中，而是定义在 Comparators 类内部，Comparators 是 Comparator 的支持类：
+和 `reverseOrder` 类似，返回一个单例对象，不过这回这个对象不是定义在 `Collections` 中，而是定义在 `Comparators` 类内部，`Comparators` 是 `Comparator` 的支持类：
 
 ```java
 // 该枚举类定义于 Comparators 类中
@@ -888,7 +888,7 @@ enum NaturalOrderComparator implements Comparator<Comparable<Object>> {
 
 #### 逆序
 
-上面讨论了，自然排序（natural order）和自然排序的逆序（reverse order），Collections 类和 Comparator 类，当中各有一个 `reverse` 和 `reversed` 方法，需要区分开来。
+上面讨论了，自然排序（natural order）和自然排序的逆序（reverse order），`Collections` 类和 `Comparator` 类，当中各有一个 `reverse` 和 `reversed` 方法，需要区分开来。
 
 先讨论 `Collections.reverse()` 方法，从语义上讲 reverse 动词，而它又是静态方法，所以可以推测出它是作用在某个对象上，然后进行修改，就和 `Collections.sort()` 一样。
 
@@ -913,7 +913,7 @@ public static void reverse(List<?> list) {
 }
 ```
 
-通过源码看出，这个被修改的对象，就是一个 List，整个修改的过程就是遍历+交换，达到列表翻转的效果。
+通过源码看出，这个被修改的对象，就是一个 `List`，整个修改的过程就是遍历+交换，达到列表翻转的效果。
 
 而 `Comparator.reversed` 从语义上看，reversed 是个修饰词，它修饰的，毫无疑问就是一个比较器，reversed comparator，即”翻转的比较器“，或者称”逆序的比较器“。
 

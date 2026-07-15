@@ -402,7 +402,7 @@ channel.start_consuming()
 
 ### 通配符模式
 
-对于消息投递的范围来说，direct 类型太固定，fanout 又太宽泛，如果要寻找一种类似 Unix 通配符模式的匹配规则，那么 RabbitMQ 的 topic 类型 exchange 就是最好的选择。
+对于消息投递的范围来说，direct 类型太固定，fanout 又太宽泛，如果要寻找一种类似 Unix 通配符模式的匹配规则，那么 RabbitMQ 的 `topic` 类型 exchange 就是最好的选择。
 
 topic exchange 不只是简单的比较字符串，它支持模式匹配，发送消息时需要携带一个 `routing_key`，而队列绑定到交换机时使用 `binding_key`。
 

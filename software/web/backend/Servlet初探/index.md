@@ -15,9 +15,9 @@ toc: true
 
 ## 前言
 
-Servlet 是一个常常在工作中被忽略但是却是整个 Java Web 基石的技术。
+`Servlet` 是一个常常在工作中被忽略但是却是整个 Java Web 基石的技术。
 
-在聊 Servlet 之前，得先了解早期的静态页面技术和动态页面技术之间的差别。
+在聊 `Servlet` 之前，得先了解早期的静态页面技术和动态页面技术之间的差别。
 
 ---
 
@@ -84,29 +84,29 @@ System.out.format("Welcome! %s", name);
 
 ---
 
-## Web Server、Servlet 以及 Servlet Container
+## Web Server、`Servlet` 以及 `Servlet` Container
 
 上面提到的静态页面，同样需要有服务器的某个软件提供支持，因为本质上，HTML，CSS，JS 还有图片这些资源，都是通过 HTTP 协议来传输和接收的，必然会有一个解析 HTTP 协议的程序，Apache 和 Nginx 都是最有名的 Web Server 软件，它们支持 HTTP 协议和传输静态资源文件，但是它们不能生成动态的页面，只是单纯的数据搬运工。
 
 ![](images/1.jpg)
 
-动态页面技术可以使用多种语言来实现，本文将以 Java Servlet 技术为中心讲述。
+动态页面技术可以使用多种语言来实现，本文将以 Java `Servlet` 技术为中心讲述。
 
-Java 中的动态页面技术主要围绕 Servlet，它的全称是：Server Applet，意为服务端的小程序，这个服务端的小程序承包了上面我们提到的所有有关于生成动态页面的内容：接收到一个请求对象，根据请求的一些参数去数据库拿数据，构造合适的数据结构，转换成响应对象，最后交由 Web Server 返回给客户端。
+Java 中的动态页面技术主要围绕 `Servlet`，它的全称是：Server Applet，意为服务端的小程序，这个服务端的小程序承包了上面我们提到的所有有关于生成动态页面的内容：接收到一个请求对象，根据请求的一些参数去数据库拿数据，构造合适的数据结构，转换成响应对象，最后交由 Web Server 返回给客户端。
 
-Servlet 不能直接运行，它只是包含了业务逻辑处理的代码（大部分业务程序员做的事情，理解业务需求，然后转换成代码，写在 Servlet 中），接受请求，处理请求，返回响应。但底层的网络协议的解析和生成 Servlet 的过程，它自己并不负责，而是让 Web Server 和 Servlet Container（像 Tomcat 这样的 Servlet 容器）来完成。
+`Servlet` 不能直接运行，它只是包含了业务逻辑处理的代码（大部分业务程序员做的事情，理解业务需求，然后转换成代码，写在 `Servlet` 中），接受请求，处理请求，返回响应。但底层的网络协议的解析和生成 `Servlet` 的过程，它自己并不负责，而是让 Web Server 和 `Servlet` Container（像 Tomcat 这样的 `Servlet` 容器）来完成。
 
-例如，Tomcat 接收到 Web Server 的请求后，解析出请求路径，找到具体访问的接口，然后创建与路径相对应的 Servlet 实现类对象，最后调用 Servlet 中的 service 方法。
+例如，Tomcat 接收到 Web Server 的请求后，解析出请求路径，找到具体访问的接口，然后创建与路径相对应的 `Servlet` 实现类对象，最后调用 `Servlet` 中的 `service` 方法。
 
 ![](images/2.jpg)
 
-Tomcat 既是 Servlet Container 又是 Web Server，但是 Tomcat 更多侧重在 Servlet 容器上面，它像是 Servlet 的包工头，负责管理 Servlet 的生命周期。
+Tomcat 既是 `Servlet` Container 又是 Web Server，但是 Tomcat 更多侧重在 `Servlet` 容器上面，它像是 `Servlet` 的包工头，负责管理 `Servlet` 的生命周期。
 
 ---
 
-## Servlet 接口和生命周期
+## `Servlet` 接口和生命周期
 
-Servlet 是一个接口，其中包含了初始化，提供服务，提供配置信息，销毁等生命周期有关的方法，Servlet 接口的注释写的非常详尽，我也对每一段做了中文翻译：
+`Servlet` 是一个接口，其中包含了初始化，提供服务，提供配置信息，销毁等生命周期有关的方法，`Servlet` 接口的注释写的非常详尽，我也对每一段做了中文翻译：
 
 ```java
 package javax.servlet;
@@ -333,9 +333,9 @@ public interface Servlet {
 }
 ```
 
-Servlet 接口定义了五个方法，从生活中的角度来做个比方：Servlet 的实现类就像是 Web Server 中不知疲倦的工具人。
+`Servlet` 接口定义了五个方法，从生活中的角度来做个比方：`Servlet` 的实现类就像是 Web Server 中不知疲倦的工具人。
 
-而 Servlet 接口就是定义了这些工具人实现类的所有必须实现的生命周期的方法：
+而 `Servlet` 接口就是定义了这些工具人实现类的所有必须实现的生命周期的方法：
 
 1. init：通过一个配置信息类，初始化一个工具人。
 2. service：让这个工具人提供服务（给它一个 request，它生产一个 response 然后返回），此方法要在 init 成功后才可以调用。
@@ -343,10 +343,10 @@ Servlet 接口定义了五个方法，从生活中的角度来做个比方：Ser
 
 另外还有两个方法用来获取工具人的信息：
 
-1. `getServletConfig`：获取一个 ServletConfig 对象，包含启动和初始化的一些信息。
-2. `getServletInfo`：获取一个 String，包含作者，版本，版权等信息。
+1. `getServletConfig`：获取一个 `ServletConfig` 对象，包含启动和初始化的一些信息。
+2. `getServletInfo`：获取一个 `String`，包含作者，版本，版权等信息。
 
-下面是我在网上找到的两张图片，都很好的描述了请求（request），响应（response），Tomcat（Web Server & Web Servlet Container），Servlet 之间的关系：
+下面是我在网上找到的两张图片，都很好的描述了请求（request），响应（response），Tomcat（Web Server & Web `Servlet` Container），`Servlet` 之间的关系：
 
 ![](images/3.jpg)
 
@@ -354,11 +354,11 @@ Servlet 接口定义了五个方法，从生活中的角度来做个比方：Ser
 
 ---
 
-## ServletConfig
+## `ServletConfig`
 
-在 init 方法的形参中，出现了 ServletConfig 类。
+在 `init` 方法的形参中，出现了 `ServletConfig` 类。
 
-要构造一个 Servlet 实现类，必须给给初始化方法一个 ServletConfig 对象。
+要构造一个 `Servlet` 实现类，必须给给初始化方法一个 `ServletConfig` 对象。
 
 ```java
 package javax.servlet;
@@ -431,13 +431,13 @@ import java.util.Enumeration;
 }
 ```
 
-ServletConfig 对象通常由 Tomcat 来自动配置，我们能够通过 ServletConfig 来获取到 ServletContext，即 Servlet 的上下文。
+`ServletConfig` 对象通常由 Tomcat 来自动配置，我们能够通过 `ServletConfig` 来获取到 `ServletContext`，即 `Servlet` 的上下文。
 
 ---
 
 ## 小结
 
-本文从静态页面和动态页面技术为切入点，就 Java 的动态页面技术的核心接口 Servlet 和 ServletConfig，做了一些简单的介绍，关于如何开发一个 Servlet 应用，并部署到 Tomcat 中，以及上面提到的 ServletContext 究竟是什么，将在之后的文章做讨论。
+本文从静态页面和动态页面技术为切入点，就 Java 的动态页面技术的核心接口 `Servlet` 和 `ServletConfig`，做了一些简单的介绍，关于如何开发一个 `Servlet` 应用，并部署到 Tomcat 中，以及上面提到的 `ServletContext` 究竟是什么，将在之后的文章做讨论。
 
 ---
 

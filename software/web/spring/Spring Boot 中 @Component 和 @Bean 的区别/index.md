@@ -14,7 +14,7 @@ summary: "@Component 和 @Bean"
 
 `@Bean` 用在第三方框架里的类，特点就是你无法修改第三方的源码，你不能在源码类上面添加注解。
 
-这时候如果想在添加一些自定义代码（一般第三方的类都允许你使用时自定义各种参数来控制生成的类），比如 RedisClient：
+这时候如果想在添加一些自定义代码（一般第三方的类都允许你使用时自定义各种参数来控制生成的类），比如 `RedisClient`：
 
 ```java
 @Configuration
@@ -58,7 +58,7 @@ public class UserController {
 
 ## 语义化
 
-`@Component` 属于通用型的注解，如果不知道 Bean 处于哪一个业务层次，可以使用 `@Component`。
+`@Component` 属于通用型的注解，如果不知道 `Bean` 处于哪一个业务层次，可以使用 `@Component`。
 
 为了清晰的分层，Spring 还引入了 `@Component` 的语义化注解，这些注解和 `@Component` 本质是一样的：
 
@@ -106,7 +106,7 @@ public class MyService {
 }
 ```
 
-配置类需要把 Database 和 MyService 加入到 Spring 容器中管理：
+配置类需要把 `Database` 和 `MyService` 加入到 Spring 容器中管理：
 
 ```java
 public class MyConfig {
@@ -127,7 +127,7 @@ public class MyConfig {
 }
 ```
 
-所以问题是给 MyConfig 添加 `@Component` 和 `@Configuration` 的区别？
+所以问题是给 `MyConfig` 添加 `@Component` 和 `@Configuration` 的区别？
 
 如果添加了 `@Component`，那么日志是：
 
@@ -137,20 +137,20 @@ MyConfig.database(): site.djhx.demospring.bean.Database@35636217
 MyConfig.myService(): site.djhx.demospring.bean.Database@35636217
 ```
 
-第一条日志是 Spring 在启动的时候需要注册 Database Bean，创建了 hashcode 为 77cb9cd1 Database 对象。
+第一条日志是 Spring 在启动的时候需要注册 `Database` `Bean`，创建了 hashcode 为 77cb9cd1 `Database` 对象。
 
-第二条日志是 Spring 注册 MyService Bean 的时候，执行了 database()，又创建了一个新的 Database 对象，hashcode 是 35636217。
+第二条日志是 Spring 注册 `MyService` `Bean` 的时候，执行了 database()，又创建了一个新的 `Database` 对象，hashcode 是 35636217。
 
-可以看到创建 MyService 时，依赖的 Database 产生了两个对象，这显然不是我们希望的，所以需要改成 `@Configuration` 注解，日志就会变成：
+可以看到创建 `MyService` 时，依赖的 `Database` 产生了两个对象，这显然不是我们希望的，所以需要改成 `@Configuration` 注解，日志就会变成：
 
 ```
 MyConfig.database(): site.djhx.demospring.bean.Database@4b869331
 MyConfig.myService(): site.djhx.demospring.bean.Database@4b869331
 ```
 
-只剩两条日志了，是因为在注册 MySerivce Bean 时，MyConfig 的代理类（MyConfig\$\$SpringCGLIB\$\$0@b25b095）拦截了 database()，发现容器已经存在 Database Bean，就不会创建新的 Database 对象。
+只剩两条日志了，是因为在注册 MySerivce `Bean` 时，`MyConfig` 的代理类（`MyConfig$$SpringCGLIB$$0@b25b095`）拦截了 database()，发现容器已经存在 `Database` `Bean`，就不会创建新的 `Database` 对象。
 
-这个例子是为了演示 `@Configuration` 是会生成一个代理类，所以在实例中，我手动 new Database()，实际上标准的写法是：
+这个例子是为了演示 `@Configuration` 是会生成一个代理类，所以在实例中，我手动 `new Database()`，实际上标准的写法是：
 
 ```java
 @Bean
@@ -160,9 +160,9 @@ public MyService myService(Database db) {
 }
 ```
 
-放在函数参数中，而不是函数内部 new，这样依赖关系看的更清楚（MyService 依赖 Database），Spring 看到函数参数，就会从容器中寻找对应的 bean。
+放在函数参数中，而不是函数内部 new，这样依赖关系看的更清楚（`MyService` 依赖 `Database`），Spring 看到函数参数，就会从容器中寻找对应的 bean。
 
-`@Configuration` 的价值不是让 `@Bean` 生效（`@Component` + `@Bean` 也能生效），而是保证配置类内部调用 `@Bean` 注解方法时，返回的是**容器中的 Bean，而不是重新创建对象**。
+`@Configuration` 的价值不是让 `@Bean` 生效（`@Component` + `@Bean` 也能生效），而是保证配置类内部调用 `@Bean` 注解方法时，返回的是**容器中的 `Bean`，而不是重新创建对象**。
 
 ---
 
@@ -187,7 +187,7 @@ public class UserRepository {
 }
 ```
 
-UserService 依赖 UserRepository 就需要手动在代码里 new：
+`UserService` 依赖 `UserRepository` 就需要手动在代码里 new：
 
 ```java
 public class UserService {
@@ -204,7 +204,7 @@ public class UserService {
 }
 ```
 
-UserController 依赖 UserService 也一样：
+`UserController` 依赖 `UserService` 也一样：
 
 ```java
 public class UserController {
@@ -317,7 +317,7 @@ public class TestRunner {
 }
 ```
 
-TestRunner 也通过 `@Component` 被扫描到，进入 Spring 容器：
+`TestRunner` 也通过 `@Component` 被扫描到，进入 Spring 容器：
 
 ```java
 ConfigurableApplicationContext context = SpringApplication.run(DemoSpringApplication.class, args);
@@ -348,7 +348,7 @@ class CheckoutService {
 
 所有组件手工 new 的好处就是能看的比较明白，所有的逻辑都是“面向过程式”的思维。
 
-但缺点很明显，CheckoutService 承担了太多的责任：
+但缺点很明显，`CheckoutService` 承担了太多的责任：
 
 1. 选择 Stripe，而不是其他支付实现
 2. 创建和配置 HTTP 客户端
@@ -376,7 +376,7 @@ class CheckoutService {
 }
 ```
 
-CheckoutService 仅仅依赖于 PaymentGateway 和 OrderRepository 两个组件，而且这两个组件都是 Interface，可以有不同的实现类来完成具体的业务功能。
+`CheckoutService` 仅仅依赖于 `PaymentGateway` 和 `OrderRepository` 两个组件，而且这两个组件都是 Interface，可以有不同的实现类来完成具体的业务功能。
 
 在使用时，依然需要 new：
 
@@ -389,7 +389,7 @@ var repository = new JdbcOrderRepository(dataSource);
 var checkout = new CheckoutService(gateway, repository);
 ```
 
-一个 new 都没有少，但创建的责任从业务对象（CheckoutService）转移到了另外的地方。 这已经是 DI，不需要 Spring。
+一个 new 都没有少，但创建的责任从业务对象（`CheckoutService`）转移到了另外的地方。 这已经是 DI，不需要 Spring。
 
 Spring 容器只是把对象图解析、作用域和生命周期管理自动化了。
 
@@ -397,7 +397,7 @@ Spring 官方对 DI 的定义也是：对象通过构造器、工厂参数或属
 
 真正的问题一般出现在 new 的是数据库、远程服务、线程池、时钟等长期协作者时：
 
-- 业务类同时依赖 PaymentGateway 概念和 StripeGateway 细节，更换实现必须修改业务源码。
+- 业务类同时依赖 `PaymentGateway` 概念和 `StripeGateway` 细节，更换实现必须修改业务源码。
 - 构造器看起来无依赖，实际调用该类的初始化后，会建立数据库连接、读取配置甚至访问网络。
 - 底层构造参数变化，所有递归 new 它的上层类都要跟着修改。
 - 无法简单传入内存仓库、固定时钟或假支付网关，单测被迫启动真实基础设施。

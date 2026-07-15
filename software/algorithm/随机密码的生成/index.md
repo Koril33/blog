@@ -33,7 +33,7 @@ password = ''.join(random.choice(string.ascii_letters + string.digits + '!@#$') 
 
 ### 改进
 
-为了保证至少 1 个大写字母和特殊字符，可以在 `password_chars` 这个 list 中，先加上一个随机的大写字母和特殊字符，剩下的部分在从字符集里面随机挑选，最后使用 random 的 shuffle 函数“洗牌”。
+为了保证至少 1 个大写字母和特殊字符，可以在 `password_chars` 这个 list 中，先加上一个随机的大写字母和特殊字符，剩下的部分在从字符集里面随机挑选，最后使用 random 的 `shuffle` 函数“洗牌”。
 
 ```python
 import string, random

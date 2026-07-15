@@ -25,7 +25,7 @@ toc: true
 
 在 JPA 2.1 之前，将枚举类型（enum）字段值映射到数据库中，最常见的做法是使用 `@Enumerated` 注解，通过这种方式，可以让 JPA 将枚举值转换成字符串形式或者它的序数（ordinal）。
 
-下面演示这两种不同的方式。首先创建一个 Article 类和 article 表方便演示：
+下面演示这两种不同的方式。首先创建一个 `Article` 类和 article 表方便演示：
 
 ```java
 @Data
@@ -65,7 +65,7 @@ public enum Status {
 }
 ```
 
-将 status 字段添加到 Article 中：
+将 `status` 字段添加到 `Article` 中：
 
 ```java
 @Data
@@ -89,7 +89,7 @@ public class Article {
 }
 ```
 
-然后保存一个 article 对象到数据库中：
+然后保存一个 `article` 对象到数据库中：
 
 ```java
 Article article = new Article();
@@ -111,17 +111,17 @@ binding parameter [1] as [INTEGER] - [0]
 binding parameter [2] as [VARCHAR] - [first article]
 ```
 
-可以看到数据库存储的是 int 类型的 0，也就是 `Status.OPEN.ordinal()` 的值，这种方式有个很大的缺点：如果在枚举类的类型中添加新的类型，那么存储到数据库中的 ordinal 值的含义都将发生改变，这意味着我们需要更新整个数据库的 status 字段的值。
+可以看到数据库存储的是 `int` 类型的 0，也就是 `Status.OPEN.ordinal()` 的值，这种方式有个很大的缺点：如果在枚举类的类型中添加新的类型，那么存储到数据库中的 ordinal 值的含义都将发生改变，这意味着我们需要更新整个数据库的 `status` 字段的值。
 
-打个简单的比方，现在 OPEN 代表 0，如果之后在 Status 类中再添加一个枚举值——CLOSE，并且置于 OPEN 之前，那么数据库中的所有的 status 为 0 的记录，它们的含义都将从 OPEN 变成 CLOSE，如果代码中有用到这个 status 字段做逻辑判断，就会导致一些不可预知的 BUG 产生。
+打个简单的比方，现在 OPEN 代表 0，如果之后在 `Status` 类中再添加一个枚举值——CLOSE，并且置于 OPEN 之前，那么数据库中的所有的 status 为 0 的记录，它们的含义都将从 OPEN 变成 CLOSE，如果代码中有用到这个 `status` 字段做逻辑判断，就会导致一些不可预知的 BUG 产生。
 
 所以使用 ordinal 的值存储到数据库中，并不是一种好的办法。
 
-### 方式二：映射成 String
+### 方式二：映射成 `String`
 
-枚举类型除了 ordinal 之外还有个 name 方法，所以当我们使用 `@Enumerated(EnumType.STRING)` 来注释枚举类型的时候，JPA 会自动使用 `Enum.name()`。
+枚举类型除了 ordinal 之外还有个 `name` 方法，所以当我们使用 `@Enumerated(EnumType.STRING)` 来注释枚举类型的时候，JPA 会自动使用 `Enum.name()`。
 
-创建第二个枚举类，并添加到 Article 中：
+创建第二个枚举类，并添加到 `Article` 中：
 
 ```java
 public enum Type {
@@ -166,7 +166,7 @@ binding parameter [2] as [VARCHAR] - [second article]
 binding parameter [3] as [VARCHAR] - [INTERNAL]
 ```
 
-可以看到，数据库中该记录的 type 字段存储了字符串——INTERNAL。
+可以看到，数据库中该记录的 `type` 字段存储了字符串——INTERNAL。
 
 存储字符串的方式，解决了前一个使用 ordinal 的方式的缺点，添加新的枚举类型，打乱它们的顺序，数据库存储记录的含义都不会改变，但是如果重命名就不行了，如果 INTERNAL 被重命名为其他名称，我们不得不再将数据库中原来 type 值为 INTERNAL 的记录更新为新的名称。
 
@@ -208,7 +208,7 @@ public enum Priority {
 }
 ```
 
-然后添加 priority 字段到 Article 中：
+然后添加 `priority` 字段到 `Article` 中：
 
 ```java
 @Data
@@ -231,7 +231,7 @@ public class Article {
 }
 ```
 
-`priorityValue` 用于数据库映射存储，priority 字段用于业务代码逻辑判断使用，两个字段合在一起，表示 priority 的枚举属性。
+`priorityValue` 用于数据库映射存储，`priority` 字段用于业务代码逻辑判断使用，两个字段合在一起，表示 priority 的枚举属性。
 
 除此之外，我们还需要加上 JPA 的回调函数：
 
@@ -273,9 +273,9 @@ public class Article {
 }
 ```
 
-`fillTransientPriority()` 确保了在数据库加载 Article 到应用程序中的业务代码的时候，将数据库中存储的 int 类型转成业务代码需要的 Priority 类型。
+`fillTransientPriority()` 确保了在数据库加载 `Article` 到应用程序中的业务代码的时候，将数据库中存储的 `int` 类型转成业务代码需要的 `Priority` 类型。
 
-`fillPersistentPriority` 确保了持久化到数据库中存储前，将业务代码中的 Priority 类型的值，转换成 int 类型。
+`fillPersistentPriority` 确保了持久化到数据库中存储前，将业务代码中的 `Priority` 类型的值，转换成 `int` 类型。
 
 ```java
 Article article = new Article();
@@ -333,7 +333,7 @@ public enum Category {
 }
 ```
 
-在 Article 中添加 category 字段：
+在 `Article` 中添加 `category` 字段：
 
 ```java
 @Data
@@ -348,7 +348,7 @@ public class Article {
 }
 ```
 
-然后编写一个 AttributeConverter 实现类：
+然后编写一个 `AttributeConverter` 实现类：
 
 ```java
 import javax.persistence.AttributeConverter;
@@ -384,9 +384,9 @@ public class CategoryConverter implements AttributeConverter<Category, String> {
 }
 ```
 
-AttributeConverter<X, Y> 的 X 表示需要转换的类的类型，Y 表示数据库字段类型。
+`AttributeConverter<X, Y>` 的 X 表示需要转换的类的类型，Y 表示数据库字段类型。
 
-插入新的 Article：
+插入新的 `Article`：
 
 ```java
 Article article = new Article();
@@ -416,7 +416,7 @@ binding parameter [5] as [VARCHAR] - [EXTERNAL]
 
 可以看到 `Category.MUSIC` 被转换成对应的 code——M，存储到了数据库中。
 
-如果不在 CategoryConverter 类上添加 `@Converter(autoApply` = true)，则需要在实体类上的相关字段手动加上 `@Convert`：
+如果不在 `CategoryConverter` 类上添加 `@Converter(autoApply = true)`，则需要在实体类上的相关字段手动加上 `@Convert`：
 
 ```java
 @Column(name = "category")
@@ -424,4 +424,4 @@ binding parameter [5] as [VARCHAR] - [EXTERNAL]
 private Category category;
 ```
 
-该方法，解决了以上所有其他方式的缺点，将数据库中已经存储的数据和 Java 应用中的枚举类的属性给分离开，通过 AttributeConverter 可以安全的添加新的枚举类型以及更改枚举类的名称，没有额外的 `@Transient` 字段和 JPA 回调函数，将代码封装在了一个 Converter 类中，提供了更多的转换的灵活性。
+该方法，解决了以上所有其他方式的缺点，将数据库中已经存储的数据和 Java 应用中的枚举类的属性给分离开，通过 `AttributeConverter` 可以安全的添加新的枚举类型以及更改枚举类的名称，没有额外的 `@Transient` 字段和 JPA 回调函数，将代码封装在了一个 `Converter` 类中，提供了更多的转换的灵活性。

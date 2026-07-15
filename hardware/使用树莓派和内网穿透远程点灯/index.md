@@ -214,7 +214,7 @@ http://korilweb.cn:8090/command/close
 
 使用手机来控制 LED 是个不错的选择。
 
-这里使用 Android Studio 开发一个简单的 App 应用。目前只有开关的接口，所以需要用到一个 Switch 组件来控制 LED 亮灭。
+这里使用 Android Studio 开发一个简单的 App 应用。目前只有开关的接口，所以需要用到一个 `Switch` 组件来控制 LED 亮灭。
 
 `activity_main.xml`
 
@@ -239,7 +239,7 @@ http://korilweb.cn:8090/command/close
 </androidx.constraintlayout.widget.ConstraintLayout>
 ```
 
-在 MainActivity 中编写对应的逻辑代码
+在 `MainActivity` 中编写对应的逻辑代码
 
 ```java
 package com.example.myapplication;

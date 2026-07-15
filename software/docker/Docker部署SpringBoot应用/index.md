@@ -188,7 +188,7 @@ sudo docker stop 9e32ed4dd5c3
 
 ## 修改接口
 
-上一节简单介绍了如何在 Docker 容器中启动 Spring Boot，但是如果我想修改 /hello 接口，必须要将修改后的 jar 包，重新上传到服务器，然后重新 build 镜像，再用新的镜像去启动容器。
+上一节简单介绍了如何在 Docker 容器中启动 Spring Boot，但是如果我想修改 `/hello` 接口，必须要将修改后的 jar 包，重新上传到服务器，然后重新 build 镜像，再用新的镜像去启动容器。
 
 其实整个开发过程中，只有 jar 包一直在变化，所以可以使用 Docker -v 将 Docker 主机下 jar 绑定到容器内部的 jar。
 

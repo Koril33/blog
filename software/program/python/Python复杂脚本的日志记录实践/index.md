@@ -221,6 +221,6 @@ if __name__ == '__main__':
 
 这里实现有几个点需要注意：
 
-1. 使用 ThreadPoolExecutor 是因为 SMTP 或者 HTTP 之类的 handler 会有很明显的 IO 阻塞，需要放到线程池执行。
-2. 使用第三方库的 ConcurrentTimedRotatingFileHandler 而不是标准库的 TimedRotatingFileHandler 是因为多进程下日志轮转会有并发问题。
-3. 日志 handler 在发送日志信息的过程中也可能会碰到异常（尤其是依赖网络的 handler，比如：HTTP Handler），在 try-except 需要记录下来。
+1. 使用 `ThreadPoolExecutor` 是因为 SMTP 或者 HTTP 之类的 handler 会有很明显的 IO 阻塞，需要放到线程池执行。
+2. 使用第三方库的 `ConcurrentTimedRotatingFileHandler` 而不是标准库的 `TimedRotatingFileHandler` 是因为多进程下日志轮转会有并发问题。
+3. 日志 handler 在发送日志信息的过程中也可能会碰到异常（尤其是依赖网络的 handler，比如：HTTP `Handler`），在 try-except 需要记录下来。

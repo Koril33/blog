@@ -35,7 +35,7 @@ Python 3.8
 
 ## 实现功能
 
-实现一个接口，get 请求，query 参数是一个字符串（例如：城市名称），返回该字符串作为前缀，匹配到的在数据库中的所有相关城市信息。
+实现一个接口，get 请求，`query` 参数是一个字符串（例如：城市名称），返回该字符串作为前缀，匹配到的在数据库中的所有相关城市信息。
 
 例如，数据库有以下省市名称：
 
@@ -440,7 +440,7 @@ public class LocationServiceImpl implements LocationService {
 
 先在 zset 找到可能的匹配项，然后再去 hash 里检索具体信息。
 
-RedisTemplate 配置以及其他工具类，这些细节就不在本文赘述了。
+`RedisTemplate` 配置以及其他工具类，这些细节就不在本文赘述了。
 
 ---
 

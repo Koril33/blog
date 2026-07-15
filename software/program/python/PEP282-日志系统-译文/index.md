@@ -30,12 +30,12 @@ Python 版本呢： 2.3
 
 此 PEP 描述了 Python 标准库的日志记录包。
 
-基本上该系统涉及到用户创建一个或者多个 logger 对象，可以使用该对象的特定方法记录调试日志（debugging notes），一般信息（general information），警告（warnings），错误（errors）等等。不同的日志级别（logging levels）用以区分那些重要的信息和不太重要的信息。
+基本上该系统涉及到用户创建一个或者多个 `logger` 对象，可以使用该对象的特定方法记录调试日志（debugging notes），一般信息（general information），警告（warnings），错误（errors）等等。不同的日志级别（logging levels）用以区分那些重要的信息和不太重要的信息。
 
-维护一个以名字作为单例 logger 对象的注册表，有利于：
+维护一个以名字作为单例 `logger` 对象的注册表，有利于：
 
 1. 存在不同的逻辑日志流（或“通道”）（例如，一个用于“`zope.zodb`”内容，另一个用于“mywebsite”特定内容）。
-2. 不必传递 Logger 对象引用。
+2. 不必传递 `Logger` 对象引用。
 
 该系统在运行时可配置。这种配置机制允许人们在不修改应用程序本身的情况下，调整记录级别和类型。
 
@@ -123,7 +123,7 @@ Doin' stuff...
 
 ### 控制流程
 
-应用程序通过调用 Logger 对象来进行日志记录。Logger 被组织在了一个层次型命名空间（hierarchical namespace）中，在命名空间里，子 Logger 会从它们的父级节点上继承一些日志属性。
+应用程序通过调用 `Logger` 对象来进行日志记录。`Logger` 被组织在了一个层次型命名空间（hierarchical namespace）中，在命名空间里，子 `Logger` 会从它们的父级节点上继承一些日志属性。
 
 日志记录器名称符合“点分名称”命名空间，其中点（句点）表示子命名空间。因此，日志记录器对象的命名空间对应于单个树形数据结构。
 
@@ -131,13 +131,13 @@ Doin' stuff...
 - "Zope" 是根节点的子节点
 - `"Zope.ZODB"` 是 "Zope" 的子节点
 
-这些 Logger 对象门会创建 **LogRecord** 对象，把他们传递给 **Handler** 对象进行输出。Loggers 和 Handlers 都可以使用日志级别和过滤器（可选）来确定它们是否对某条特定的 LogRecord 感兴趣。当有必要将 LogRecord 输出到外部时，Handler 可以在发送到 I/O 流之前，使用 Formatter（格式化器）进行本地化或者格式化消息。
+这些 `Logger` 对象门会创建 `LogRecord` 对象，把他们传递给 `Handler` 对象进行输出。`Logger` 和 `Handler` 都可以使用日志级别和过滤器（可选）来确定它们是否对某条特定的 `LogRecord` 感兴趣。当有必要将 `LogRecord` 输出到外部时，`Handler` 可以在发送到 I/O 流之前，使用 `Formatter`（格式化器）进行本地化或者格式化消息。
 
-每一个 Logger 都会跟踪一组输出 Handlers。默认情况下，所有 Loggers 将输出发送给它们祖先 Loggers 的所有 Handlers。但是，Loggers 也可以被配制成忽略高层树节点的 Handler。
+每一个 `Logger` 都会跟踪一组输出 `Handler`。默认情况下，所有 `Logger` 将输出发送给它们祖先 `Logger` 的所有 `Handler`。但是，`Logger` 也可以被配制成忽略高层树节点的 `Handler`。
 
-这些 API 的结构化设计使得在禁用日志记录时，对 Logger API 的调用成本较低。如果给定的日志级别被禁用，那么 Logger 可以进行低成本的比较测试并返回。如果给定的日志级别已启用，Logger 仍会谨慎行事，在将 LogRecord 传递给 Handlers 之前尽量减少成本。特别是，本地化和格式化（这两者相对昂贵）会延迟到处理程序请求时才进行。
+这些 API 的结构化设计使得在禁用日志记录时，对 `Logger` API 的调用成本较低。如果给定的日志级别被禁用，那么 `Logger` 可以进行低成本的比较测试并返回。如果给定的日志级别已启用，`Logger` 仍会谨慎行事，在将 `LogRecord` 传递给 `Handler` 之前尽量减少成本。特别是，本地化和格式化（这两者相对昂贵）会延迟到处理程序请求时才进行。
 
-整个 Logger 层次结构也可以关联一个级别，该级别优先于各个 Logger 的级别。这是通过一个模块级函数来实现的：
+整个 `Logger` 层次结构也可以关联一个级别，该级别优先于各个 `Logger` 的级别。这是通过一个模块级函数来实现的：
 
 ```python
 def disable(lvl):
@@ -183,13 +183,13 @@ def addLevelName(lvl, lvlName):
 
 ---
 
-### Loggers
+### `Logger`
 
-每一个 Logger 对象都追踪它们感兴趣的级别的日志，并且丢弃那些比该级别低级的日志请求。
+每一个 `Logger` 对象都追踪它们感兴趣的级别的日志，并且丢弃那些比该级别低级的日志请求。
 
-一个 Manager 类的对象维护了以名称作为层次型命名空间的 Logger 对象门。根据句点分割名称来表示不同的层次：Logger "foo" 是 Logger `"foo.bar"` 和 `"foo.baz"` 的父级节点。
+一个 `Manager` 类的对象维护了以名称作为层次型命名空间的 `Logger` 对象门。根据句点分割名称来表示不同的层次：`Logger` "foo" 是 `Logger` `"foo.bar"` 和 `"foo.baz"` 的父级节点。
 
-Manager 类的实例其实是一个单例对象，并且不直接暴露给用户，用户使用各种模块级别的函数来和它交互。
+`Manager` 类的实例其实是一个单例对象，并且不直接暴露给用户，用户使用各种模块级别的函数来和它交互。
 
 一般的日志方法是：
 
@@ -236,7 +236,7 @@ class Message:
 logger.info(Message("abc"), ...)
 ```
 
-为一条日志消息收集和格式化数据可能会很昂贵，而且如果记录器无论如何都会丢弃该消息的话，那就是一种浪费。要想知道一个请求是否会被记录仪接受，可以使用 `isEnabledFor()`方法。
+为一条日志消息收集和格式化数据可能会很昂贵，而且如果记录器无论如何都会丢弃该消息的话，那就是一种浪费。要想知道一个请求是否会被记录仪接受，可以使用 `isEnabledFor()` 方法。
 
 ```python
 class Logger:
@@ -265,14 +265,14 @@ if log.isEnabledFor(logging.INFO):
     log.info(hamletStr)
 ```
 
-当创建新的 Logger 时，它们会以表示“无级别”（no level）的级别进行初始化。可以使用 setlevel（）方法明确设置级别：
+当创建新的 `Logger` 时，它们会以表示“无级别”（no level）的级别进行初始化。可以使用 setlevel（）方法明确设置级别：
 
 ```python
 class Logger:
     def setLevel(self, lvl): ...
 ```
 
-如果未设置 Logger 的级别，系统会咨询其所有祖先，遍历其层次结构，直到找到明确的设置级别。这被认为是该 Logger 的“有效级别”，可以通过 `getEffectiveLevel()` 方法来查询：
+如果未设置 `Logger` 的级别，系统会咨询其所有祖先，遍历其层次结构，直到找到明确的设置级别。这被认为是该 `Logger` 的“有效级别”，可以通过 `getEffectiveLevel()` 方法来查询：
 
 ```python
 def getEffectiveLevel(self): ...
@@ -284,37 +284,37 @@ Loggers 永远都不该被直接实例化，相反，应该使用模块级别的
 def getLogger(name=None): ...
 ```
 
-如果未指定名称，则返回根 Logger，如果存在该名称的 Logger，则将其返回。如果没有找到该名称的 Logger，则将新的 Logger 初始化并返回。在这里，“名称”是“频道名称”的代名词。 用户可以在实例化新记录器时指定系统使用的自定义子类：
+如果未指定名称，则返回根 `Logger`，如果存在该名称的 `Logger`，则将其返回。如果没有找到该名称的 `Logger`，则将新的 `Logger` 初始化并返回。在这里，“名称”是“频道名称”的代名词。 用户可以在实例化新记录器时指定系统使用的自定义子类：
 
 ```python
 def setLoggerClass(klass): ...
 ```
 
-被传递的类应该是 Logger 的子类，其 `__init__` 方法应该调用 `Logger.__init__`。
+被传递的类应该是 `Logger` 的子类，其 `__init__` 方法应该调用 `Logger.__init__`。
 
 ---
 
-### Handlers
+### `Handler`
 
-Handlers 负责将给定的 LogRecord 进行一些有用的处理，下面是一些核心的，将被实现的 Handlers：
+`Handler` 负责对给定的 `LogRecord` 进行一些有用的处理，下面是一些将被实现的核心 `Handler`：
 
-- StreamHandler: 用于写入类似文件的对象的 Handler。
-- FileHandler: 用于写入单个文件或一组轮转文件的 Handler。
-- SocketHandler: 用于向远程 TCP 端口写入的 Handler。
-- DatagramHandler: 写入 UDP 套接字的 Handler，用于低成本的日志记录。Jeff Bauer 已经有这样一个系统。
-- MemoryHandler: 在内存中缓冲日志记录，直到缓冲区满了或出现特定条件。
-- SMTPHandler: 通过 SMTP 协议发送邮件的 Handler。
-- SysLogHandler: 用于通过 UDP 向 Unix syslog 写入的 Handler。
-- NTEventLogHandler: 用于向 Windows NT, 2000 和 XP 的 event logs 写入的 Handler。
-- HTTPHandler: 用于以 GET 或 POST 的方式向 Web 服务器写入信息的 Handler。
+- `StreamHandler`: 用于写入类似文件的对象的 `Handler`。
+- `FileHandler`: 用于写入单个文件或一组轮转文件的 `Handler`。
+- `SocketHandler`: 用于向远程 TCP 端口写入的 `Handler`。
+- `DatagramHandler`: 写入 UDP 套接字的 `Handler`，用于低成本的日志记录。Jeff Bauer 已经有这样一个系统。
+- `MemoryHandler`: 在内存中缓冲日志记录，直到缓冲区满了或出现特定条件。
+- `SMTPHandler`: 通过 SMTP 协议发送邮件的 `Handler`。
+- `SysLogHandler`: 用于通过 UDP 向 Unix syslog 写入的 `Handler`。
+- `NTEventLogHandler`: 用于向 Windows NT, 2000 和 XP 的 event logs 写入的 `Handler`。
+- `HTTPHandler`: 用于以 GET 或 POST 的方式向 Web 服务器写入信息的 `Handler`。
 
-Handler 还可以使用 `setLevel()` 方法为他们设置级别：
+`Handler` 还可以使用 `setLevel()` 方法为他们设置级别：
 
 ```python
 def setLevel(self, lvl): ...
 ```
 
-可以设置 FileHandler 以创建一组轮转的日志文件集。在这种情况下，传递给构造函数的文件名被视为“基础”文件名。旋转的其他文件名是通过附加.1，.2 等来创建基本文件名的其他文件名，最高为最大值，如要求汇总时指定的最大值。 `setRollover` 方法用于指定日志文件的最大大小和轮转中的最大备份文件数量。
+可以设置 `FileHandler` 以创建一组轮转的日志文件集。在这种情况下，传递给构造函数的文件名被视为“基础”文件名。旋转的其他文件名是通过附加.1，.2 等来创建基本文件名的其他文件名，最高为最大值，如要求汇总时指定的最大值。 `setRollover` 方法用于指定日志文件的最大大小和轮转中的最大备份文件数量。
 
 ```python
 def setRollover(maxBytes, backupCount): ...
@@ -324,26 +324,26 @@ def setRollover(maxBytes, backupCount): ...
 
 ---
 
-### LogRecords
+### `LogRecord`
 
-一个 LogRecord 用于表示一个 logging 事件的容器。它不仅仅只是一个字典，尽管它确实定义了 `getMessage` 函数用于将一个消息与可选的运行参数合并。
+一个 `LogRecord` 用于表示一个 logging 事件的容器。它不仅仅只是一个字典，尽管它确实定义了 `getMessage` 函数用于将一个消息与可选的运行参数合并。
 
 ---
 
-### Formatters
+### `Formatter`
 
-一个 Formatter 用于将一个 LogRecord 转换成字符串类型来表示。一个 Handler 可能会在写入一个日志记录前调用 Formatter。以下核心的 Formatters 将会被实现：
+一个 `Formatter` 用于将一个 `LogRecord` 转换成字符串类型来表示。一个 `Handler` 可能会在写入一个日志记录前调用 `Formatter`。以下核心的 Formatters 将会被实现：
 
-- Formatter：提供类似于 printf 的格式化器，使用 % 操作符。
-- BufferingFormatter：为多个消息提供格式化支持，并支持头部和尾部的格式化。
+- `Formatter`：提供类似于 printf 的格式化器，使用 % 操作符。
+- `BufferingFormatter`：为多个消息提供格式化支持，并支持头部和尾部的格式化。
 
-在 Handlers 对象上调用 `setFormatter()`，可以将 Handler 和 Formatter 连接起来：
+在 `Handler` 对象上调用 `setFormatter()`，可以将 `Handler` 和 `Formatter` 连接起来：
 
 ```python
 def setFormatter(self, form): ...
 ```
 
-Formatters 使用 % 来格式化日志信息。格式化字符串应该包含 `%(name)s`，这些 LogRecord 属性字典可以用来获取特定信息的数据，以下属性将被提供：
+`Formatter` 使用 % 来格式化日志信息。格式化字符串应该包含 `%(name)s`，这些 `LogRecord` 属性字典可以用来获取特定信息的数据，以下属性将被提供：
 
 | `%(name)s` | Name of the logger (logging channel) |
 | --------------------- | ------------------------------------------------------------ |
@@ -353,22 +353,22 @@ Formatters 使用 % 来格式化日志信息。格式化字符串应该包含 `%
 | `%(filename)s` | Filename portion of pathname |
 | `%(module)s` | Module from which logging call was made |
 | `%(lineno)d` | Source line number where the logging call was issued (if available) |
-| `%(created)f` | Time when the LogRecord was created (`time.time()` return value) |
-| `%(asctime)s` | Textual time when the LogRecord was created |
+| `%(created)f` | Time when the `LogRecord` was created (`time.time()` return value) |
+| `%(asctime)s` | Textual time when the `LogRecord` was created |
 | `%(msecs)d` | Millisecond portion of the creation time |
-| `%(relativeCreated)d` | Time in milliseconds when the LogRecord was created, relative to the time the logging module was loaded (typically at application startup time) |
+| `%(relativeCreated)d` | Time in milliseconds when the `LogRecord` was created, relative to the time the logging module was loaded (typically at application startup time) |
 | `%(thread)d` | Thread ID (if available) |
 | `%(message)s` | The result of `record.getMessage()`, computed just as the record is emitted |
 
-如果 formatter 看到格式字符串包括"(asctime)s"，创建时间就会被格式化为 LogRecord 的 asctime 属 性。为了允许灵活地格式化日期，formatter 被初始化为整个消息的格式字符串，以及一个单独的日期/时间格式字符串。日期/时间格式字符串应该是 `time.strftime` 格式。消息格式的默认值是"%(message)s"。默认的日期/时间格式是 ISO8601。
+如果 formatter 看到格式字符串包括"(asctime)s"，创建时间就会被格式化为 `LogRecord` 的 asctime 属 性。为了允许灵活地格式化日期，formatter 被初始化为整个消息的格式字符串，以及一个单独的日期/时间格式字符串。日期/时间格式字符串应该是 `time.strftime` 格式。消息格式的默认值是"%(message)s"。默认的日期/时间格式是 ISO8601。
 
 formatter 使用一个类属性 "converter"，以表明如何将时间从秒转换为元组。默认情况下，"converter "的值是 `"time.localtime"`。如果需要，可以在单个 formatter 实例上设置一个不同的转换器（例如 `"time.gmtime"`），或者改变类属性以影响所有 formatter 实例。
 
 ---
 
-### Filters
+### `Filter`
 
-当基于日志级别的过滤不够用的时候，Logger 或 Handler 可以调用 Filter 来决定是否应该输出 LogRecord。Logger 和 Handlers 可以配置多个 Filters，其中的任何一个 Filter 都可以否决掉正在输出 LogRecord。
+当基于日志级别的过滤不够用的时候，`Logger` 或 `Handler` 可以调用 `Filter` 来决定是否应该输出 `LogRecord`。`Logger` 和 `Handler` 可以配置多个 `Filter`，其中的任何一个 `Filter` 都可以否决掉正在输出 `LogRecord`。
 
 ```python
 class Filter:
@@ -380,9 +380,9 @@ class Filter:
         """
 ```
 
-默认行为允许使用 Logger 名称初始化 Filter。这将仅允许通过使用指定名称的 Logger 或其任何子 Logger 生成的事件。例如，使用“`A.B`”初始化的 Filter 将允许由“`A.B`”、“`A.B.C`”、“`A.B.C.D`”、“`A.B.D`”等 Logger 记录的事件，但不允许“`A.BB`”、“`B.A.B`”等 Logger 记录的事件。如果使用空字符串进行初始化，则 Filter 将允许所有事件通过。这种 Filter 行为在希望将注意力集中在应用程序的某个特定区域时非常有用；只需更改附加到根 Logger 的 Filter 即可更改关注点。
+默认行为允许使用 `Logger` 名称初始化 `Filter`。这将仅允许通过使用指定名称的 `Logger` 或其任何子 `Logger` 生成的事件。例如，使用“`A.B`”初始化的 `Filter` 将允许由“`A.B`”、“`A.B.C`”、“`A.B.C.D`”、“`A.B.D`”等 `Logger` 记录的事件，但不允许“`A.BB`”、“`B.A.B`”等 `Logger` 记录的事件。如果使用空字符串进行初始化，则 `Filter` 将允许所有事件通过。这种 `Filter` 行为在希望将注意力集中在应用程序的某个特定区域时非常有用；只需更改附加到根 `Logger` 的 `Filter` 即可更改关注点。
 
-在[6]中提供了许多 Filter 的示例。
+在[6]中提供了许多 `Filter` 的示例。
 
 ---
 
@@ -392,14 +392,14 @@ class Filter:
 
 配置包括以下内容：
 
-- Logger 或 Handler 应该关注哪个日志级别。
-- 哪些 Handler 应该附加到哪些 Logger 。
-- 哪些 Filter 应该附加到哪些 Handler 和 Logger。
-- 指定特定于某些 Handler 和 Filter 的属性。
+- `Logger` 或 `Handler` 应该关注哪个日志级别。
+- 哪些 `Handler` 应该附加到哪些 `Logger` 。
+- 哪些 `Filter` 应该附加到哪些 `Handler` 和 `Logger`。
+- 指定特定于某些 `Handler` 和 `Filter` 的属性。
 
 一般来说，每个应用程序对于用户如何配置日志输出都有各自的要求。但是，每个应用程序都会通过标准机制向日志系统指定所需的配置。
 
-最简单的配置是将单个 Handler 附加到根 Logger，该 Handler 将日志信息写入 stderr。导入日志模块后，通过调用 `basicConfig()` 函数来设置此配置。
+最简单的配置是将单个 `Handler` 附加到根 `Logger`，该 `Handler` 将日志信息写入 stderr。导入日志模块后，通过调用 `basicConfig()` 函数来设置此配置。
 
 ```python
 def basicConfig(): ...
@@ -423,7 +423,7 @@ def basicConfig(): ...
 
 ### 模块级别的方法
 
-为了支持在短脚本和小型应用程序中使用日志记录机制，日志库提供了模块级函数 debug()、info()、warn()、error()、critical() 和 exception()。这些函数的工作方式与 Logger 中相应名称的方法相同——实际上，它们委托给根 Logger 上的相应方法。这些函数的另一个便利之处在于，如果尚未进行任何配置，则会自动调用 `basicConfig()`。
+为了支持在短脚本和小型应用程序中使用日志记录机制，日志库提供了模块级函数 debug()、info()、warn()、error()、critical() 和 exception()。这些函数的工作方式与 `Logger` 中相应名称的方法相同——实际上，它们委托给根 `Logger` 上的相应方法。这些函数的另一个便利之处在于，如果尚未进行任何配置，则会自动调用 `basicConfig()`。
 
 在应用程序退出时，可以通过调用以下函数刷新所有处理程序：
 

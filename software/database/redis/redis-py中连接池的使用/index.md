@@ -65,7 +65,7 @@ redis_client = redis.Redis(
 )
 ```
 
-正确的写法如下，所有连接信息参数放在 ConnectionPool 构造器：
+正确的写法如下，所有连接信息参数放在 `ConnectionPool` 构造器：
 
 ```python
 # 正确的写法
@@ -260,9 +260,9 @@ max_connections = max_connections or 2**31
 
 ### 线程安全
 
-ConnectionPool 的实现，是线程安全的，也就是说多个 Redis 客户端实例共用一个相同的连接池是安全的。
+`ConnectionPool` 的实现，是线程安全的，也就是说多个 Redis 客户端实例共用一个相同的连接池是安全的。
 
-所以，一个应用中，只需要构建一个 ConnectionPool 的实例即可，其他所有的 Redis 客户端共享该实例。
+所以，一个应用中，只需要构建一个 `ConnectionPool` 的实例即可，其他所有的 Redis 客户端共享该实例。
 
 那么在一个客户端中应该保持有多少个 Redis 实例？频繁的创建销毁是否会影响性能？
 

@@ -100,11 +100,11 @@ public interface UserDetails extends Serializable {
 
 这个接口定义了 Spring Security 框架眼中的用户信息，框架的运行逻辑就依赖于这个抽象。
 
-框架提供了一个实现：`org.springframework.security.core.userdetails.User`，这个实现为我们日后自己去实现一个 UserDetails 提供了很好的参考。
+框架提供了一个实现：`org.springframework.security.core.userdetails.User`，这个实现为我们日后自己去实现一个 `UserDetails` 提供了很好的参考。
 
-### CredentialsContainer
+### `CredentialsContainer`
 
-首先是继承的接口，除了 UserDetails 之外，还继承了 CredentialsContainer：
+首先是继承的接口，除了 `UserDetails` 之外，还继承了 `CredentialsContainer`：
 
 ```java
 public interface CredentialsContainer {
@@ -114,7 +114,7 @@ public interface CredentialsContainer {
 }
 ```
 
-这个接口的目的就是为了清除凭证这个敏感信息，也就是密码，User 的 Override 如下：
+这个接口的目的就是为了清除凭证这个敏感信息，也就是密码，`User` 的 `Override` 如下：
 
 ```java
 	@Override
@@ -123,7 +123,7 @@ public interface CredentialsContainer {
 	}
 ```
 
-在 ProviderManager 调用完认证 Provider 后，会去调用 `eraseCredentials`，确保敏感信息完成认证后就擦除，而不是一直保存：
+在 `ProviderManager` 调用完认证 Provider 后，会去调用 `eraseCredentials`，确保敏感信息完成认证后就擦除，而不是一直保存：
 
 ```java
 if (this.eraseCredentialsAfterAuthentication && (result instanceof CredentialsContainer)) {
@@ -135,7 +135,7 @@ if (this.eraseCredentialsAfterAuthentication && (result instanceof CredentialsCo
 
 ### builder
 
-User 还提供了 builder 模式，可以链式调用，构造一个完整的 User：
+`User` 还提供了 builder 模式，可以链式调用，构造一个完整的 `User`：
 
 ```java
 	/**
@@ -158,7 +158,7 @@ User 还提供了 builder 模式，可以链式调用，构造一个完整的 Us
 
 ### equals,hashcode,`toString`
 
-从 equals 和 hashcode 可以看到 User 的实现，是用 username 作为唯一性判定值的：
+从 equals 和 hashcode 可以看到 `User` 的实现，是用 username 作为唯一性判定值的：
 
 ```java
 	@Override
@@ -198,7 +198,7 @@ User 还提供了 builder 模式，可以链式调用，构造一个完整的 Us
 
 ### 自定义实现
 
-User 的实现给了我们很多的参考，但是在实际项目中，用户表可能会存在更多的字段，一个典型的用户类可能如下：
+`User` 的实现给了我们很多的参考，但是在实际项目中，用户表可能会存在更多的字段，一个典型的用户类可能如下：
 
 ```java
 @Entity
@@ -218,7 +218,7 @@ public class AppUser {
 }
 ```
 
-这里用的是 JPA 的注解，表示 AppUser 是关系型数据库用户表的映射，问题在于，如果我们简单的让 AppUser 去 implement UserDetails 接口，那么整个 AppUser 类就会变得非常臃肿，职责也不明确：
+这里用的是 JPA 的注解，表示 `AppUser` 是关系型数据库用户表的映射，问题在于，如果我们简单的让 `AppUser` 去 implement `UserDetails` 接口，那么整个 `AppUser` 类就会变得非常臃肿，职责也不明确：
 
 ```java
 @Entity
@@ -271,9 +271,9 @@ public class AppUser implements UserDetails {
 }
 ```
 
-AppUser 除了承担数据库实体类的职责，还需要将表的部分字段信息转换成 Spring Security 需要的信息，来构建 Authentication。
+`AppUser` 除了承担数据库实体类的职责，还需要将表的部分字段信息转换成 Spring Security 需要的信息，来构建 `Authentication`。
 
-所以，为了明确的划分职责，最佳实践是，提供两个类，一个是 AppUser 数据库实体类，用来承载应用实际的用户信息，另一个是 SecurityUser，用来桥接 AppUser 和 Spring Security 所需要的 UserDetails：
+所以，为了明确的划分职责，最佳实践是，提供两个类，一个是 `AppUser` 数据库实体类，用来承载应用实际的用户信息，另一个是 `SecurityUser`，用来桥接 `AppUser` 和 Spring Security 所需要的 `UserDetails`：
 
 ```java
 @Entity
@@ -318,9 +318,9 @@ public class SecurityUser implements UserDetails {
 }
 ```
 
-划分两个类，这样职责明确：AppUser 就是表示业务用户实体信息，而 SecurityUser 则用来走 Spring Security 的认证授权等流程。
+划分两个类，这样职责明确：`AppUser` 就是表示业务用户实体信息，而 `SecurityUser` 则用来走 Spring Security 的认证授权等流程。
 
-在一些小型系统中，我们也可以不自定义 SecurityUser，直接使用 Spring Security 提供的 User，在 UserDetailsService 的 `loadUserByUsername` 实现方法中进行转换：
+在一些小型系统中，我们也可以不自定义 `SecurityUser`，直接使用 Spring Security 提供的 `User`，在 `UserDetailsService` 的 `loadUserByUsername` 实现方法中进行转换：
 
 ```java
 @Override
@@ -358,7 +358,7 @@ Authentication.principal
 
 Spring Security 底层只有权限（Authority），角色（Role）是一种特殊的权限，带有前缀 ROLE_。
 
-框架对于权限的抽象提供了 GrantedAuthority：
+框架对于权限的抽象提供了 `GrantedAuthority`：
 
 ```java
 public interface GrantedAuthority extends Serializable {
@@ -398,7 +398,7 @@ user:write
 
 ### roles 和 authorities
 
-回头来看 User 的 roles 和 authorities，它们的目的相同，都是为了填充 User 的 authorities：
+回头来看 `User` 的 roles 和 authorities，它们的目的相同，都是为了填充 `User` 的 authorities：
 
 ```java
 public static final class UserBuilder {
@@ -445,9 +445,9 @@ alice 最终只有 user:read 权限，`ROLE_ADMIN` 被覆盖了。
 
 简单的理解是 roles() 基于 authorities()，默认会添加 ROLE_ 前缀，本质都是字符串，除此之外没有太多特殊之处。
 
-### 创建 GrantedAuthority
+### 创建 `GrantedAuthority`
 
-GrantedAuthority 是个接口，并且仅包含一个函数，所以可以用 lambda 表达式创建，或者使用 Spring Security 提供的一个基本的实现类 SimpleGrantedAuthority 来创建，以创建一个 user:read 的权限为例：
+`GrantedAuthority` 是个接口，并且仅包含一个函数，所以可以用 lambda 表达式创建，或者使用 Spring Security 提供的一个基本的实现类 `SimpleGrantedAuthority` 来创建，以创建一个 user:read 的权限为例：
 
 ```java
 GrantedAuthority first = () -> "user:read";
@@ -460,14 +460,14 @@ GrantedAuthority second = new SimpleGrantedAuthority("user:read");
 
 到目前位置，已经理清了 Spring Security 对于用户和权限抽象的两个接口：
 
-- UserDetails
-- GrantedAuthority
+- `UserDetails`
+- `GrantedAuthority`
 
 下一步就是看看 Spring Security 对于用户管理（对于实体信息的增删改查）是如何抽象的。
 
-### UserDetailsService
+### `UserDetailsService`
 
-UserDetailsService 作为一个接口，仅仅只做一件事：根据用户名取得对应的用户信息对象，找不到就抛出异常：
+`UserDetailsService` 作为一个接口，仅仅只做一件事：根据用户名取得对应的用户信息对象，找不到就抛出异常：
 
 ```java
 public interface UserDetailsService {
@@ -488,9 +488,9 @@ public interface UserDetailsService {
 }
 ```
 
-UserDetailsService 并不关心从哪里找，这是它的实现类需要考虑的事情，可以是内存（比如之前用的 InMemoryUserDetailsManager），可以是关系型数据库，可以是非关系型数据库，可以是远程接口等等。
+`UserDetailsService` 并不关心从哪里找，这是它的实现类需要考虑的事情，可以是内存（比如之前用的 `InMemoryUserDetailsManager`），可以是关系型数据库，可以是非关系型数据库，可以是远程接口等等。
 
-前面已经演示了从内存中获取用户，这里以一个自定义 UserDetailsService 演示一下，如何构造一个自定义的实现类。
+前面已经演示了从内存中获取用户，这里以一个自定义 `UserDetailsService` 演示一下，如何构造一个自定义的实现类。
 
 ```java
 import org.springframework.beans.factory.annotation.Value;
@@ -633,11 +633,11 @@ Bob|{noop}123|ROLE_USER
 Cindy|{noop}123|
 ```
 
-TextFileUserDetailsService 会从指定的文本文件找到对应的用户信息，并且构建成 User 对象返回。
+`TextFileUserDetailsService` 会从指定的文本文件找到对应的用户信息，并且构建成 `User` 对象返回。
 
-### UserDetailsManager
+### `UserDetailsManager`
 
-UserDetailsService 的职责仅仅是查询用户，而 UserDetailsManager 则是它的扩展：
+`UserDetailsService` 的职责仅仅是查询用户，而 `UserDetailsManager` 则是它的扩展：
 
 ```java
 public interface UserDetailsManager extends UserDetailsService {
@@ -673,6 +673,6 @@ public interface UserDetailsManager extends UserDetailsService {
 }
 ```
 
-UserDetailsManager 提供了创建用户、更新用户、删除用户、修改密码、判定用户是否已存在等方法。
+`UserDetailsManager` 提供了创建用户、更新用户、删除用户、修改密码、判定用户是否已存在等方法。
 
-常见实现 InMemoryUserDetailsManager、JdbcUserDetailsManager 同时承担认证和用户管理，所以实现的是 UserDetailsManager。
+常见实现 `InMemoryUserDetailsManager`、`JdbcUserDetailsManager` 同时承担认证和用户管理，所以实现的是 `UserDetailsManager`。

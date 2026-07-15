@@ -53,7 +53,7 @@ public class UserController {
 
 有时候请求一些页面需要加一些简单的，不敏感的参数，比如分页信息，传输页面编号和数量，又比如博客网站，需要传递一个文章编号，这些简单的信息可以用 GET 请求，把参数加在 URL 后面，比如豆瓣的一个链接：[https://movie.douban.com/top250?start=125&filter=，里面有两个参数一个是](https://movie.douban.com/top250?start=125&filter=，里面有两个参数一个是) start，另一个是 filter，中间用 & 符号分割。
 
-### HttpServletRequest 获取参数
+### `HttpServletRequest` 获取参数
 
 ```java
 // GET
@@ -316,9 +316,9 @@ public String getInfo14(@RequestBody User user) {
 
 ## 多个对象
 
-上面的例子都是单个 User 对象信息，下面简单介绍一下多个对象接受的方法。
+上面的例子都是单个 `User` 对象信息，下面简单介绍一下多个对象接受的方法。
 
-### List
+### `List`
 
 ```java
 // POST
@@ -343,9 +343,9 @@ public String getInfo15(@RequestBody List<User> userList) {
 }
 ```
 
-### Map
+### `Map`
 
-map 可以用作单个对象，但是这对后期项目维护不太友好，如果你是用 User 对象接受前端参数，那么后期维护的程序员一眼就能看出，前端传了什么参数的对象过来，但是如果改成 Map，只能靠 log 打印或者求助于文档了，没法直接从源码看出前端传了什么。
+map 可以用作单个对象，但是这对后期项目维护不太友好，如果你是用 `User` 对象接受前端参数，那么后期维护的程序员一眼就能看出，前端传了什么参数的对象过来，但是如果改成 `Map`，只能靠 log 打印或者求助于文档了，没法直接从源码看出前端传了什么。
 
 ```java
 // POST
@@ -365,7 +365,7 @@ public String getInfo16(@RequestBody Map<String, String> userMap) {
 }
 ```
 
-Map 对象用作多个参数：
+`Map` 对象用作多个参数：
 
 ```java
 // POST
@@ -426,7 +426,7 @@ public class Order {
 }
 ```
 
-Order 中的用户信息类，`ClientInfo.java`
+`Order` 中的用户信息类，`ClientInfo.java`
 
 ```java
 import lombok.Data;
@@ -442,7 +442,7 @@ public class ClientInfo {
 }
 ```
 
-ClientInfo 中的地址信息类，`Address.java`
+`ClientInfo` 中的地址信息类，`Address.java`
 
 ```java
 import lombok.Data;
@@ -462,7 +462,7 @@ public class Address {
 }
 ```
 
-Order 中的物品类，`Item.java`
+`Order` 中的物品类，`Item.java`
 
 ```java
 import lombok.Data;

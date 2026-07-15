@@ -319,7 +319,7 @@ content = [pickle.loads(item) for item in data_bin]
 
 ## 搜索
 
-zrangebyscore 支持 min 和 max 参数，所以对于时间范围的搜索是很方便的。
+`zrangebyscore` 支持 `min` 和 `max` 参数，所以对于时间范围的搜索是很方便的。
 
 但是如果要对某个字段进行检索，比如，业务字段：性别=男，如果是 SQL，则加个 where 条件即可，这里使用的 Redis 的 zset 就没这么简单了。
 

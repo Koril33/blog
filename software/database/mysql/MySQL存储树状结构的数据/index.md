@@ -40,9 +40,9 @@ toc: true
 
 ---
 
-## Entity
+## `Entity`
 
-本文的 Entity 类非常简单，仅仅包含构造树结构必要的字段，在实际业务场景中，可以随意增加业务字段。
+本文的 `Entity` 类非常简单，仅仅包含构造树结构必要的字段，在实际业务场景中，可以随意增加业务字段。
 
 id 的生成，考虑到通用性，我使用 UUID 作为主键生成策略。
 
@@ -149,9 +149,9 @@ public class AreaVO {
 }
 ```
 
-AreaVO 和 Area 不同点在于，AreaVO 作为返回给前端的对象，比面向数据库的 Area 多了一个 children 字段，里面存储着下一级的子节点的引用。
+`AreaVO` 和 `Area` 不同点在于，`AreaVO` 作为返回给前端的对象，比面向数据库的 `Area` 多了一个 `children` 字段，里面存储着下一级的子节点的引用。
 
-在构造 children 字段前，我们可以使用 `BeanUtils.copyProperties()`，将除了 children 之外的字段，从原始 Area 复制到 AreaVO 中。
+在构造 `children` 字段前，我们可以使用 `BeanUtils.copyProperties()`，将除了 children 之外的字段，从原始 `Area` 复制到 `AreaVO` 中。
 
 ```java
 // 从数据库中提取的原始数据
@@ -181,7 +181,7 @@ if (Objects.equals(childrenNode.getParentId(), parentNode.getId())) {
 }
 ```
 
-第一轮应该是根节点遍历找到所有自己的直接子节点，然后根节点就完成了自己的任务，它 children 字段中应该有了一些子节点的引用。
+第一轮应该是根节点遍历找到所有自己的直接子节点，然后根节点就完成了自己的任务，它 `children` 字段中应该有了一些子节点的引用。
 
 举个具体的例子，当“中国”开始寻找子节点时，第一轮遍历，它的 children 应该是北京市，天津市，河北省，山西省...，而杭州市，宁波市则不在它的 children list 当中。
 
@@ -304,7 +304,7 @@ public class AreaServiceImpl implements AreaService {
 }
 ```
 
-可以看到 service 方法中，我额外放了一个 id 字段，这是为了应付这样的需求：前端不想要一棵以中国为根节点的树，而是需要一颗以杭州市为根节点的树。
+可以看到 `service` 方法中，我额外放了一个 id 字段，这是为了应付这样的需求：前端不想要一棵以中国为根节点的树，而是需要一颗以杭州市为根节点的树。
 
 理想情况就是，前端传一个它所期望的根节点的 id，我们后端返回以该 id 的节点为根节点构造的一棵树。
 

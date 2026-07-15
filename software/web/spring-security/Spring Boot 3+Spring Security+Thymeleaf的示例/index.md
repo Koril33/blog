@@ -372,7 +372,7 @@ logback 的日志记录也很重要，贴上我常用的配置文件，`logback-
 
 ### entity 的基类
 
-BaseEntity 包含了 id 和 `create_datetime`，`update_datetime` 三个字段，其他 entity 继承该类，避免重复性的编写这三个字段：
+`BaseEntity` 包含了 id 和 `create_datetime`，`update_datetime` 三个字段，其他 entity 继承该类，避免重复性的编写这三个字段：
 
 ```java
 @Data
@@ -397,7 +397,7 @@ public abstract class BaseEntity {
 }
 ```
 
-Draft 类：
+`Draft` 类：
 ```java
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -415,7 +415,7 @@ public class Draft extends BaseEntity {
 }
 ```
 
-DraftRepository 类：
+`DraftRepository` 类：
 
 ```java
 @Repository
