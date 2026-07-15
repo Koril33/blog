@@ -20,13 +20,13 @@ summary: "如何在 Debian 12 下查看 SSH Server 的日志信息"
 
 Debian12 默认使用了 systemctl 管理 sshd 服务，所以日志需要通过 journalctl 查看。
 
-查看 ssh 日志：
+查看 SSH 日志：
 
 ```sh
 sudo journalctl -u ssh
 ```
 
-这样会按照时间顺序（从最早开始）显示 ssh 的日志信息。如果想要从最晚时间开始显示（倒序），指定 -r 参数：
+这样会按照时间顺序（从最早开始）显示 SSH 的日志信息。如果想要从最晚时间开始显示（倒序），指定 -r 参数：
 
 ```sh
 sudo journalctl -u ssh -r
@@ -52,7 +52,7 @@ Jun 29 08:52:59 my-debian sshd[179811]: Failed password for root from 139.128.10
 成功信息：
 
 - 通过用户名密码登陆成功：Accepted password for root from 139.188.102.101 port 29806 ssh2
-- 通过公私钥登陆：Accepted publickey for root from 139.208.16.19 port 29784 ssh2: ED25519 SHA256:qxxaRehIr1...
+- 通过公私钥登陆：Accepted publickey for root from 139.208.16.19 port 29784 ssh2: ED25519 `SHA256:qxxaRehIr1...`
 
 失败信息：
 
@@ -86,7 +86,7 @@ journalctl -u ssh | grep -E "Accepted|Failed"
 
 ## 参考
 
-1. https://wiki.debian.org/SSH
-2. https://www.strongdm.com/blog/view-ssh-logs
-3. https://www.jinbuguo.com/systemd/journalctl.html
-4. https://last9.io/blog/sshd-logs-101/
+1. [https://wiki.debian.org/SSH](https://wiki.debian.org/SSH)
+2. [https://www.strongdm.com/blog/view-ssh-logs](https://www.strongdm.com/blog/view-ssh-logs)
+3. [https://www.jinbuguo.com/systemd/journalctl.html](https://www.jinbuguo.com/systemd/journalctl.html)
+4. [https://last9.io/blog/sshd-logs-101/](https://last9.io/blog/sshd-logs-101/)

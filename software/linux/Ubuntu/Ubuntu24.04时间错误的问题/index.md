@@ -1,7 +1,13 @@
 ---
 title: "Ubuntu24.04时间错误的问题"
 date: 2025-06-17T20:10:00+08:00
-summary: "Ubuntu时间错误的解决方法"
+summary: "Ubuntu 时间错误的解决方法"
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 问题
@@ -22,7 +28,7 @@ System clock synchronized: no
 
 可以看到时区是正确的，但是 RTC/UTC/Loca 时间都错了，Local time 应该是 2025-06-17 19:51:53，也就是说，Local time 比正确 UTC 时间超了 16 小时。
 
-查看了下 systemd-timesyncd.service 的日志：
+查看了下 `systemd-timesyncd.service` 的日志：
 
 ```sh
 koril@ThinkBook:~$ systemctl status systemd-timesyncd.service
@@ -48,7 +54,6 @@ Jun 18 03:51:22 ThinkBook systemd-timesyncd[6904]: Timed out waiting for reply >
 Jun 18 03:51:32 ThinkBook systemd-timesyncd[6904]: Timed out waiting for reply >
 Jun 18 03:51:43 ThinkBook systemd-timesyncd[6904]: Timed out waiting for reply >
 Jun 18 03:51:53 ThinkBook systemd-timesyncd[6904]: Timed out waiting for reply >
-
 ```
 
 看到**Timed out waiting for reply**就大概知道了，估计还是网络（墙）的问题。
@@ -78,7 +83,7 @@ PollIntervalMaxSec=2048
 
 这里可以自行搜索可靠的国内 ntp 服务器。
 
-重启 systemd-timesyncd.service：
+重启 `systemd-timesyncd.service`：
 
 ```sh
 # 重启
@@ -91,5 +96,5 @@ sudo timedatectl set-ntp on
 
 ## 参考
 
-1. https://plumz.me/archives/13983/
-2. https://developer.aliyun.com/article/1141208
+1. [https://plumz.me/archives/13983/](https://plumz.me/archives/13983/)
+2. [https://developer.aliyun.com/article/1141208](https://developer.aliyun.com/article/1141208)

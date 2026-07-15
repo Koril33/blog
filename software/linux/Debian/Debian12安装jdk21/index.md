@@ -3,8 +3,14 @@ title: "Debian12安装jdk21"
 date: 2024-10-20T10:09:00+08:00
 tags: []
 featured_image: "images/background.jpg"
-summary: "下载压缩包/配置JDK21环境变量"
+summary: "下载压缩包/配置 JDK21 环境变量"
 toc: true
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 前言
@@ -13,7 +19,7 @@ toc: true
 
 1. apt install
 2. 下载 deb 包，dpkg 安装
-3. 下载 tar.gz 包，解压安装
+3. 下载 `tar.gz` 包，解压安装
 
 前两种很简单，本文仅记录第三种方式。
 
@@ -71,4 +77,3 @@ java version "21.0.5" 2024-10-15 LTS
 Java(TM) SE Runtime Environment (build 21.0.5+9-LTS-239)
 Java HotSpot(TM) 64-Bit Server VM (build 21.0.5+9-LTS-239, mixed mode, sharing)
 ```
-

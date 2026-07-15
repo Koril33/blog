@@ -7,6 +7,12 @@ summary: "注解的意义和用法"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 注解（Annotation），是一种元数据，所谓元数据，是关于数据的数据，关于信息的信息。
@@ -85,7 +91,7 @@ void myMethod() { ... }
 void myMethod() { ... }
 ```
 
-如果注解一个元素也没有，那么括号也可以被省略掉，比如常用的 @Override 注解。
+如果注解一个元素也没有，那么括号也可以被省略掉，比如常用的 `@Override` 注解。
 
 也可以在同一个声明上使用多个注解：
 
@@ -103,7 +109,7 @@ class MyClass { ... }
 class MyClass { ... }
 ```
 
-Java 平台提供了一些官方注解，定义在`java.lang`包和`java.lang.annotation`包中。在之前的实例中，Override 和 SuppressWarning 都属于官方注解。当然也可以定义自己的注解，前面示例中的 Author  和 EBook 就属于自定义注解类型。
+Java 平台提供了一些官方注解，定义在 `java.lang` 包和 `java.lang.annotation` 包中。在之前的实例中，Override 和 SuppressWarning 都属于官方注解。当然也可以定义自己的注解，前面示例中的 Author 和 EBook 就属于自定义注解类型。
 
 ### 声明注解
 
@@ -160,4 +166,3 @@ public class Generation3List extends Generation2List {
 
 }
 ```
-

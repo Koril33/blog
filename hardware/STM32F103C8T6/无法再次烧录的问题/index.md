@@ -1,7 +1,7 @@
 ---
 title: "无法再次烧录的问题"
 date: 2025-04-04T10:43:00+08:00
-summary: "Jlink无法连接到开发板的问题解决"
+summary: "Jlink 无法连接到开发板的问题解决"
 ---
 
 ## 目录
@@ -32,7 +32,7 @@ summary: "Jlink无法连接到开发板的问题解决"
 
 ### 方案一
 
-1. 先把 BOOT0 的跳帽从 GND 接到 3.3V，也就是进入 BOOT0 =  1, BOOT1 = 0 的启动模式
+1. 先把 BOOT0 的跳帽从 GND 接到 3.3V，也就是进入 BOOT0 = 1, BOOT1 = 0 的启动模式
 2. 按下 Reset 键
 3. 点击 STM32CubeIDE 的烧录按钮，这时候就不会报错了
 4. 把 BOOT0 的跳帽重新接到 GND

@@ -34,7 +34,7 @@ cookie 是一种在 web 服务器和 web 浏览器之间传递信息的技术，
 
 ## session
 
-cookie 本身并不是为了解决“在浏览器上存东西”而被发明，它的出现是为了解决 HTTP 协议无状态特性的问题。在网络的早期，当没有其他选择时，cookie 被用于数据存储目的（也就是上一小节提到的用法），现在建议使用新式存储 API，例如 Web Storage API (localStorage，sessionStorage) 或者 IndexedDB。
+cookie 本身并不是为了解决“在浏览器上存东西”而被发明，它的出现是为了解决 HTTP 协议无状态特性的问题。在网络的早期，当没有其他选择时，cookie 被用于数据存储目的（也就是上一小节提到的用法），现在建议使用新式存储 API，例如 Web Storage API（`localStorage`、`sessionStorage`）或者 IndexedDB。
 
 如果说 cookie 是 HTTP 中一个实际的 header 字段，那么 session 更像是一个过程，它基于 cookie 实现：
 
@@ -141,14 +141,14 @@ cookie 为了增强安全性，提供了以下字段：
 - Secure
 - SameSite
 
-这一部分的内容可以参考：https://juejin.cn/post/6959830432519520292
+这一部分的内容可以参考：[https://juejin.cn/post/6959830432519520292](https://juejin.cn/post/6959830432519520292)
 
 ---
 
 ## 参考
 
-1. https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies
-2. https://http.dev/cookies
-3. https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview#http_is_stateless_but_not_sessionless
-4. https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Reference/Headers/Set-Cookie
-5. https://zhuanlan.zhihu.com/p/688144675
+1. [https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies)
+2. [https://http.dev/cookies](https://http.dev/cookies)
+3. [https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview#http_is_stateless_but_not_sessionless](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Overview#http_is_stateless_but_not_sessionless)
+4. [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Reference/Headers/Set-Cookie](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Reference/Headers/Set-Cookie)
+5. [https://zhuanlan.zhihu.com/p/688144675](https://zhuanlan.zhihu.com/p/688144675)

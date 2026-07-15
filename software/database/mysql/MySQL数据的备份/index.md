@@ -7,6 +7,12 @@ summary: "MySQL 的定期备份方法"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 对于软件而言，它可以不好用，交互稀碎，它也可以页面很丑陋，不堪入目。但用户绝对不能接受重要数据的丢失，尤其是在很多重要领域的数据，比如：金融，司法，工业生产，制造业等领域的专业软件。
@@ -26,7 +32,7 @@ mysqldump -u [user] -p [database_name] > [filename].sql
 ```
 
 * [user] 表示你数据库的用户名。
-* [database_name] 表示你需要转储的数据库名字。
+* [`database_name]` 表示你需要转储的数据库名字。
 * [filename] 就是你希望保存的转储文件的具体路径。
 
 例如，现在有一个数据库——demo-jpa-better，然后又四张表，如果我希望把 demo-jpa-better 这整个数据库备份下来，执行命令：
@@ -35,11 +41,11 @@ mysqldump -u [user] -p [database_name] > [filename].sql
 mysqldump -u root -p demo-jpa-better > ./my_db_back.sql
 ```
 
-这样 demo-jpa-better 这个数据库的所有表结构和表中的数据，都以 SQL 语句的形式保存到了名为 my_db_back.sql 的文件中。
+这样 demo-jpa-better 这个数据库的所有表结构和表中的数据，都以 SQL 语句的形式保存到了名为 `my_db_back.sql` 的文件中。
 
 ![](./images/1.jpg)
 
-如果需要备份所有数据库，添加 --all-databases 参数即可：
+如果需要备份所有数据库，添加 `--all-databases` 参数即可：
 
 ```shell
 mysqldump -uroot -p --all-databases > full_db_back.sql
@@ -71,7 +77,7 @@ mysqldump -uroot -p --no-create-info demo-jpa-better t_user > user_no_structure_
 
 ### 恢复
 
-得到了备份的 sql 文件，接下来需要做的就是恢复，比如，线上的数据库备份下来，恢复到本地的数据库。
+得到了备份的 SQL 文件，接下来需要做的就是恢复，比如，线上的数据库备份下来，恢复到本地的数据库。
 
 首先新建一个数据库，比如叫 demo-jpa-better-bak：
 
@@ -79,13 +85,13 @@ mysqldump -uroot -p --no-create-info demo-jpa-better t_user > user_no_structure_
 mysql> create database `demo-jpa-better-bak`
 ```
 
-然后将刚刚备份的 my_db_bak.sql 的表结构和数据恢复到这个新建的库中：
+然后将刚刚备份的 `my_db_bak.sql` 的表结构和数据恢复到这个新建的库中：
 
 ```shell
 mysql -uroot -p demo-jpa-better-bak < my_db_back.sql
 ```
 
-也可以在 mysql 交互模式下使用 source 指令：
+也可以在 MySQL 交互模式下使用 source 指令：
 
 ```mysql
 mysql> create database `demo-jpa-better-bak`;
@@ -156,5 +162,5 @@ crontab -e
 
 ## 参考
 
-1. https://cloud.tencent.com/developer/article/1935637
-1. https://juejin.cn/post/6950164920100978702
+1. [https://cloud.tencent.com/developer/article/1935637](https://cloud.tencent.com/developer/article/1935637)
+1. [https://juejin.cn/post/6950164920100978702](https://juejin.cn/post/6950164920100978702)

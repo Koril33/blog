@@ -7,6 +7,12 @@ summary: "从静态页面聊到 Servlet"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 Servlet 是一个常常在工作中被忽略但是却是整个 Java Web 基石的技术。
@@ -325,7 +331,6 @@ public interface Servlet {
 
     public void destroy();
 }
-
 ```
 
 Servlet 接口定义了五个方法，从生活中的角度来做个比方：Servlet 的实现类就像是 Web Server 中不知疲倦的工具人。
@@ -338,8 +343,8 @@ Servlet 接口定义了五个方法，从生活中的角度来做个比方：Ser
 
 另外还有两个方法用来获取工具人的信息：
 
-1. getServletConfig：获取一个 ServletConfig 对象，包含启动和初始化的一些信息。
-2. getServletInfo：获取一个 String，包含作者，版本，版权等信息。
+1. `getServletConfig`：获取一个 ServletConfig 对象，包含启动和初始化的一些信息。
+2. `getServletInfo`：获取一个 String，包含作者，版本，版权等信息。
 
 下面是我在网上找到的两张图片，都很好的描述了请求（request），响应（response），Tomcat（Web Server & Web Servlet Container），Servlet 之间的关系：
 
@@ -424,7 +429,6 @@ import java.util.Enumeration;
     public Enumeration<String> getInitParameterNames();
 
 }
-
 ```
 
 ServletConfig 对象通常由 Tomcat 来自动配置，我们能够通过 ServletConfig 来获取到 ServletContext，即 Servlet 的上下文。
@@ -439,5 +443,5 @@ ServletConfig 对象通常由 Tomcat 来自动配置，我们能够通过 Servle
 
 ## 参考
 
-1. https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaServlets.html
-2. https://mossgreen.github.io/Servlet-Containers-and-Spring-Framework/
+1. [https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaServlets.html](https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaServlets.html)
+2. [https://mossgreen.github.io/Servlet-Containers-and-Spring-Framework/](https://mossgreen.github.io/Servlet-Containers-and-Spring-Framework/)

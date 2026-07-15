@@ -1,7 +1,7 @@
 ---
 title: "filebeat的使用"
 date: 2026-03-08T14:16:52
-summary: "filebeat的安装和使用"
+summary: "Filebeat 的安装和使用"
 ---
 
 ## 目录
@@ -13,11 +13,11 @@ summary: "filebeat的安装和使用"
 ## 前言
 
 
-Filebeat 是 Elastic Stack  里专门用来采集日志，并发送到后端的轻量级日志采集器。
+Filebeat 是 Elastic Stack 里专门用来采集日志，并发送到后端的轻量级日志采集器。
 
 它的核心作用是：从服务器上读取日志文件，然后把日志发送到集中日志系统：
 
-- 监控日志文件（如`/var/log/*.log`）
+- 监控日志文件（如 `/var/log/*.log`）
 - 读取新增日志
 - 进行简单解析
 - 发送到日志系统
@@ -62,7 +62,7 @@ sudo systemctl start filebeat
 
 ## 内置模块
 
-filebeat 内置了一些常见服务的模块，比如 system、nginx，可以通过以下命令查看：
+Filebeat 内置了一些常见服务的模块，比如 system、Nginx，可以通过以下命令查看：
 
 ```shell
 sudo filebeat modules list
@@ -109,18 +109,18 @@ sudo vim /etc/filebeat/modules.d/system.yml
 
 system module 默认采集：
 
-- /var/log/syslog
-- /var/log/auth.log
+- `/var/log/syslog`
+- `/var/log/auth.log`
 
-我用的是 debian13，使用的是 journald，所以这里`var.use_journald`要改为 true。
+我用的是 debian13，使用的是 journald，所以这里 `var.use_journald` 要改为 true。
 
-启动 nginx 模块步骤和 system 类似：
+启动 Nginx 模块步骤和 system 类似：
 
 ```shell
 sudo filebeat modules enable nginx
 ```
 
-配置 nginx 模块：
+配置 Nginx 模块：
 
 ```yaml
 - module: nginx
@@ -149,15 +149,15 @@ sudo filebeat modules enable nginx
     #var.paths:
 ```
 
-配置好后，重启 filebeat 服务：
+配置好后，重启 Filebeat 服务：
 
 ```shell
 sudo systemctl restart filebeat
 ```
 
-如果 system 和 nginx 的日志成功导入了 ES，那么可以看到 ES 应该是有 filebeat 的 datastream 的。
+如果 system 和 Nginx 的日志成功导入了 ES，那么可以看到 ES 应该是有 Filebeat 的 datastream 的。
 
-通过`/_cat/indices?v`可以看到：
+通过 `/_cat/indices?v` 可以看到：
 
 ```
 yellow open   .ds-filebeat-8.19.12-2026.03.07-000001                             WmKwYxg2Q8KJ7rhqJOFJKQ   1   1    5120311            0    794.1mb        794.1mb      794.1mb
@@ -169,11 +169,11 @@ yellow open   .ds-filebeat-8.19.12-2026.03.07-000001                            
 
 ---
 
-## 
+##
 
 ---
 
 ## 参考
 
-1. https://www.elastic.co/guide/en/beats/filebeat/8.19/filebeat-overview.html
-2. https://www.elastic.co/guide/en/beats/filebeat/8.19/how-filebeat-works.html
+1. [https://www.elastic.co/guide/en/beats/filebeat/8.19/filebeat-overview.html](https://www.elastic.co/guide/en/beats/filebeat/8.19/filebeat-overview.html)
+2. [https://www.elastic.co/guide/en/beats/filebeat/8.19/how-filebeat-works.html](https://www.elastic.co/guide/en/beats/filebeat/8.19/how-filebeat-works.html)

@@ -1,12 +1,18 @@
 ---
 title: "随机密码的生成"
 date: 2025-11-14T11:11:08
-summary: ""
+summary: "使用 Python 生成兼顾字符组成与随机性的密码"
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 前言
 
-在服务器管理过程中，需要使用一些随机的密码，Linux 本身提供了一些命令（openssl或者urandom）提供了某种随机性的机制来生成密码，但是不够直观。
+在服务器管理过程中，需要使用一些随机的密码，Linux 本身提供了一些命令（openssl 或者 urandom）提供了某种随机性的机制来生成密码，但是不够直观。
 
 考虑到我运维的机器都有 Python，所以本文用一个 Python 脚本来生成随机密码。
 
@@ -27,7 +33,7 @@ password = ''.join(random.choice(string.ascii_letters + string.digits + '!@#$') 
 
 ### 改进
 
-为了保证至少 1 个大写字母和特殊字符，可以在 password_chars 这个 list 中，先加上一个随机的大写字母和特殊字符，剩下的部分在从字符集里面随机挑选，最后使用 random 的 shuffle 函数“洗牌”。
+为了保证至少 1 个大写字母和特殊字符，可以在 `password_chars` 这个 list 中，先加上一个随机的大写字母和特殊字符，剩下的部分在从字符集里面随机挑选，最后使用 random 的 shuffle 函数“洗牌”。
 
 ```python
 import string, random
@@ -51,7 +57,6 @@ def gen_password(total_length: int = 8):
 
 	random.shuffle(password_chars)
 	return ''.join(password_chars)
-
 ```
 
 运行效果如下：

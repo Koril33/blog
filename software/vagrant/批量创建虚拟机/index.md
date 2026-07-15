@@ -4,9 +4,15 @@ date: 2026-02-13T14:32:52
 summary: "使用 Vagrantfile 批量创建虚拟机"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
-之前一直使用 Virtualbox 手动安装 ISO 镜像文件来搭建测试环境，或者使用 Docker 来跑一些服务，最近看到 vagrant，发现它和 Docker 类似，比较轻量，但是 Docker 是容器化技术，而 Vagrant 的隔离性更好，是面向虚拟机的环境管理工具。
+之前一直使用 VirtualBox 手动安装 ISO 镜像文件来搭建测试环境，或者使用 Docker 来跑一些服务，最近看到 vagrant，发现它和 Docker 类似，比较轻量，但是 Docker 是容器化技术，而 Vagrant 的隔离性更好，是面向虚拟机的环境管理工具。
 
 Vagrantfile 是 vagrant 的配置文件，可以用来批量创建虚拟机环境。
 
@@ -31,7 +37,7 @@ Vagrant 不负责模拟硬件，而是负责管理 VirtualBox。
 
 vagrant 的项目（或者说虚拟机）需要一个空目录，类似 git，所以初始化工作包含：创建目录以及初始化命令的执行：
 
-比如我在本篇文章中，想要用 vagrant 快速创建一个 debian 的集群：
+比如我在本篇文章中，想要用 vagrant 快速创建一个 Debian 的集群：
 
 ```shell
 mkdir debian-cluster
@@ -170,7 +176,7 @@ end
 vagrant up
 ```
 
-启动成功后，可以在 virtualbox 中看到：
+启动成功后，可以在 VirtualBox 中看到：
 
 ![](./images/1.jpg)
 
@@ -179,11 +185,10 @@ vagrant up
 vagrant 创建的虚拟机会有一个默认的 sudo 用户——vagrant，可以通过 vagrant 命令连接虚拟机：
 
 
-
 ```shell
 vagrant ssh test-debian-1
 ```
-由于我上面通过 sed 把 sshd 的 PasswordAuthentication 改成 yes 了，也可以通过 ssh 正常连接：
+由于我上面通过 sed 把 sshd 的 PasswordAuthentication 改成 yes 了，也可以通过 SSH 正常连接：
 
 ```shell
 ssh test@192.168.0.211
@@ -238,5 +243,5 @@ vagrant up
 
 ## 参考
 
-1. https://developer.hashicorp.com/vagrant/intro
-2. https://developer.hashicorp.com/vagrant/tutorials/get-started/setup-project
+1. [https://developer.hashicorp.com/vagrant/intro](https://developer.hashicorp.com/vagrant/intro)
+2. [https://developer.hashicorp.com/vagrant/tutorials/get-started/setup-project](https://developer.hashicorp.com/vagrant/tutorials/get-started/setup-project)

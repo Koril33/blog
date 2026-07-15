@@ -4,6 +4,12 @@ date: 2026-01-01T09:35:51
 summary: "并发编程中的基本工具"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 进程和线程
 
 当我们在编写计算机程序的时候，我们实际上是在编写指令代码（instructions），对于操作系统而言，只有指令代码这种文本是无法执行程序的，操作系统还需要给程序分配资源（CPU、内存、网络），操作系统还需要决定进程的权限，所以可以把进程看作是一种资源容器，一种对于运行程序的抽象，一个进程就是一个正在执行程序的实例。
@@ -44,5 +50,5 @@ summary: "并发编程中的基本工具"
 
 ## 参考
 
-1. https://superfastpython.com/threading-in-python/
-2. https://superfastpython.com/thread-vs-process/
+1. [https://superfastpython.com/threading-in-python/](https://superfastpython.com/threading-in-python/)
+2. [https://superfastpython.com/thread-vs-process/](https://superfastpython.com/thread-vs-process/)

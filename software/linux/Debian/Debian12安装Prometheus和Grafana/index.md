@@ -7,6 +7,12 @@ summary: "Linux 的各个指标监控，以及测试"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 之前很长一段时间，我对于 Linux 的监控仅仅停留在原始的命令当中（top，ss，du/df，free，ping，telnet），有些状况下，比如在内网环境中，这是最直接的方法，但是对于一些长期运行的服务器而言，监控和告警是必不可少的，尤其是告警，可以在定义的指标条件下，及时的反馈问题，消灭问题于萌芽之中，而不是当一个救火的队员。
@@ -55,8 +61,8 @@ http://<target-ip>:9100/metrics
 
 监控目标的 HTTP 端点返回的数据是 纯文本格式，每一行记录一个时间序列数据（指标名 + 标签 + 值）。示例如下：
 
-node_cpu_seconds_total{cpu="0",mode="idle"} 12084.34
-node_cpu_seconds_total{cpu="0",mode="user"} 5784.12
+`node_cpu_seconds_total`{cpu="0",mode="idle"} 12084.34
+`node_cpu_seconds_total`{cpu="0",mode="user"} 5784.12
 
 ---
 
@@ -78,7 +84,7 @@ sudo systemctl status prometheus-node-exporter
 sudo systemctl is-enabled prometheus-node-exporter
 ```
 
-Prometheus 配置文件地址：/etc/prometheus/prometheus.yml
+Prometheus 配置文件地址：`/etc/prometheus/prometheus.yml`
 
 ---
 
@@ -144,7 +150,7 @@ sudo systemctl start grafana-server
 sudo systemctl enable grafana-server
 ```
 
-Grafana 配置文件地址：/etc/grafana/grafana.ini
+Grafana 配置文件地址：`/etc/grafana/grafana.ini`
 
 ---
 
@@ -162,13 +168,13 @@ Grafana 默认的 web 端口是 3000，默认的账号和密码都是 admin
 
 ![](./images/13.jpg)
 
-如果是内网服务器，到这一步就成功了，如果是公网服务器，想要通过 Nginx 代理路径的方式映射到 3000 端口，那么需要找到 Grafana 配置文件中的 root_url 中，修改路径：
+如果是内网服务器，到这一步就成功了，如果是公网服务器，想要通过 Nginx 代理路径的方式映射到 3000 端口，那么需要找到 Grafana 配置文件中的 `root_url` 中，修改路径：
 
 ```ini
 root_url = %(protocol)s://%(domain)s:%(http_port)s/你自己设置的nginx代理路径/
 ```
 
-nginx 的 server 块中，加上：
+Nginx 的 server 块中，加上：
 
 ```nginx
 # grafana
@@ -178,7 +184,7 @@ location /代理路径/ {
 }
 ```
 
-比如，你的域名是 example.com，如果不进行 Nginx 代理，就需要开放端口，访问 Grafana 地址就是：
+比如，你的域名是 `example.com`，如果不进行 Nginx 代理，就需要开放端口，访问 Grafana 地址就是：
 
 ```
 http://example.com:3000
@@ -186,13 +192,13 @@ http://example.com:3000
 
 如果进行 Nginx 代理，代理路径是 /monitor，那么就需要按以上的配置：
 
-/etc/grafana/grafana.ini：
+`/etc/grafana/grafana.ini`：
 
 ```ini
 root_url = %(protocol)s://%(domain)s:%(http_port)s/monitor/
 ```
 
-nginx.conf：
+`nginx.conf`：
 
 ```nginx
 # grafana
@@ -202,13 +208,13 @@ location /monitor/ {
 }
 ```
 
-example.com 也可以用 Nginx 的变量——$host 来替代。此时，访问 Grafana 地址就是：
+`example.com` 也可以用 Nginx 的变量——$host 来替代。此时，访问 Grafana 地址就是：
 
 ```cmd
 http://example.com/monitor/
 ```
 
-要配置 proxy_set_header 是为了解决跨域问题，nginx 代理后，host 会变成 localhost:3000，所以需要强制 Nginx 保持请求的 Host 头为浏览器的原始域名，使 Grafana 认为请求是从合法来源发出的。
+要配置 `proxy_set_header` 是为了解决跨域问题，Nginx 代理后，host 会变成 localhost:3000，所以需要强制 Nginx 保持请求的 Host 头为浏览器的原始域名，使 Grafana 认为请求是从合法来源发出的。
 
 ---
 
@@ -216,7 +222,7 @@ http://example.com/monitor/
 
 这里选择的是 [Node Exporter Full | Grafana Labs](https://grafana.com/grafana/dashboards/1860-node-exporter-full/)
 
-Prometheus 默认安装就配置了一个 job_name 名为 node 的 job，所以直接配置数据源和仪表盘即可。
+Prometheus 默认安装就配置了一个 `job_name` 名为 node 的 job，所以直接配置数据源和仪表盘即可。
 
 ### 数据源
 
@@ -340,7 +346,6 @@ if __name__ == "__main__":
 
     # 示例：在 60 秒内，磁盘占用逐步增加到 80%
     gradual_increase(step_duration=10, total_duration=60, target_usage=0.8, func=consume_disk)
-
 ```
 
 运行脚本前：
@@ -351,4 +356,4 @@ if __name__ == "__main__":
 
 ![](./images/15.jpg)
 
-grafana 的仪表盘相当直观，再也不用盯着黑框框里的数据了。
+Grafana 的仪表盘相当直观，再也不用盯着黑框框里的数据了。

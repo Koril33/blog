@@ -7,6 +7,12 @@ summary: "关于跨域问题的一些基础知识"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 跨域问题大概是前后端对接接口的时候碰到的最多，也是最摸不清头脑的问题之一，如果对于相关协议没有很好的了解，只能是闭着眼睛摸石头过河。
@@ -23,33 +29,33 @@ CORS 的全称是 Cross-Origin Resource Sharing，中文名是跨源资源共享
 
 源由三部分组成：
 
-* URI Scheme：访问协议，例如 http 或者 https
-* Domain：主机地址，例如 korilweb.cn，192.168.0.101
+* URI Scheme：访问协议，例如 HTTP 或者 HTTPS
+* Domain：主机地址，例如 `korilweb.cn`，192.168.0.101
 * Port：服务端口号，例如 8080
 
 举些例子：
 
-| URL                                      | scheme | domain        | port |
+| URL | scheme | domain | port |
 | ---------------------------------------- | ------ | ------------- | ---- |
-| https://baidu.com                        | https  | baidu.com     | 80   |
-| https://korilweb.cn                      | https  | korilweb.cn   | 80   |
-| http://some-web.com:8090                 | http   | some-web.com  | 8090 |
-| http://192.168.0.101:8080/web/index.html | http   | 192.168.0.101 | 8080 |
+| [https://baidu.com](https://baidu.com) | HTTPS | `baidu.com` | 80 |
+| [https://korilweb.cn](https://korilweb.cn) | HTTPS | `korilweb.cn` | 80 |
+| [http://some-web.com:8090](http://some-web.com:8090) | HTTP | `some-web.com` | 8090 |
+| [http://192.168.0.101:8080/web/index.html](http://192.168.0.101:8080/web/index.html) | HTTP | 192.168.0.101 | 8080 |
 
 ### 跨源是什么？
 
 现在就很好理解什么是跨源，即 Cross-Origin，只要访问者和被访问者的源的三部分（Scheme，Domain，Port），一旦有一个不一样，那么此次访问就构成了跨源访问资源。
 
-假设，客户端的 URL 是 https://korilweb.cn，那么以下的 URL，其中部分存在跨源访问（也可以叫做：跨域访问）的问题。
+假设，客户端的 URL 是 [https://korilweb.cn，那么以下的](https://korilweb.cn，那么以下的) URL，其中部分存在跨源访问（也可以叫做：跨域访问）的问题。
 
-| URL                                | 是否同源 | 原因                        |
+| URL | 是否同源 | 原因 |
 | ---------------------------------- | -------- | --------------------------- |
-| https://korilweb.cn:80             | 非同源   | port 不同（https 默认 443） |
-| http://korilweb.cn                 | 非同源   | scheme 不同                 |
-| https://baidu.com                  | 非同源   | domain 不同                 |
-| https://other.korilweb.cn          | 非同源   | domain 不同                 |
-| https://korilweb.cn/web/index.html | 同源     | 三者相同                    |
-| http://korilweb.cn:8080            | 非同源   | scheme 和 port 不同         |
+| [https://korilweb.cn:80](https://korilweb.cn:80) | 非同源 | port 不同（HTTPS 默认 443） |
+| [http://korilweb.cn](http://korilweb.cn) | 非同源 | scheme 不同 |
+| [https://baidu.com](https://baidu.com) | 非同源 | domain 不同 |
+| [https://other.korilweb.cn](https://other.korilweb.cn) | 非同源 | domain 不同 |
+| [https://korilweb.cn/web/index.html](https://korilweb.cn/web/index.html) | 同源 | 三者相同 |
+| [http://korilweb.cn:8080](http://korilweb.cn:8080) | 非同源 | scheme 和 port 不同 |
 
 不同源的网站之间，能不能访问，会有什么漏洞，这就需要了解同源策略（SOP，Same-Origin Policy）。
 
@@ -57,16 +63,16 @@ CORS 的全称是 Cross-Origin Resource Sharing，中文名是跨源资源共享
 
 假如现在用户在浏览器中，先后打开以下两个网站：
 
-1. http://bank.com
-2. http://bad.com
+1. [http://bank.com](http://bank.com)
+2. [http://bad.com](http://bad.com)
 
 第一个网站是银行网站，第二个是恶意网站。用户先登录了银行网站，此时该网站的 Cookie 就会存储在用户浏览器中，以便维持会话。
 
-紧接着，用户打开了第二个恶意网站，网站内有一串代码是调用了 http://bank.com 的转账接口，如果是正常情况下，恶意代码是无法进行转账的（因为没有登陆获取 cookie），但是由于用户先打开并且登录了银行网站，恶意网站就可以向转账接口，携带 cookie，发起请求。
+紧接着，用户打开了第二个恶意网站，网站内有一串代码是调用了 [http://bank.com](http://bank.com) 的转账接口，如果是正常情况下，恶意代码是无法进行转账的（因为没有登陆获取 cookie），但是由于用户先打开并且登录了银行网站，恶意网站就可以向转账接口，携带 cookie，发起请求。
 
 这就是跨站请求伪造（CSRF，Cross-site request forgery）。简单地说，是攻击者通过一些技术手段欺骗用户的浏览器去访问一个自己曾经认证过的网站并运行一些操作（如发邮件，发消息，甚至财产操作如转账和购买商品）。由于浏览器曾经认证过该站点，所以被访问的网站会误认为，该次请求是真正的用户操作，而去运行接口。
 
-这利用了web中用户身份验证的一个漏洞：简单的身份验证只能保证请求发自某个用户的浏览器，却不能保证请求本身是用户自愿发出的。
+这利用了 web 中用户身份验证的一个漏洞：简单的身份验证只能保证请求发自某个用户的浏览器，却不能保证请求本身是用户自愿发出的。
 
 为了防御这种攻击，所有浏览器现在都实施同源策略。
 
@@ -102,7 +108,7 @@ CORS 的全称是 Cross-Origin Resource Sharing，中文名是跨源资源共享
 * multipart/form-data
 * application/x-www-form-urlencoded
 
-现在页面中模拟一个 GET 的简单请求，index.html：
+现在页面中模拟一个 GET 的简单请求，`index.html`：
 
 ```html
 <html>
@@ -118,15 +124,14 @@ CORS 的全称是 Cross-Origin Resource Sharing，中文名是跨源资源共享
     </script>
 </body>
 </html>
-
 ```
 
-页面中使用了 XMLHttpRequest 向 http://192.168.0.150:18018/home/page 接口发起了请求。
+页面中使用了 XMLHttpRequest 向 [http://192.168.0.150:18018/home/page](http://192.168.0.150:18018/home/page) 接口发起了请求。
 
 使用 Nginx 做下静态资源代理，我们将这个页面部署在 192.168.0.150:81 上面，现在就构成了跨域：
 
-1. 客户端页面：http://192.168.0.150:81/index.html
-2. 接口：http://192.168.0.150:18018/home/page
+1. 客户端页面：[http://192.168.0.150:81/index.html](http://192.168.0.150:81/index.html)
+2. 接口：[http://192.168.0.150:18018/home/page](http://192.168.0.150:18018/home/page)
 
 尽管 Scheme 和 Domain 一致，但是 Port 一个是 81，一个是 18018，所以该请求是跨域请求。
 
@@ -156,12 +161,11 @@ public class HomeController {
 
 报错详细信息：
 
-> Access to XMLHttpRequest at 'http://192.168.0.150:18018/home/page' from origin 'http://192.168.0.150:81' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+> Access to XMLHttpRequest at '[http://192.168.0.150:18018/home/page'](http://192.168.0.150:18018/home/page') from origin '[http://192.168.0.150:81'](http://192.168.0.150:81') has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
 >
 > 翻译：
 >
-> 从源 'http://192.168.0.150:81' 向 'http://192.168.0.150:18018/home/page' 发起的 XMLHttpRequest 请求被 CORS 政策封锁：请求资源的 header 中不存在 'Access-Control-Allow-Origin'。
-
+> 从源 '[http://192.168.0.150:81'](http://192.168.0.150:81') 向 '[http://192.168.0.150:18018/home/page'](http://192.168.0.150:18018/home/page') 发起的 XMLHttpRequest 请求被 CORS 政策封锁：请求资源的 header 中不存在 'Access-Control-Allow-Origin'。
 
 
 就像之前提到的，CORS 的机制是通过 header 中一些特殊的字段来实现的，所以结论很明显，因为该请求是跨源请求，而服务器并没有在响应 header 中添加 Access-Control-Allow-Origin，所以并未通过 CORS 检测。
@@ -262,13 +266,12 @@ public class CorsFilter implements Filter {
 暂略
 
 
-
 ---
 
 ## 参考
 
-1. https://cloud.tencent.com/developer/article/1838494
-2. https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
-3. https://fetch.spec.whatwg.org/#http-cors-protocol
-4. https://portswigger.net/web-security/cors/same-origin-policy
-5. https://portswigger.net/web-security/cors/access-control-allow-origin
+1. [https://cloud.tencent.com/developer/article/1838494](https://cloud.tencent.com/developer/article/1838494)
+2. [https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+3. [https://fetch.spec.whatwg.org/#http-cors-protocol](https://fetch.spec.whatwg.org/#http-cors-protocol)
+4. [https://portswigger.net/web-security/cors/same-origin-policy](https://portswigger.net/web-security/cors/same-origin-policy)
+5. [https://portswigger.net/web-security/cors/access-control-allow-origin](https://portswigger.net/web-security/cors/access-control-allow-origin)

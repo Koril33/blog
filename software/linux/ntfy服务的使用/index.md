@@ -14,7 +14,7 @@ summary: "ntfy，一个好用的通知服务工具"
 
 消息推送服务，在运维、爬虫、游戏挂机这些场景经常用到，除了微信公众号的推送（[虾推啥](https://xtuis.cn/)），自建的服务也是很好的选择，比如本文介绍的 ntfy。
 
-官网：https://github.com/binwiederhier/ntfy
+官网：[https://github.com/binwiederhier/ntfy](https://github.com/binwiederhier/ntfy)
 
 ---
 
@@ -49,10 +49,9 @@ StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
-
 ```
 
-server.yml 可以更改端口和域名，假设你的域名是 notify.test.com，本地端口是 18080
+`server.yml` 可以更改端口和域名，假设你的域名是 `notify.test.com`，本地端口是 18080
 
 ```yaml
 # ntfy server config file
@@ -65,7 +64,6 @@ upstream-base-url: "https://ntfy.sh"
 为了开启 websocket，Nginx 配置如下：
 
 ```
-
 server {
     listen 80;
     server_name notify.test.com;
@@ -84,10 +82,9 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
-
 ```
 
-更新 nginx
+更新 Nginx
 
 ```
 sudo nginx -t
@@ -119,7 +116,7 @@ auth-default-access: "deny-all"
 
 这里配置了 auth-default-access 表示默认没有在数据库中找到匹配的用户，一律禁止访问。
 
-重启服务后，会自动创建 user.db 文件（sqlite3 数据库），先添加一个 admin 角色的用户：
+重启服务后，会自动创建 `user.db` 文件（sqlite3 数据库），先添加一个 admin 角色的用户：
 
 ```shell
 sudo ntfy user add --role=admin bob
@@ -139,13 +136,13 @@ sudo ntfy user add alice
 sudo ntfy access alice test rw
 ```
 
-更加详细的 ACL 配置，参考官网文档：https://docs.ntfy.sh/config/#access-control
+更加详细的 ACL 配置，参考官网文档：[https://docs.ntfy.sh/config/#access-control](https://docs.ntfy.sh/config/#access-control)
 
 ---
 
 ## 参考
 
-1. https://github.com/binwiederhier/ntfy
-2. https://docs.ntfy.sh/install/#linux-binaries
-3. https://k1r.in/posts/notify-ntfy/
-4. https://shuaixin.cc/ntfy/
+1. [https://github.com/binwiederhier/ntfy](https://github.com/binwiederhier/ntfy)
+2. [https://docs.ntfy.sh/install/#linux-binaries](https://docs.ntfy.sh/install/#linux-binaries)
+3. [https://k1r.in/posts/notify-ntfy/](https://k1r.in/posts/notify-ntfy/)
+4. [https://shuaixin.cc/ntfy/](https://shuaixin.cc/ntfy/)

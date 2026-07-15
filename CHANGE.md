@@ -1,0 +1,175 @@
+# 博客整理记录
+
+> 整理日期：2026-07-15
+
+本次依照 `STYLE_GUIDE.md` 审核了 `hardware` 和 `software` 下的全部 164 篇文章；其中 162 篇发生内容或目录调整，`about` 与 `cook` 按要求未处理。
+
+## 逐篇记录
+
+- `hardware/Arduino/Ubuntu下的环境配置和点灯/index.md`：统一正文的中英文间距、全角标点和技术术语写法；清理代码围栏内多余空行。
+- `hardware/ESP32/Ubuntu下的环境配置和点灯/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `hardware/NodeMCU+MQTT与后台交互信息/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `hardware/NodeMCU发送数据给树莓派/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `hardware/STC89C52/Ubuntu下的环境配置和点灯/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `hardware/STM32F103C8T6/Ubuntu下的环境配置和点灯/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `hardware/STM32F103C8T6/两种方式的点灯/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `hardware/STM32F103C8T6/无法再次烧录的问题/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法。
+- `hardware/使用OLED做一个简易手表/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `hardware/使用OLED展示DHT11的温湿度数据/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `hardware/使用树莓派和内网穿透远程点灯/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `hardware/动手制作一个3×3×3的LED光立方/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `hardware/木制的小台钻/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `hardware/步进电机和A4988的控制实践/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/algorithm/Myers差分算法/index.md`：将裸链接改为 Markdown 链接。
+- `software/algorithm/从定时器到时间轮：速率可控任务调度算法的演进/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/algorithm/随机密码的生成/index.md`：补充 `summary`；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/concurrency/Python的Thread基础/index.md`：补充目录与 `[TOC]` 标记；将裸链接改为 Markdown 链接。
+- `software/database/ORM是什么/index.md`：补充 `summary`；补充目录与 `[TOC]` 标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/database/SQLAlchemy入门/index.md`：将裸链接改为 Markdown 链接。
+- `software/database/SQL中的各种连接/index.md`：补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/database/jpa/JPA+MySQL的主键选择/index.md`：从 `software/web/backend/JPA+MySQL的主键选择` 移至当前分类；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/database/jpa/JPA中的枚举类型字段存储/index.md`：从 `software/web/backend/JPA中的枚举类型字段存储` 移至当前分类；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/database/mysql/MySQL存储树状结构的数据/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/database/mysql/MySQL数据的备份/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/database/mysql/MySQL的事务/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/database/mysql/MySQL的索引/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/database/postgresql/PG的字符类型/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/database/postgresql/创建数据库、模式和表/index.md`：补充 `summary`；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/database/postgresql/表连接/index.md`：补充目录与 `[TOC]` 标记；清理代码围栏内多余空行。
+- `software/database/postgresql/角色、用户和权限/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/database/redis/redis-py中连接池的使用/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/database/redis/redis的string类型/index.md`：使 `title` 与文章目录名一致；规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/database/redis/redis的配置文件/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/database/sqlite/sqlite创建表/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/database/sqlite/sqlite命令行下的命令解释/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/database/sqlite/sqlite的数据类型/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/docker/Docker挂代理/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/docker/Docker部署Nginx/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/docker/Docker部署SpringBoot应用/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/docker/Docker部署一个Gunicorn+Flask应用/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/elk/Elasticsearch的基本概念/index.md`：统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/elk/QueryDSL基础/index.md`：补充 `summary`；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接；补齐缺失的代码围栏。
+- `software/elk/elk的搭建/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/elk/filebeat收集python日志/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/elk/filebeat的使用/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/fundamentals/IEEE 754标准以及0.1加0.2不等于0.3的问题/index.md`：从 `software/web/backend/IEEE-754标准以及0.1加0.2不等于0.3的问题` 移至当前分类；规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/fundamentals/数据存储度量单位差异/index.md`：从 `software/web/backend/数据存储度量单位差异` 移至当前分类。
+- `software/fundamentals/时间与计算机/index.md`：从 `software/web/backend/时间与计算机` 移至当前分类；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/fundamentals/聊聊Unicode、UTF-8、UTF-16以及UTF-32的那些事儿/index.md`：从 `software/web/backend/聊聊Unicode、UTF-8、UTF-16以及UTF-32的那些事儿` 移至当前分类；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/gtk/GTK4在Linux和Windows下的HelloWorld/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/Beszel的搭建和告警配置/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/CentOS+Hugo建站不完全指北/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/CentOS防火墙的一些操作/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法。
+- `software/linux/Cron在Linux中的用法/index.md`：从 `software/linux/cron在Linux中的用法` 移至当前分类；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Debian/Debian12安装MongoDB/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/linux/Debian/Debian12安装PostgreSQL/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Debian/Debian12安装Prometheus和Grafana/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/linux/Debian/Debian12安装Redis/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Debian/Debian12安装jdk21/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Debian/VirtualBox创建Debian12虚拟机/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/DroidCam下载和使用/index.md`：补充 `summary`；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/linux/FHS文件系统规范/index.md`：将裸链接改为 Markdown 链接。
+- `software/linux/Linux中与查找相关的命令/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Linux之间使用scp命令传输文件/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/Linux命令行设置代理/index.md`：将裸链接改为 Markdown 链接。
+- `software/linux/Linux的grep命令展示匹配项的前后n行信息/index.md`：补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Linux的排序命令sort/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Linux的权限系统/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Linux的链接/index.md`：补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/SSH日志/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/Shell的快捷键/index.md`：补充目录与 `[TOC]` 标记。
+- `software/linux/Top命令的一些进阶用法/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/Ubuntu/TextEditor中文输入重复显示的BUG/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；将裸链接改为 Markdown 链接。
+- `software/linux/Ubuntu/Ubuntu24.04时间错误的问题/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/linux/Ubuntu/Ubuntu24.04设置桌面软件自启动/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/linux/Ubuntu/Virtualbox无法打开虚拟机的问题/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Ubuntu/使用mitmproxy进行抓包/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/linux/Ubuntu/公网VPS下的Ubuntu系统保护措施/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/Ubuntu/卸载和弹出移动硬盘/index.md`：补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/Ubuntu/树莓派4B安装Ubuntu Server 22.04/index.md`：从 `software/linux/Ubuntu/树莓派4B安装Ubuntu-Server-22.04` 移至当前分类；规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/VirtualBox中虚拟机运行缓慢的解决方案/index.md`：从 `software/web/backend/VirtualBox中虚拟机运行缓慢的解决方案` 移至当前分类；补充目录与 `[TOC]` 标记。
+- `software/linux/VirtualBox创建CentOS7虚拟机/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/df和du详解/index.md`：补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/linux/frp服务的使用/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/ntfy服务的使用/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/linux/ssh心跳保活/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法。
+- `software/linux/usr目录的历史背景/index.md`：规范 `summary` 的术语、标点或中英文间距；将裸链接改为 Markdown 链接。
+- `software/linux/使用Telegram机器人实现告警功能/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/linux/使用systemd管理简单的服务/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/命令行设计的艺术/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/linux/如何在Linux中查看机器的参数和性能/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/linux/环境变量/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/linux/误删除glibc后的教训/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/network/DNS和域名的一些记录/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/network/IPv4首部和IP报文的分片重组/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；清理代码围栏内多余空行。
+- `software/network/MAC地址和ARP协议/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法。
+- `software/network/宽带和带宽以及服务器上下行带宽/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/network/局域网和以太网/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法。
+- `software/nginx/GoAccess可视化Nginx日志/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/nginx/Nginx上传文件大小的限制/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/nginx/Nginx中proxy_pass的斜杠问题/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/nginx/Nginx中的sites Enabled和sites Available/index.md`：从 `software/nginx/Nginx中的sites-enabled和sites-available` 移至当前分类；补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/nginx/Nginx的基础用法/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/observability/SpringBoot埋点/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/observability/可观测性的概念/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/oss/SeaweedFS的搭建和示例/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/program/c/C的整型类型和占用大小/index.md`：补充目录与 `[TOC]` 标记。
+- `software/program/java/IDEA断点调试技巧/index.md`：从 `software/web/backend/IDEA断点调试技巧` 移至当前分类；补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/program/java/Java中的比较和排序/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/program/java/Java基础之I／O流/index.md`：从 `software/program/java/Java基础之IO流` 移至当前分类；使 `title` 与文章目录名一致；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/program/java/Java基础之文件操作/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/program/java/Java基础之注解/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/program/java/Java的异常和异常处理/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/program/java/Java获取两个时间的间隔天数/index.md`：从 `software/web/backend/Java获取两个时间的间隔天数` 移至当前分类；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/program/python/PEP282-日志系统-译文/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/program/python/Python中的多线程编程/index.md`：调整文章所在分类。
+- `software/program/python/Python使用SMTP发送邮件/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/program/python/Python压缩JPEG图片/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/program/python/Python复杂脚本的日志记录实践/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/program/python/Python多线程下载网络图片/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/program/python/Python的异常机制/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/program/python/Python的日志记录/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/program/python/Python的模块和包/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行；补齐缺失的代码围栏。
+- `software/program/python/Python简单脚本的日志记录实践/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/program/python/Python解释器的-m参数/index.md`：规范 `summary` 的术语、标点或中英文间距；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/program/python/uv设置镜像源/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/program/python/上下文管理器/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/program/python/使用devpi搭建pypi缓存服务器/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/prometheus/springboot接入prometheus/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/rabbitmq/RabbitMQ的基本概念和使用/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/vagrant/批量创建虚拟机/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/web/backend/CORS的基础知识/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/web/backend/Flask实现简单的登陆功能/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/web/backend/Gunicorn+Flask的基本应用/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/web/backend/Servlet初探/index.md`：补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/web/backend/Windows安装OpenSSH服务端/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法。
+- `software/web/backend/cookie和session/index.md`：为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/web/backend/一个软件全量更新的简单方式/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/web/backend/一种直白有效的前缀匹配方案/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/web/backend/使用MMDB来获取客户端的IP信息/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/web/backend/使用Redis实现分页和搜索的功能/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/web/backend/在Tomcat中部署一个简单的Servlet/index.md`：规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/web/backend/拦截器和过滤器/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/web/backend/用户系统设计下的通用概念/index.md`：补充目录与 `[TOC]` 标记；将裸链接改为 Markdown 链接。
+- `software/web/backend/登录注册体系的安全手段/index.md`：从 `software/web/backend/登陆注册体系的安全手段` 移至当前分类；统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接。
+- `software/web/backend/自制一个聚合搜索引擎的页面/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/web/backend/阿里云短信认证服务的使用/index.md`：统一正文的中英文间距、全角标点和技术术语写法；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/web/frontend/SPA和SSR/index.md`：补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/web/frontend/自己动手写一个博客静态页面生成器/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/web/spring-security/Spring Boot 3+Spring Security+Thymeleaf的示例/index.md`：从 `software/web/backend/SpringBoot3+SpringSecurity+Thymeleaf的示例` 移至当前分类；使 `title` 与文章目录名一致；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/web/spring-security/Spring Security 初探/index.md`：从 `software/web/backend/Spring Security 初探` 移至当前分类；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接。
+- `software/web/spring-security/Spring Security用户管理/index.md`：从 `software/web/backend/SpringSecurity用户管理` 移至当前分类；使 `title` 与文章目录名一致；补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/web/spring-security/Spring Security认证过程/index.md`：从 `software/web/backend/SpringSecurity认证过程` 移至当前分类；使 `title` 与文章目录名一致；补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/web/spring-security/Spring Security配置SecurityFilterChain/index.md`：从 `software/web/backend/SpringSecurity配置SecurityFilterChain` 移至当前分类；使 `title` 与文章目录名一致；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/web/spring-security/Spring Security默认配置/index.md`：从 `software/web/backend/SpringSecurity默认配置` 移至当前分类；使 `title` 与文章目录名一致；规范 `summary` 的术语、标点或中英文间距；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/web/spring/Spring Boot 中 @Component 和 @Bean 的区别/index.md`：从 `software/web/backend/SpringBoot中@Component和@Bean的区别` 移至当前分类；使 `title` 与文章目录名一致；补充目录与 `[TOC]` 标记；为路径、文件名、参数或标识符补充行内代码标记；清理代码围栏内多余空行。
+- `software/web/spring/Spring Boot 中 Session 的使用/index.md`：从 `software/web/backend/springboot 中 session 的使用` 移至当前分类；使 `title` 与文章目录名一致；补充 `summary`；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/web/spring/Spring Boot+JPA的日志打印问题/index.md`：从 `software/web/backend/SpringBoot+JPA的日志打印问题` 移至当前分类；使 `title` 与文章目录名一致；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+- `software/web/spring/Spring MVC 接收前端参数的 N 种方式/index.md`：从 `software/web/backend/SpringMVC接收前端参数的N种方式` 移至当前分类；使 `title` 与文章目录名一致；补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/web/关于前后端接口规范的讨论/index.md`：补充目录与 `[TOC]` 标记；统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记；将裸链接改为 Markdown 链接；清理代码围栏内多余空行。
+- `software/我的技术小结-2025/index.md`：统一正文的中英文间距、全角标点和技术术语写法；为路径、文件名、参数或标识符补充行内代码标记。
+
+## 已审核但无需修改
+
+- `software/program/python/使用uv和typer编写CLI工具的流程/index.md`
+- `software/web/backend/RBAC权限模型概述/index.md`

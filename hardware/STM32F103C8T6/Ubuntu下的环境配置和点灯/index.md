@@ -90,12 +90,11 @@ For bug reports, read
 
 ## 示例
 
-这里用的示例，来源于 Github 一个项目：https://github.com/ubogdan/STM32F103C8T6
+这里用的示例，来源于 GitHub 一个项目：[https://github.com/ubogdan/STM32F103C8T6](https://github.com/ubogdan/STM32F103C8T6)
 
 这个项目提供了一个让 STM32 的板载 LED 闪烁的示例，不过他用的是 J-LINK，如果用 ST-LINK 的话，只需要修改 Makefile 的 flash 指令即可：
 
 ```shell
-
 # flash
 flash: all
 	openocd -f interface/stlink.cfg -f target/stm32f1x.cfg -c "program main.bin 0x08000000 verify reset exit"
@@ -117,12 +116,12 @@ in procedure 'program'
 shutdown command invoked
 ```
 
-那就是因为芯片是CS32F103C8T6，一个中国仿制版本的芯片，原因参考博客：
+那就是因为芯片是 CS32F103C8T6，一个中国仿制版本的芯片，原因参考博客：
 
-1. https://blog.csdn.net/qq\_40923918/article/details/131698522
-2. https://blog.csdn.net/nick\_young\_qu/article/details/108217987
+1. [https://blog.csdn.net/qq\_40923918/article/details/131698522](https://blog.csdn.net/qq\_40923918/article/details/131698522)
+2. [https://blog.csdn.net/nick\_young\_qu/article/details/108217987](https://blog.csdn.net/nick\_young\_qu/article/details/108217987)
 
-可以把 /usr/share/openocd/scripts/target/stm32f1x.cfg 这个文件复制到当前的工程目录下，然后把文件中的 0x1ba01477 改称 0x2ba01477 就可以了
+可以把 `/usr/share/openocd/scripts/target/stm32f1x.cfg` 这个文件复制到当前的工程目录下，然后把文件中的 0x1ba01477 改称 0x2ba01477 就可以了
 
 ```
 #jtag scan chain

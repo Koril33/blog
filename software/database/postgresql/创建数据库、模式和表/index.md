@@ -1,7 +1,7 @@
 ---
 title: "创建数据库、模式和表"
 date: 2026-05-02T20:49:38
-summary: ""
+summary: "介绍 PostgreSQL 数据库、模式和表的创建、修改与删除"
 ---
 
 ## 目录
@@ -93,9 +93,9 @@ CREATE DATABASE study;
 CREATE DATABASE study OWNER koril;
 ```
 
-如果创建时没有指定 Owner，默认这个数据库的所有者就是执行`CREATE DATABASE`指令的角色。
+如果创建时没有指定 Owner，默认这个数据库的所有者就是执行 `CREATE DATABASE` 指令的角色。
 
-默认创建数据库，没有限制连接数，连接数都是`-1`，如果想要限制新建数据库的最大连接数，使用`CONNECTION LIMIT`：
+默认创建数据库，没有限制连接数，连接数都是 `-1`，如果想要限制新建数据库的最大连接数，使用 `CONNECTION LIMIT`：
 
 ```sql
 CREATE DATABASE study CONNECTION LIMIT 10;
@@ -125,7 +125,7 @@ WITH
 
 在同一个模式下，对象需要具有不同的名字，比如 index 和 table 不能重名，但是在不同模式下，一个名字可以重复使用，比如多租户系统下，schema-1 包含了 user 表，schema-2 也可以包含一个同样名字的 user 表。
 
-在以下情况时可以考虑使用多个schema来管理数据库：
+在以下情况时可以考虑使用多个 schema 来管理数据库：
 
 1. 多个用户使用同一个数据库，每个用户使用一个 schema，互不影响。
 2. 一个项目下的不同子项目，比如微服务，可以使用多个 schema。
@@ -180,9 +180,9 @@ SHOW search_path;
 SELECT current_schema();
 ```
 
-`current_schema()`会返回当前`search_path`中“第一个存在且可用的 schema”。
+`current_schema()` 会返回当前 `search_path` 中“第一个存在且可用的 schema”。
 
-假设 search path 有 a b c 三个schema,但是 a 和 b 都不存在或者不可访问（权限），c 存在且可以访问，那么`current_schema`就会返回 c。
+假设 search path 有 a b c 三个 schema，但是 a 和 b 都不存在或者不可访问（权限），c 存在且可以访问，那么 `current_schema` 就会返回 c。
 
 创建表的时候，不指定 schema，PG 运行的原理大致可以粗略的理解成：
 
@@ -209,7 +209,6 @@ for schema in search_path:
 ## 修改
 
 
-
 ---
 
 ## 删除
@@ -229,5 +228,5 @@ for schema in search_path:
 
 ## 参考
 
-1. https://neon.com/postgresql/administration/create-database
-2. https://neon.com/postgresql/administration/create-database
+1. [https://neon.com/postgresql/administration/create-database](https://neon.com/postgresql/administration/create-database)
+2. [https://neon.com/postgresql/administration/create-database](https://neon.com/postgresql/administration/create-database)

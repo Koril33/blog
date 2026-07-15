@@ -6,9 +6,15 @@ summary: "Windows 也可以开启 OpenSSH Server 通过 SSH 连接"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
-最近在尝试把 Windows 下的磁盘挂载到公网服务器上，其中的一个方案是 sshfs，它是基于 ssh 的，所以要先能够通过 SSH 连接到 Windows 才行。
+最近在尝试把 Windows 下的磁盘挂载到公网服务器上，其中的一个方案是 sshfs，它是基于 SSH 的，所以要先能够通过 SSH 连接到 Windows 才行。
 
 本文介绍如何在 Windows 中开启 OpenSSH Server。
 

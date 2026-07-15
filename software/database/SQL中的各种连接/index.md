@@ -7,6 +7,12 @@ summary: "SQL 的左连接，右连接，全连接等等"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 SQL 的各种表连接，是查询的精髓之一，本文用一种可视化的方式去理解这些连接。
@@ -82,11 +88,11 @@ R 集合和 S 集合的笛卡尔积
 
 ## SQL 实践
 
-示例表，一个是用户表（t_user），一个是订单表（t_order）
+示例表，一个是用户表（`t_user`），一个是订单表（`t_order`）
 
-其中订单表的 user_id 字段表明了这个订单是哪个 id 的用户订购的。
+其中订单表的 `user_id` 字段表明了这个订单是哪个 id 的用户订购的。
 
-t_user
+`t_user`
 
 ```sql
 create table demo.t_user
@@ -97,7 +103,7 @@ create table demo.t_user
 );
 ```
 
-t_order
+`t_order`
 ```sql
 create table demo.t_order
 (
@@ -108,7 +114,7 @@ create table demo.t_order
 );
 ```
 
-t_user 数据：
+`t_user` 数据：
 
 ```
 id    name
@@ -120,7 +126,7 @@ id    name
 6     linda
 ```
 
-t_order 数据：
+`t_order` 数据：
 
 ```
 id    item     user_id
@@ -185,7 +191,7 @@ cross join 返回的结果集，包含了两个表的数据，所能组成的所
 
 大多数时候，笛卡尔连接没什么大用处。比如，bob 只下了一个钢笔的订单，笛卡尔积却依然把他和其他三个订单给连接在了一起。
 
-所以我们希望通过 t_order 的 user_id 字段来排除那些不符合关系的结果。
+所以我们希望通过 `t_order` 的 `user_id` 字段来排除那些不符合关系的结果。
 
 ```
 方法一：在笛卡尔连接上使用 where
@@ -200,7 +206,7 @@ from
     on t_user.id = t_order.user_id;
 ```
 
-方法二连接的关键，就在于 order 表的 user_id 和 user 表的 id 有关联关系，上面的查询语句将返回所有左表（t_user）和右表（t_order）在公共字段（t_user 的 id 和 t_order 的 user_id 的交集）匹配的记录。
+方法二连接的关键，就在于 order 表的 `user_id` 和 user 表的 id 有关联关系，上面的查询语句将返回所有左表（`t_user`）和右表（`t_order`）在公共字段（`t_user` 的 id 和 `t_order` 的 `user_id` 的交集）匹配的记录。
 
 ![](./images/4.jpg)
 
@@ -243,7 +249,6 @@ t_user.id	t_user.name	t_order.id	t_order.item	t_order.user_id
 1                bob	     1	         pen               1
 3                jack	     2	        pencil             3
 5                ada	     3           book              5
-
 ```
 
 ---
@@ -325,7 +330,7 @@ from
 
 ![](./images/8.jpg)
 
-可以看到右表每一个元素都出现了，id 为 4 的订单的 user_id 是 7，但并没有存在于 user 表中，所以不存在的用户信息用 NULL 来表示。
+可以看到右表每一个元素都出现了，id 为 4 的订单的 `user_id` 是 7，但并没有存在于 user 表中，所以不存在的用户信息用 NULL 来表示。
 
 用文字阐述步骤：
 
@@ -408,7 +413,7 @@ where
     t_order.id is null;
 ```
 
-因为使用了 where t_order.id is null，所以会将所有没有下过订单的用户筛选出来：
+因为使用了 where `t_order.id` is null，所以会将所有没有下过订单的用户筛选出来：
 
 ![](./images/12.jpg)
 
@@ -493,4 +498,4 @@ where
 
 ## 参考
 
-1. https://www.codeproject.com/Articles/33052/Visual-Representation-of-SQL-Joins
+1. [https://www.codeproject.com/Articles/33052/Visual-Representation-of-SQL-Joins](https://www.codeproject.com/Articles/33052/Visual-Representation-of-SQL-Joins)

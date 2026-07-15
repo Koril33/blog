@@ -3,8 +3,14 @@ title: "使用OLED展示DHT11的温湿度数据"
 date: 2023-01-05T19:13:59+08:00
 tags: []
 featured_image: "images/background.jpg"
-summary: "DHT11和OLED的简单应用"
+summary: "DHT11 和 OLED 的简单应用"
 toc: true
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 前言
@@ -17,20 +23,20 @@ OLED 屏幕可以将数据可视化的展现出来。
 
 ## 项目代码
 
-该项目有关的代码托管在了 Github 上：
+该项目有关的代码托管在了 GitHub 上：
 
-https://github.com/Koril33/ArduinoProject/tree/main/DHT11_OLED_display
+[https://github.com/Koril33/ArduinoProject/tree/main/DHT11_OLED_display](https://github.com/Koril33/ArduinoProject/tree/main/DHT11_OLED_display)
 
 ---
 
 ## 材料
 
-| 名称              | 数量 | 单价（单位：元） |
+| 名称 | 数量 | 单价（单位：元） |
 | ----------------- | ---- | ---------------- |
-| Arduino Nano      | 1    | 18               |
-| 母对母杜邦线      | 10   | 0.051            |
-| SSD1306 OLED 屏幕 | 1    | 13.5             |
-| DHT11             | 1    | 8                |
+| Arduino Nano | 1 | 18 |
+| 母对母杜邦线 | 10 | 0.051 |
+| SSD1306 OLED 屏幕 | 1 | 13.5 |
+| DHT11 | 1 | 8 |
 
 ---
 
@@ -48,7 +54,7 @@ DHT11 如果买的是下图左边的模块的话，只有三根引脚：VCC，GN
 
 * VCC：+5V
 * GND：接地
-* Data：传感器输出的数字信号，接 arduino 的 IO引脚
+* Data：传感器输出的数字信号，接 Arduino 的 IO 引脚
 * N/C：not connect，不连接
 
 3pin 的接线图：
@@ -63,7 +69,7 @@ DHT11 如果买的是下图左边的模块的话，只有三根引脚：VCC，GN
 
 关于 DHT11 有很多封装好的库，这里我使用的是下面这个库：
 
-https://playground.arduino.cc/Main/DHT11Lib/
+[https://playground.arduino.cc/Main/DHT11Lib/](https://playground.arduino.cc/Main/DHT11Lib/)
 
 下载好库文件的压缩包后，解压放到 Arduino 的库目录下：
 
@@ -107,7 +113,7 @@ void DHT11Test() {
 
 ## SSD1306 OLED
 
-SSD1306是一款单片 OLED 的驱动器，我购买的是 7pin 引脚，支持 SPI 和 I2C 通信的 OLED 模块。本文使用 SPI 通讯方式。
+SSD1306 是一款单片 OLED 的驱动器，我购买的是 7pin 引脚，支持 SPI 和 I2C 通信的 OLED 模块。本文使用 SPI 通讯方式。
 
 ![](images/0.96nch-oled.jpg)
 
@@ -255,8 +261,8 @@ void showDHT11Date(int t, int h) {
 
 ## 参考
 
-1. https://electropeak.com/learn/interfacing-dht11-temperature-humidity-sensor-arduino/
-2. https://randomnerdtutorials.com/complete-guide-for-dht11dht22-humidity-and-temperature-sensor-with-arduino/
-3. https://projecthub.arduino.cc/arcaegecengiz/12f621d5-055f-41fe-965d-a596fcc594f6
-4. https://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-an-arduino/
-5. https://www.youtube.com/watch?v=7x1P80X1V3E
+1. [https://electropeak.com/learn/interfacing-dht11-temperature-humidity-sensor-arduino/](https://electropeak.com/learn/interfacing-dht11-temperature-humidity-sensor-arduino/)
+2. [https://randomnerdtutorials.com/complete-guide-for-dht11dht22-humidity-and-temperature-sensor-with-arduino/](https://randomnerdtutorials.com/complete-guide-for-dht11dht22-humidity-and-temperature-sensor-with-arduino/)
+3. [https://projecthub.arduino.cc/arcaegecengiz/12f621d5-055f-41fe-965d-a596fcc594f6](https://projecthub.arduino.cc/arcaegecengiz/12f621d5-055f-41fe-965d-a596fcc594f6)
+4. [https://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-an-arduino/](https://www.circuitbasics.com/how-to-set-up-the-dht11-humidity-sensor-on-an-arduino/)
+5. [https://www.youtube.com/watch?v=7x1P80X1V3E](https://www.youtube.com/watch?v=7x1P80X1V3E)

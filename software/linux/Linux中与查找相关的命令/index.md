@@ -6,6 +6,12 @@ summary: "which、whereis、type、locate、find"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 在服务器运维的时候，我们不能寄希望于每个工程师都按照标准的目录结构存放特定类型的软件包或者文件。特别是当有些配置文件隐藏的目录层级很深，或者没有放到默认的目录下，如果不借助查找相关的命令，根本无从下手。
@@ -46,7 +52,7 @@ PATH 中包含的 /bin、/user/bin 这些都是存储外部命令，外部命令
 
 ![](./images/6.jpg)
 
-可以看到 which 命令路径是 /usr/bin/which，而手册路径是 /usr/share/man/man1/which.1.gz
+可以看到 which 命令路径是 `/usr/bin/which`，而手册路径是 `/usr/share/man/man1/which.1.gz`
 
 ---
 
@@ -127,7 +133,7 @@ touch cat bat fat soat
 * w：2 字节
 * k：kibibytes (KiB, units of 1024 bytes)
 * M：mebibytes (MiB, units of 1024 * 1024 = 1048576 bytes)
-* G：gibibytes  (GiB,  units  of  1024  * 1024 * 1024 = 1073741824
+* G：gibibytes (GiB, units of 1024 * 1024 * 1024 = 1073741824
                        bytes)
 
 ```bash

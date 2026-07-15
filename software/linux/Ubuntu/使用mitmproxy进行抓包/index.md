@@ -13,13 +13,13 @@ summary: "如何在 Ubuntu 下使用 mitmproxy 进行 HTTP 抓包"
 ## 前言
 
 之前使用过 Windows 下的 fiddler，但是在 Ubuntu 下就不支持了（我看 fiddler everywhere 好像是支持的，不过收费）。
-所以把目光放到了开源的抓包工具：[mimproxy](https://mitmproxy.org/)，支持命令行、web界面以及 Python API 调用。
+所以把目光放到了开源的抓包工具：[mimproxy](https://mitmproxy.org/)，支持命令行、web 界面以及 Python API 调用。
 
 ---
 
 ## 安装
 
-安装很简单，官方下载 tar.gz 的压缩包到本地，解压到 /opt（或者别的什么目录），就可以直接使用了。
+安装很简单，官方下载 `tar.gz` 的压缩包到本地，解压到 /opt（或者别的什么目录），就可以直接使用了。
 
 包含三个工具：
 
@@ -27,7 +27,7 @@ summary: "如何在 Ubuntu 下使用 mitmproxy 进行 HTTP 抓包"
 - mitmproxy: 一个交互式的、支持 SSL/TLS 的拦截代理，带有控制台 HTTP/1、HTTP/2 和 WebSockets 的接口。
 - mitmweb: 基于 Web 的界面。
 
-关于这些工具的详细信息，参考官网文档：https://docs.mitmproxy.org/stable/
+关于这些工具的详细信息，参考官网文档：[https://docs.mitmproxy.org/stable/](https://docs.mitmproxy.org/stable/)
 
 三个工具都可以使用，我更喜欢图形界面，所以本文使用的是 mitmweb。
 
@@ -39,15 +39,15 @@ summary: "如何在 Ubuntu 下使用 mitmproxy 进行 HTTP 抓包"
 
 ![](./images/1.png)
 
-设置好之后，请求一个 http 协议的网站：http://example.com/，就可以看到页面抓到数据了：
+设置好之后，请求一个 HTTP 协议的网站：[http://example.com/，就可以看到页面抓到数据了](http://example.com/，就可以看到页面抓到数据了)：
 
 ![](./images/2.png)
 
 ---
 
-## 设置CA证书
+## 设置 CA 证书
 
-上面设置好代理端口后，仅能正常访问 http 的网站，如果访问了 https 则会爆出“你的连接不是专用链接”之类的字样。
+上面设置好代理端口后，仅能正常访问 HTTP 的网站，如果访问了 HTTPS 则会爆出“你的连接不是专用链接”之类的字样。
 
 ![](./images/3.png)
 
@@ -56,29 +56,25 @@ summary: "如何在 Ubuntu 下使用 mitmproxy 进行 HTTP 抓包"
 我们要做的就是把这个目录下的 pem 文件配置到系统里，就两个命令：
 
 ```sh
-
 # 把证书移动到特定的系统目录，并且把后缀的 pem 改称 crt
 mv ~/.mitmproxy/mitmproxy-ca-cert.pem /usr/local/share/ca-certificates/mitmproxy.crt
 # 更新系统证书
 sudo update-ca-certificates
-
 ```
 
 出现以下结果，说明安装成功了：
 
 ```
-
 Updating certificates in /etc/ssl/certs...
 rehash: warning: skipping ca-certificates.crt,it does not contain exactly one certificate or CRL
 1 added, 0 removed; done.
 Running hooks in /etc/ca-certificates/update.d...
 done.
-
 ```
 
-其他系统的 CA 证书文档，参考：http://mitm.it/
+其他系统的 CA 证书文档，参考：[http://mitm.it/](http://mitm.it/)
 
-如果浏览器依然无法访问 https 的网站，那么浏览器需要额外的设置，一般都是在“安全、隐私”中，找到管理证书，然后在授权机构那一栏添加本地的 pem 文件。
+如果浏览器依然无法访问 HTTPS 的网站，那么浏览器需要额外的设置，一般都是在“安全、隐私”中，找到管理证书，然后在授权机构那一栏添加本地的 pem 文件。
 
 ![](./images/4.png)
 
@@ -96,8 +92,8 @@ done.
 
 ## 手机
 
-安卓上也是类似，保证安卓手机和电脑，在一个局域网下，电脑上开着 mitmproxy，然后在手机 wifi 配置中，配置代理，ip 就是电脑的 ip，端口默认是 8080。
+安卓上也是类似，保证安卓手机和电脑，在一个局域网下，电脑上开着 mitmproxy，然后在手机 wifi 配置中，配置代理，IP 就是电脑的 IP，端口默认是 8080。
 
-设置好之后，手机打开浏览器，进入网站：mitm.it
+设置好之后，手机打开浏览器，进入网站：`mitm.it`
 
 下载好证书后，在手机的设置中，安装 CA 证书即可。

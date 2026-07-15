@@ -14,14 +14,14 @@ summary: "个人开发者又可以重新发送短信验证码了"
 
 之前由于电信运营商的政策收紧，个人资质无法发送短信验证码，不过阿里云推出的“短信认证服务”，让个人开发者又可以重新开始使用短信验证码了。
 
-> 短信认证服务是阿里云为个人和企业用户提供的验证服务，您可免申请资质、签名和模板，通过API直接使用。
+> 短信认证服务是阿里云为个人和企业用户提供的验证服务，您可免申请资质、签名和模板，通过 API 直接使用。
 > 短信认证服务由平台提供资源，对接成本低、成功率高，特别适合无法提供企业资质但有验证码场景需求的个人用户。
 
 ---
 
 ## 购买
 
-购买链接：https://dypns.console.aliyun.com/smsServiceOverview
+购买链接：[https://dypns.console.aliyun.com/smsServiceOverview](https://dypns.console.aliyun.com/smsServiceOverview)
 
 ---
 
@@ -29,7 +29,7 @@ summary: "个人开发者又可以重新发送短信验证码了"
 
 调用阿里云 API 服务，需要使用 AccessKey 认证，首先需要创建 AccessKey，不建议使用主账号创建，可以使用 RAM 账号创建 AccessKey。
 
-参考文档：https://help.aliyun.com/zh/ram/user-guide/create-an-accesskey-pair
+参考文档：[https://help.aliyun.com/zh/ram/user-guide/create-an-accesskey-pair](https://help.aliyun.com/zh/ram/user-guide/create-an-accesskey-pair)
 
 成功获取到 AccessKey 和 AccessKey Secret 后，才能进行下面的 API 调用。
 
@@ -43,7 +43,7 @@ summary: "个人开发者又可以重新发送短信验证码了"
 
 阿里云提供了 Credentials 工具来配置 AccessKey 进行凭据管理，参考文档：
 
-https://help.aliyun.com/zh/sdk/developer-reference/v2-manage-python-access-credentials
+[https://help.aliyun.com/zh/sdk/developer-reference/v2-manage-python-access-credentials](https://help.aliyun.com/zh/sdk/developer-reference/v2-manage-python-access-credentials)
 
 我使用的是方式一，在控制台中使用环境变量，配置以下两个环境变量，把上一节获取到的 AccessKey 和 AccessKey Secret 写到两个变量中：
 
@@ -54,9 +54,9 @@ ALIBABA_CLOUD_ACCESS_KEY_SECRET
 
 ### Python API
 
-阿里云短信服务的 SDK 在 pypi 中可以找到：https://pypi.org/project/alibabacloud-dypnsapi20170525/2.0.0/
+阿里云短信服务的 SDK 在 PyPI 中可以找到：[https://pypi.org/project/alibabacloud-dypnsapi20170525/2.0.0/](https://pypi.org/project/alibabacloud-dypnsapi20170525/2.0.0/)
 
-SDK 的示例代码可以使用阿里云的 OpenAPI 平台测试和生成：https://api.aliyun.com/api/Dypnsapi/2017-05-25/SendSmsVerifyCode
+SDK 的示例代码可以使用阿里云的 OpenAPI 平台测试和生成：[https://api.aliyun.com/api/Dypnsapi/2017-05-25/SendSmsVerifyCode](https://api.aliyun.com/api/Dypnsapi/2017-05-25/SendSmsVerifyCode)
 
 ![](./images/1.jpg)
 
@@ -122,7 +122,6 @@ class Sample:
 
 if __name__ == '__main__':
     Sample.main()
-
 ```
 
 验证码是阿里云平台随机生成的，我们并不知道，所以验证用户的验证码需要调用阿里云的核验验证码接口：
@@ -182,7 +181,6 @@ class Sample:
 
 if __name__ == '__main__':
     Sample.main()
-
 ```
 
 阿里云默认生成的验证码是 4 位和有效期 300 秒（可以通过 SendSmsVerifyCode 发送短信接口的参数进行修改），且核验接口成功核验后，该该验证码会失效。
@@ -193,8 +191,8 @@ if __name__ == '__main__':
 
 ## 参考
 
-1. https://help.aliyun.com/zh/pnvs/getting-started/sms-authentication-service-novice-guide
-2. https://www.v2ex.com/t/1172035#reply32
-3. https://common-buy.aliyun.com/?commodityCode=dypns\_smsverify\_public\_cn#buy
-4. https://help.aliyun.com/zh/pnvs/developer-reference/api-dypnsapi-2017-05-25-sendsmsverifycode
-5. https://api.aliyun.com/api-tools/sdk/Dypnsapi
+1. [https://help.aliyun.com/zh/pnvs/getting-started/sms-authentication-service-novice-guide](https://help.aliyun.com/zh/pnvs/getting-started/sms-authentication-service-novice-guide)
+2. [https://www.v2ex.com/t/1172035#reply32](https://www.v2ex.com/t/1172035#reply32)
+3. [https://common-buy.aliyun.com/?commodityCode=dypns\_smsverify\_public\_cn#buy](https://common-buy.aliyun.com/?commodityCode=dypns\_smsverify\_public\_cn#buy)
+4. [https://help.aliyun.com/zh/pnvs/developer-reference/api-dypnsapi-2017-05-25-sendsmsverifycode](https://help.aliyun.com/zh/pnvs/developer-reference/api-dypnsapi-2017-05-25-sendsmsverifycode)
+5. [https://api.aliyun.com/api-tools/sdk/Dypnsapi](https://api.aliyun.com/api-tools/sdk/Dypnsapi)

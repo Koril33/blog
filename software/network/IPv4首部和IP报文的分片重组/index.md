@@ -2,8 +2,14 @@
 title: "IPv4首部和IP报文的分片重组"
 date: 2024-06-14T10:21:16+08:00
 featured_image: "images/background.jpg"
-summary: "IPv4首部各个字段含义以及在MTU限制下IP报文的分片和重组"
+summary: "IPv4 首部各个字段含义以及在 MTU 限制下 IP 报文的分片和重组"
 toc: true
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 前言
@@ -28,9 +34,9 @@ toc: true
 
 表示 IP 首部的大小，由 4 bit 组成，其表示长度大小的单位为 4 字节，对于没有选项（Options）的 IP 报文而言，其长度是固定的 20 字节，20 / 4 = 5，所以首部长度一般都是 5，即 0101。
 
-### 区分服务（Type  Of  Service）
+### 区分服务（Type Of Service）
 
-用来表示服务的质量，由 8 bit 组成，用来表示优先度，延迟，吞吐，可靠性，由于 TOS 的实现控制非常复杂，导致其几乎没有被投入使用，后来 TOS 被拆分成两个段——DSCP（Differential Services Codepoint，差分服务代码点）以及ECN（Explicit Congestion Notification，显示拥塞通告）。
+用来表示服务的质量，由 8 bit 组成，用来表示优先度，延迟，吞吐，可靠性，由于 TOS 的实现控制非常复杂，导致其几乎没有被投入使用，后来 TOS 被拆分成两个段——DSCP（Differential Services Codepoint，差分服务代码点）以及 ECN（Explicit Congestion Notification，显示拥塞通告）。
 
 DSCP 用来进行质量控制，ECN 用来报告网络拥堵情况。
 
@@ -119,7 +125,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 ```
 
 ### Wireshark 抓包

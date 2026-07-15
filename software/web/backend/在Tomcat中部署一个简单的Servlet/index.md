@@ -3,8 +3,14 @@ title: "在Tomcat中部署一个简单的Servlet"
 date: 2023-05-23T18:51:18+08:00
 tags: []
 featured_image: "images/background.jpg"
-summary: "从手动到IDEA，简述如何在 Tomcat 中部署 Servlet 服务"
+summary: "从手动到 IDEA，简述如何在 Tomcat 中部署 Servlet 服务"
 toc: true
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 前言
@@ -21,11 +27,11 @@ Servlet 更像是一种记录业务逻辑的东西，它不能单独运行，必
 
 在创建 Servlet 应用前，必须下载并且成功运行 Tomcat 应用。
 
-Tomcat 官网：https://tomcat.apache.org/
+Tomcat 官网：[https://tomcat.apache.org/](https://tomcat.apache.org/)
 
-Tomcat 9 Windows 版本下载地址：https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75-windows-x64.zip
+Tomcat 9 Windows 版本下载地址：[https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75-windows-x64.zip](https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.75/bin/apache-tomcat-9.0.75-windows-x64.zip)
 
-下载后，可以双击 bin/startup.bat 启动 Tomcat，打开 http://localhost:8080/ 可以下面的页面：
+下载后，可以双击 `bin/startup.bat` 启动 Tomcat，打开 [http://localhost:8080/](http://localhost:8080/) 可以下面的页面：
 
 ![](images/1.jpg)
 
@@ -57,7 +63,7 @@ public class Main {
 }
 ```
 
-打印的结果是“信息”两个字，因为 Tomcat 是 UTF-8 的编码输出到日志文件，但是微软的 cmd 默认是 GBK 编码，所以出现了乱码的问题，修改的方式也很简单，在 conf/logging.properties 文件中：
+打印的结果是“信息”两个字，因为 Tomcat 是 UTF-8 的编码输出到日志文件，但是微软的 cmd 默认是 GBK 编码，所以出现了乱码的问题，修改的方式也很简单，在 `conf/logging.properties` 文件中：
 
 ```properties
 # java.util.logging.ConsoleHandler.encoding = UTF-8
@@ -73,7 +79,7 @@ java.util.logging.ConsoleHandler.encoding = GBK
 
 之前提到过 Tomcat 也是 Web Server，所以它支持直接响应静态页面，所有 Tomcat 下的 Web App 都部署在 webapps 目录下，之所以上面能够展示 Tomcat 的欢迎页面，也是因为 webapps 目录下有了一些默认的示例项目。
 
-展示静态资源很简单，在 webapps 下新建一个目录（webapps 下的每一个目录都将被视为一个单独的 web application），然后新建 index.html
+展示静态资源很简单，在 webapps 下新建一个目录（webapps 下的每一个目录都将被视为一个单独的 web application），然后新建 `index.html`
 
 ```html
 <!DOCTYPE html>
@@ -89,13 +95,13 @@ java.util.logging.ConsoleHandler.encoding = GBK
 </html>
 ```
 
-然后打开 http://localhost:8080/static-demo/，可以看到以下页面：
+然后打开 [http://localhost:8080/static-demo/，可以看到以下页面](http://localhost:8080/static-demo/，可以看到以下页面)：
 
 ![](images/2.jpg)
 
-输入这串 URL 实际上访问的资源文件是 index.html，即完整路径为：http://localhost:8080/static-demo/index.html。
+输入这串 URL 实际上访问的资源文件是 `index.html`，即完整路径为：[http://localhost:8080/static-demo/index.html](http://localhost:8080/static-demo/index.html)。
 
-也就是说如果目录下有 index.html，Tomcat 会默认返回这个文件，但是如果是其他文件名称，就不能省略了。
+也就是说如果目录下有 `index.html`，Tomcat 会默认返回这个文件，但是如果是其他文件名称，就不能省略了。
 
 ---
 
@@ -105,16 +111,16 @@ java.util.logging.ConsoleHandler.encoding = GBK
 
 和 Maven 约定俗成的一些目录结构和命名习惯一样，Tomcat 下的 web app 也有约定的格式和结构：
 
-* <TOMCAT_HOME>/webapps/hello-servlet/：表示一个 web app 目录，下面放着一些资源文件，如 HTML，CSS，JS文件，以及 Java 的 Class 文件和第三方库，这个目录也表示该 app 的整个上下文（root context）。
-* <TOMCAT_HOME>/webapps/hello-servlet/WEB-INF：这个目录是不能被客户端所直接访问的，里面存放着该应用的配置，比如 web.xml，在此目录下还放这个程序的源代码文件目录，编译后的 classes 目录以及第三方库目录。
+* <TOMCAT_HOME>/webapps/hello-servlet/：表示一个 web app 目录，下面放着一些资源文件，如 HTML，CSS，JS 文件，以及 Java 的 Class 文件和第三方库，这个目录也表示该 app 的整个上下文（root context）。
+* <TOMCAT_HOME>/webapps/hello-servlet/WEB-INF：这个目录是不能被客户端所直接访问的，里面存放着该应用的配置，比如 `web.xml`，在此目录下还放这个程序的源代码文件目录，编译后的 classes 目录以及第三方库目录。
 * <TOMCAT_HOME>/webapps/hello-servlet/WEB-INF/src：存放 Java 程序的源代码文件，为了方便部署，最佳实践是将源代码文件和编译后的 classes 分开放。
-* <TOMCAT_HOME>/webapps/hello-servlet/WEB-INF/classes：存放 Java 程序编译后的 class 文件，如果 class 定义了包的结构（package），该目录也要遵循同样的包结构，比如，package cn.korilweb; 那么这个目录下应该是 cn/korilweb/xxx.class 的结构。
+* <TOMCAT_HOME>/webapps/hello-servlet/WEB-INF/classes：存放 Java 程序编译后的 class 文件，如果 class 定义了包的结构（package），该目录也要遵循同样的包结构，比如，package `cn.korilweb`; 那么这个目录下应该是 `cn/korilweb/xxx.class` 的结构。
 * <TOMCAT_HOME>/webapps/hello-servlet/WEB-INF/lib：存放着这个 app 所需要使用的第三方库的 jar 包。
-* <TOMCAT_HOME>/webapps/hello-servlet/META-INF：此目录和 WEB-INF 一样不能被客户端直接访问，它存放了一些和服务器相关的资源和配置文件，比如 context.xml。
+* <TOMCAT_HOME>/webapps/hello-servlet/META-INF：此目录和 WEB-INF 一样不能被客户端直接访问，它存放了一些和服务器相关的资源和配置文件，比如 `context.xml`。
 
-Servlet 就是一个运行在 Tomcat 容器中的程序，客户通过 URL 调用相对应的 Servlet，比如我们接下来编写一个叫做 MyFirstServlet.java 的程序，然后编译成 MyFirstServlet.class 文件然后放在 hello-servlet/ 下面某个目录中，客户端就可以通过 http://localhost:8080/hello-servlet/MyFirstServlet 来访问到 Servlet 中的业务代码。
+Servlet 就是一个运行在 Tomcat 容器中的程序，客户通过 URL 调用相对应的 Servlet，比如我们接下来编写一个叫做 `MyFirstServlet.java` 的程序，然后编译成 `MyFirstServlet.class` 文件然后放在 hello-servlet/ 下面某个目录中，客户端就可以通过 [http://localhost:8080/hello-servlet/MyFirstServlet](http://localhost:8080/hello-servlet/MyFirstServlet) 来访问到 Servlet 中的业务代码。
 
-在 hello-servlet/WEB-INF 下面新建一个 src，存放源代码文件，我使用的包名是 cn.korilweb，所以在 src 下面新建 cn/korilweb 目录，最后新建一个 MyFirstServlet.java，并且写入以下代码：
+在 hello-servlet/WEB-INF 下面新建一个 src，存放源代码文件，我使用的包名是 `cn.korilweb`，所以在 src 下面新建 cn/korilweb 目录，最后新建一个 `MyFirstServlet.java`，并且写入以下代码：
 
 ```java
 package cn.korilweb;
@@ -164,7 +170,7 @@ public class MyFirstServlet extends HttpServlet {
 }
 ```
 
-编译需要使用第三方库，servlet-api.jar，幸运的是，这个 jar 包已经在 Tomcat 安装目录下的 lib 目录中，直接把 servlet-api.jar 复制到 WEB-INF/lib 下面。
+编译需要使用第三方库，`servlet-api.jar`，幸运的是，这个 jar 包已经在 Tomcat 安装目录下的 lib 目录中，直接把 `servlet-api.jar` 复制到 WEB-INF/lib 下面。
 
 进入 hello-servlet/WEB-INF 目录下，建立 classes 目录，并执行命令：
 
@@ -172,9 +178,9 @@ public class MyFirstServlet extends HttpServlet {
 javac -cp ".;./lib/servlet-api.jar" -d classes -encoding utf-8 .\src\cn\korilweb\MyFirstServlet.java
 ```
 
-可以看到 classes 目录下，生成了 cn/korilweb/MyFirstServlet.class。
+可以看到 classes 目录下，生成了 `cn/korilweb/MyFirstServlet.class`。
 
-启动 Tomcat 的 startup.bat，访问：http://localhost:8080/hello-servlet/hello，可以看到以下页面：
+启动 Tomcat 的 `startup.bat`，访问：[http://localhost:8080/hello-servlet/hello，可以看到以下页面](http://localhost:8080/hello-servlet/hello，可以看到以下页面)：
 
 ![](images/3.jpg)
 
@@ -188,5 +194,5 @@ javac -cp ".;./lib/servlet-api.jar" -d classes -encoding utf-8 .\src\cn\korilweb
 
 ## 参考
 
-1. https://www.zhihu.com/question/21416727/answer/690289895
-2. https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaServlets.html
+1. [https://www.zhihu.com/question/21416727/answer/690289895](https://www.zhihu.com/question/21416727/answer/690289895)
+2. [https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaServlets.html](https://www3.ntu.edu.sg/home/ehchua/programming/java/JavaServlets.html)

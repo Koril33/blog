@@ -7,6 +7,12 @@ summary: "查看 Linux 机器的各种参数，如：CPU，内存，硬盘等"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 在 Linux 服务器上部署或者维护应用程序的时候，少不了和性能打交道，而了解性能的第一步就是摸清楚面前这台机器的各种硬件配置如何。
@@ -19,7 +25,7 @@ toc: true
 
 ### lscpu
 
-查看 CPU 信息可以使用 lscpu，该命令从 sysfs 和 /proc/cpuinfo 文档中获取CPU架构信息，并将其显示在终端中。
+查看 CPU 信息可以使用 lscpu，该命令从 sysfs 和 `/proc/cpuinfo` 文档中获取 CPU 架构信息，并将其显示在终端中。
 
 ```shell
 $ lscpu
@@ -35,7 +41,7 @@ $ lscpu
 
 参数解释：
 
-* Architecture：CPU 架构，我的笔记本是 X86_64，而树莓派是 aarch64（就是 ARM64）。
+* Architecture：CPU 架构，我的笔记本是 `X86_64`，而树莓派是 aarch64（就是 ARM64）。
 * CPU op-mode(s)：这里两张图都显示，CPU 同时支持 32 位和 64 位指令。
 * Byte Order：大小端字节序，这里两个都是 Little Endian，即小端字节序。
 * CPU(s)：逻辑 CPU 的个数
@@ -53,9 +59,9 @@ $ lscpu
 * BogoMIPS：
 * Flags：指令集
 
-### /proc/cpuinfo
+### `/proc/cpuinfo`
 
-既然 lscpu 是从 /proc/cpuinfo 中获取的信息，我们也可以直接查看这个文件的内容：
+既然 lscpu 是从 `/proc/cpuinfo` 中获取的信息，我们也可以直接查看这个文件的内容：
 
 ```shell
 $ cat /proc/cpuinfo
@@ -69,19 +75,19 @@ $ cat /proc/cpuinfo
 
 ### top
 
-top 命令经常用来监控 linux 的系统状况，是常用的性能分析工具，能够实时显示系统中各个进程的资源占用情况。
+top 命令经常用来监控 Linux 的系统状况，是常用的性能分析工具，能够实时显示系统中各个进程的资源占用情况。
 
 top 的命令很简单，但是显示信息很多，具体的信息解释，可以参考：
 
-* https://blog.csdn.net/yaomingyang/article/details/78968573
-* https://blog.csdn.net/xp178171640/article/details/123633732
+* [https://blog.csdn.net/yaomingyang/article/details/78968573](https://blog.csdn.net/yaomingyang/article/details/78968573)
+* [https://blog.csdn.net/xp178171640/article/details/123633732](https://blog.csdn.net/xp178171640/article/details/123633732)
 
 top 中可以看到内存信息，但是除了内存之外，top 还展示了 CPU 的负载信息，运行时间，用户数，进程数等等有用的信息。
 
 top 可以按照 CPU 和内存占用排序显示进程：
 
-* 按P – 以 CPU 占用率大小的顺序排列进程列表
-* 按M – 以内存占用率大小的顺序排列进程列表
+* 按 P – 以 CPU 占用率大小的顺序排列进程列表
+* 按 M – 以内存占用率大小的顺序排列进程列表
 
 ### free
 
@@ -96,9 +102,9 @@ Swap:         2.0Gi          0B       2.0Gi
 
 Mem 表示物理内存，Swap 表示交换内存。
 
-### /proc/meminfo
+### `/proc/meminfo`
 
-上面的命令都是从 /proc/meminfo 获取信息的，所以我们可以直接查看 /proc/meminfo 的内容
+上面的命令都是从 `/proc/meminfo` 获取信息的，所以我们可以直接查看 `/proc/meminfo` 的内容
 
 ```shell
 $ cat /proc/meminfo
@@ -110,7 +116,7 @@ $ cat /proc/meminfo
 
 ### lsblk
 
-lsblk命令 用于列出所有可用块设备的信息，而且还能显示他们之间的依赖关系，但是它不会列出RAM盘的信息。块设备有硬盘，闪存盘，cd-ROM等等。
+lsblk 命令 用于列出所有可用块设备的信息，而且还能显示他们之间的依赖关系，但是它不会列出 RAM 盘的信息。块设备有硬盘，闪存盘，cd-ROM 等等。
 
 ```shell
 $ lsblk -f
@@ -130,11 +136,11 @@ $ fdisk -l
 
 ### df
 
-`df`报告文件系统正在使用多少磁盘空间。
+`df` 报告文件系统正在使用多少磁盘空间。
 
 该命令显示文件系统上可用的磁盘空间量以及每个文件名的参数。
 
-如果您想df 以人类可读的格式运行，请使用`--human-readable （-h 简称）`选项：
+如果您想 df 以人类可读的格式运行，请使用 `--human-readable （-h 简称）` 选项：
 
 ```shell
 $ df -h
@@ -142,9 +148,9 @@ $ df -h
 
 ### du
 
-该`du`命令允许用户快速获取磁盘使用信息。它最适合应用于特定目录。
+该 `du` 命令允许用户快速获取磁盘使用信息。它最适合应用于特定目录。
 
-如果您想df 以人类可读的格式运行，请使用`--human-readable （-h 简称）`选项：
+如果您想 df 以人类可读的格式运行，请使用 `--human-readable （-h 简称）` 选项：
 
 ```shell
 $ du -h
@@ -189,14 +195,13 @@ ls -lR | grep "^[-,d]" | wc -l
 ```
 
 
-
 ---
 
 ## 性能测试
 
 ### CPU
 
-sysbench 是一款开源的多线程性能测试工具，可以执行CPU/内存/线程/IO/数据库等方面的性能测试。
+sysbench 是一款开源的多线程性能测试工具，可以执行 CPU/内存/线程/IO/数据库等方面的性能测试。
 
 Ubuntu 下安装 sysbench：
 
@@ -256,7 +261,7 @@ Threads fairness:
     execution time (avg/stddev):   9.9912/0.00
 ```
 
-通过 --threads 参数，可以增加线程数量
+通过 `--threads` 参数，可以增加线程数量
 
 ```shell
 sysbench --threads=2 cpu run
@@ -317,4 +322,3 @@ sysbench --threads=32 --report-interval=4 --time=60 --test=fileio --file-num=10 
 # 清理测试数据
 sysbench --threads=32 --report-interval=4 --time=60 --test=fileio --file-num=10 --file-total-size=10G --file-test-mode=rndrw cleanup
 ```
-

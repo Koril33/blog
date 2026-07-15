@@ -3,8 +3,14 @@ title: "Python压缩JPEG图片"
 date: 2023-05-20T10:41:51+08:00
 tags: []
 featured_image: "images/background.jpg"
-summary: "使用Pillow压缩JPEG图片"
+summary: "使用 Pillow 压缩 JPEG 图片"
 toc: true
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 前言
@@ -15,7 +21,7 @@ JPEG 格式图片的存储和压缩原理是一个非常复杂的话题，本文
 
 ## 最简单的 save
 
-Pillow 库中的 Image.save 方法，可以指定保存的 quality，从而实现 JPEG 图片的压缩：
+Pillow 库中的 `Image.save` 方法，可以指定保存的 quality，从而实现 JPEG 图片的压缩：
 
 ```python
 from PIL import Image
@@ -29,13 +35,13 @@ def compress_image(file_path: str, quality: int):
 
 过程很简单，打开一个图片，然后按照指定的 quality 保存图片。
 
-quality 的范围是限制的，范围从1 到 100，但最好不要超过 95，不然体积会变得很大。
+quality 的范围是限制的，范围从 1 到 100，但最好不要超过 95，不然体积会变得很大。
 
-参考这篇文章：https://jdhao.github.io/2019/07/20/pil_jpeg_image_quality/
+参考这篇文章：[https://jdhao.github.io/2019/07/20/pil_jpeg_image_quality/](https://jdhao.github.io/2019/07/20/pil_jpeg_image_quality/)
 
 另外官方文档，也对 quality 做出了一定的解释：
 
-https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html
+[https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html](https://pillow.readthedocs.io/en/stable/handbook/image-file-formats.html)
 
 > **quality**
 >
@@ -77,5 +83,5 @@ def resize_image(file_path: str, ratio: float = None, width: int = None, height:
 
 ## 参考
 
-1. https://www.thepythoncode.com/article/compress-images-in-python
-2. https://pillow.readthedocs.io/en/stable/index.html
+1. [https://www.thepythoncode.com/article/compress-images-in-python](https://www.thepythoncode.com/article/compress-images-in-python)
+2. [https://pillow.readthedocs.io/en/stable/index.html](https://pillow.readthedocs.io/en/stable/index.html)

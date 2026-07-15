@@ -1,7 +1,7 @@
 ---
 title: "Ubuntu下的环境配置和点灯"
 date: 2025-03-22T10:28:00+08:00
-summary: "Ubuntu 下开发51单片机的环境配置"
+summary: "Ubuntu 下开发 51 单片机的环境配置"
 ---
 
 ## 目录
@@ -31,7 +31,7 @@ summary: "Ubuntu 下开发51单片机的环境配置"
 
 ### 编译器
 
-编译 51 系列的单片机，需要有一个编译器——SDCC，官网: https://sdcc.sourceforge.net/
+编译 51 系列的单片机，需要有一个编译器——SDCC，官网： [https://sdcc.sourceforge.net/](https://sdcc.sourceforge.net/)
 
 安装：
 
@@ -41,9 +41,9 @@ sudo apt install sdcc
 
 ### 烧录器
 
-编译好的二进制文件需要烧写到单片机的 Flash 中，所以还需要一个烧写器——stcgal，官网：https://github.com/grigorig/stcgal
+编译好的二进制文件需要烧写到单片机的 Flash 中，所以还需要一个烧写器——stcgal，官网：[https://github.com/grigorig/stcgal](https://github.com/grigorig/stcgal)
 
-这个工具是用 Python 编写的，所以可以使用 pip 安装，为了不污染全局 pip，我单独在家目录的tool目录下给它建了个虚拟环境：
+这个工具是用 Python 编写的，所以可以使用 pip 安装，为了不污染全局 pip，我单独在家目录的 tool 目录下给它建了个虚拟环境：
 
 ```
 mkdir -p ~/tool/stcgal
@@ -66,7 +66,6 @@ python -m pip install stcgal
 这里提供一个最简单的 LED 闪烁示例代码：
 
 ```c
-
 #include <8052.h>
 
 void delay() {
@@ -85,8 +84,6 @@ void main() {
         delay();
     }
 }
-
-
 ```
 
 编译代码：
@@ -107,14 +104,12 @@ ls /dev/ttyUSB*
 然后，通过 stcgal 工具烧写文件：
 
 ```shell
-
 source ~/tool/stcgal/venv/bin/activate
 
 stcgal -P stc89a -p /dev/ttyUSB0 main.ihx 
-
 ```
 
-出现: Waiting for MCU, please cycle power: done，则需要重新打开单片机（在我的开发板上就是一个电源按键），成功后会提示：
+出现： Waiting for MCU, please cycle power: done，则需要重新打开单片机（在我的开发板上就是一个电源按键），成功后会提示：
 
 ```
 (venv) koril@koril-ThinkBook-16-G6-IMH:~/project/c52/blink$ stcgal -P stc89a -p /dev/ttyUSB0 main.ihx 
@@ -144,4 +139,3 @@ Setting options:
 done
 Disconnected!
 ```
-

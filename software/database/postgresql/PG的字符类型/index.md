@@ -4,6 +4,12 @@ date: 2026-05-17T11:47:16
 summary: "char varchar text 的区别"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 两种字符串
 
 SQL 标准定义了两种类型的字符串：
@@ -29,7 +35,7 @@ text 是 PG 内部原生的字符串类型，varchar 更像是一种 text 的变
 
 ## 使用哪一个？
 
-文档的 Tip 写道：这三种类型之间没有性能差异,除了使用空白填充类型时增加了存储空间,以及在将长度限制的列存储时,会多检查几个CPU周期。尽管 char(n) 在某些其他数据库系统中具有性能优势,但在PostgreSQL中并不存在此类优势;事实上,由于额外的存储成本, char(n) 通常是三者中最慢的。在大多数情况下,应改用 text 或 varchar 的格式。
+文档的 Tip 写道：这三种类型之间没有性能差异，除了使用空白填充类型时增加了存储空间，以及在将长度限制的列存储时，会多检查几个 CPU 周期。尽管 char(n) 在某些其他数据库系统中具有性能优势，但在 PostgreSQL 中并不存在此类优势；事实上，由于额外的存储成本， char(n) 通常是三者中最慢的。在大多数情况下，应改用 text 或 varchar 的格式。
 
 ---
 
@@ -37,7 +43,7 @@ text 是 PG 内部原生的字符串类型，varchar 更像是一种 text 的变
 
 文档写道：If you desire to store long strings with no specific upper limit, use text or character varying without a length specifier, rather than making up an arbitrary length limit.)
 
-所以，PG 里的字符串其实不用需要考虑性能，如果没有明确的限制，直接使用不指定 n 的 varchar 或者 text，除非明确需要数据库限制长度，使用 varchar(n)，或者明确一个字段是固定长度的（几乎不会更改，比如邮编，车牌号，证件号），则最后再考虑使用char(n)。
+所以，PG 里的字符串其实不用需要考虑性能，如果没有明确的限制，直接使用不指定 n 的 varchar 或者 text，除非明确需要数据库限制长度，使用 varchar(n)，或者明确一个字段是固定长度的（几乎不会更改，比如邮编，车牌号，证件号），则最后再考虑使用 char(n)。
 
 text 是 PG 的内置类型，支持很好，varchar 曾更像是一种带有限制的 text，而 char 的性能是三者里最差的，所以优先级如下：
 
@@ -49,4 +55,4 @@ text > varchar > varchar(n) > char
 
 ## 参考
 
-1. https://www.postgresql.org/docs/17/datatype-character.html
+1. [https://www.postgresql.org/docs/17/datatype-character.html](https://www.postgresql.org/docs/17/datatype-character.html)

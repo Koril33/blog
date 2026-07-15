@@ -6,7 +6,7 @@ summary: "Ubuntu 的 kvm 导致的冲突"
 
 ## 问题
 
-Ubuntu 在一次更新后无法正常打开 Virtualbox 里的虚拟机，会爆出如下错误：
+Ubuntu 在一次更新后无法正常打开 VirtualBox 里的虚拟机，会爆出如下错误：
 
 ![](./images/1.jpg)
 
@@ -32,10 +32,9 @@ sudo rmmod kvm
 
 方案 2：开机时禁用 KVM 模块
 
-编辑 /etc/modprobe.d/blacklist.conf，添加：
+编辑 `/etc/modprobe.d/blacklist.conf`，添加：
 
 ```sh
 blacklist kvm
 blacklist kvm_intel
 ```
-

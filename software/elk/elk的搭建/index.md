@@ -1,7 +1,13 @@
 ---
 title: "elk的搭建"
 date: 2026-03-03T11:53:40
-summary: "ElasticSearch、Logstash、Kibana 在 Linux 的安装和部署"
+summary: "Elasticsearch、Logstash、Kibana 在 Linux 的安装和部署"
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 前言
@@ -29,7 +35,7 @@ sudo apt install kibana
 sudo apt install logstash
 ```
 
-注：elasticsearch 第一安装会输出以下内容：
+注：Elasticsearch 第一安装会输出以下内容：
 
 ```
 --------------------------- Security autoconfiguration information ------------------------------
@@ -62,7 +68,7 @@ Generate an enrollment token for Elasticsearch nodes with
  sudo systemctl start elasticsearch.service
 ```
 
-ElasticSearch 8.X 版本后，默认启用 TLS（后续节点或者API请求走的是 HTTPS），built-in superuser （账号名是：elastic）也就是超级用户的密码是随机生成的，如果忘记了可以通过以下命令重置：
+Elasticsearch 8.X 版本后，默认启用 TLS（后续节点或者 API 请求走的是 HTTPS），built-in superuser （账号名是：elastic）也就是超级用户的密码是随机生成的，如果忘记了可以通过以下命令重置：
 
 ```shell
 sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u elastic
@@ -84,7 +90,7 @@ sudo apt -o Acquire::https::Proxy="http://192.168.0.114:7897" install xxx
 /etc/logstash/
 ```
 
-elasticsearch.yml 默认配置：
+`elasticsearch.yml` 默认配置：
 
 ```
 path.data: /var/lib/elasticsearch
@@ -103,7 +109,7 @@ cluster.initial_master_nodes: ["debian-elk"]
 http.host: 0.0.0.0
 ```
 
-默认开启了开启了安全认证，开启了 HTTPS，开启了节点间 TLS，证书路径：/etc/elasticsearch/certs/http_ca.crt
+默认开启了开启了安全认证，开启了 HTTPS，开启了节点间 TLS，证书路径：`/etc/elasticsearch/certs/http_ca.crt`
 
 如果仅仅是测试，可以改成简化为单机模式，并且关闭安全配置：
 
@@ -112,7 +118,7 @@ discovery.type: single-node
 xpack.security.enabled: false
 ```
 
-kibana.yml 需要修改，添加 elasticsearch 验证的信息：
+`kibana.yml` 需要修改，添加 Elasticsearch 验证的信息：
 
 ```
 server.host: "0.0.0.0"
@@ -134,13 +140,13 @@ logging:
 pid.file: /run/kibana/kibana.pid
 ```
 
-可以通过以下命令重置 kibana_system 密码：
+可以通过以下命令重置 `kibana_system` 密码：
 
 ```shell
 sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u kibana_system
 ```
 
-这里的 elasticsearch.ssl.verificationMode 设置为 none，是因为测试环境，关闭 TLS 验证（生产环境应该开启并且配置好证书）。
+这里的 `elasticsearch.ssl.verificationMode` 设置为 none，是因为测试环境，关闭 TLS 验证（生产环境应该开启并且配置好证书）。
 
 ---
 
@@ -149,7 +155,6 @@ sudo /usr/share/elasticsearch/bin/elasticsearch-reset-password -u kibana_system
 依次启动 ELK 的服务：
 
 ```shell
-
 sudo systemctl daemon-reload
 
 sudo systemctl enable elasticsearch
@@ -160,12 +165,11 @@ sudo systemctl start kibana
 
 sudo systemctl enable logstash
 sudo systemctl start logstash
-
 ```
 
 验证是否安装成功：
 
-对于 ElasticSearch 可以用 curl：
+对于 Elasticsearch 可以用 curl：
 
 ```shell
 sudo curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic:WrFx5aWjon-fP5O_VZxo https://localhost:9200
@@ -188,9 +192,8 @@ curl -k -u elastic:WrFx5aWjon-fP5O_VZxo https://localhost:9200
   },
   "tagline" : "You Know, for Search"
 }
-
 ```
 
-`-k`或者`--insecure`表示忽略 TLS 验证，即允许不使用证书访问 SSL 站点。
+`-k` 或者 `--insecure` 表示忽略 TLS 验证，即允许不使用证书访问 SSL 站点。
 
-对于 kibana，只需要打开浏览器，访问服务器IP的 5601 端口，能显示登陆界面就说明安装成功了。
+对于 kibana，只需要打开浏览器，访问服务器 IP 的 5601 端口，能显示登陆界面就说明安装成功了。

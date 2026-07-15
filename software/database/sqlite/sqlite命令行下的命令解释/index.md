@@ -1,7 +1,7 @@
 ---
 title: "sqlite命令行下的命令解释"
 date: 2025-06-01T10:44:00+08:00
-summary: "sqlite 的命令作用解释"
+summary: "SQLite 的命令作用解释"
 ---
 
 ## 目录
@@ -12,17 +12,17 @@ summary: "sqlite 的命令作用解释"
 
 ## 前言
 
-sqlite 和 mysql/postgresql 类似，除了支持标准的 SQL 语句（DML，DDL）之外，还拥有完整的非标准命令和许多扩展功能。
+SQLite 和 MySQL/PostgreSQL 类似，除了支持标准的 SQL 语句（DML，DDL）之外，还拥有完整的非标准命令和许多扩展功能。
 
 这些非标准命令主要是为了方便管理数据库元数据（如查看表、索引、配置），这些操作超出了标准 SQL 的 DML 和 DDL 范畴，SQL 标准未定义这些管理功能，这些命令目的是提供简洁、直观的交互方式。通常可以当作客户端工具的“快捷方式”，而不是数据库核心引擎的一部分。
 
-比如，查看所有数据库，sqlite 是 `.databases`，mysql 是 `SHOW DATABASES`，pg 则是 `\l`，sqlite 的内置命令都以点开头，pg 则以反斜杠开头，mysql 则依赖类似 SQL 的语法。
+比如，查看所有数据库，SQLite 是 `.databases`，MySQL 是 `SHOW DATABASES`，pg 则是 `\l`，SQLite 的内置命令都以点开头，pg 则以反斜杠开头，MySQL 则依赖类似 SQL 的语法。
 
 ---
 
-## sqlite 的内置命令
+## SQLite 的内置命令
 
-通过 `.help` 可以查看 sqlite 所有支持的命令：
+通过 `.help` 可以查看 SQLite 所有支持的命令：
 
 ```sh
 sqlite> .help
@@ -92,21 +92,20 @@ sqlite> .help
 
 大约有 60 个命令，这里按照不同功能进行简单的分类，然后逐一介绍。
 
-| index | category             | command                                                      |
+| index | category | command |
 | ----- | -------------------- | ------------------------------------------------------------ |
-| 1     | 数据库文件与备份操作 | .archive .backup .clone .open .recover .restore .save .vfsinfo/.vfslist/.vfsname .filectrl |
-| 2     | 数据导入导出         | .dump .excel .import .once .output .read                     |
-| 3     | 元数据与结构查询     | .databases .fullschema .indexes .schema .tables .dbinfo      |
-| 4     | 查询输出格式化       | .header .mode .nullvalue .separator .width .show             |
-| 5     | 系统配置与调试       | .bail .cd .dbconfig .eqp .explain .expert .limit .lint .scanstats .timer .trace |
-| 6     | 扩展与外部工具       | .load .shell .system .sha3sum                                |
-| 7     | 会话与状态管理       | .changes .connection .log .parameter .progress .prompt .session |
-| 8     | 辅助工具与帮助       | .auth .check .echo .exit .help .nonce .print .version .timeout |
+| 1 | 数据库文件与备份操作 | .archive .backup .clone .open .recover .restore .save .vfsinfo/.vfslist/.vfsname .filectrl |
+| 2 | 数据导入导出 | .dump .excel .import .once .output .read |
+| 3 | 元数据与结构查询 | .databases .fullschema .indexes .schema .tables .dbinfo |
+| 4 | 查询输出格式化 | .header .mode .nullvalue .separator .width .show |
+| 5 | 系统配置与调试 | .bail .cd .dbconfig .eqp .explain .expert .limit .lint .scanstats .timer .trace |
+| 6 | 扩展与外部工具 | .load .shell .system .sha3sum |
+| 7 | 会话与状态管理 | .changes .connection .log .parameter .progress .prompt .session |
+| 8 | 辅助工具与帮助 | .auth .check .echo .exit .help .nonce .print .version .timeout |
 
 ---
 
 ## 数据库文件与备份操作
-
 
 
 ---
@@ -114,11 +113,9 @@ sqlite> .help
 ## 数据导入导出
 
 
-
 ---
 
 ## 元数据与结构查询
-
 
 
 ---
@@ -126,11 +123,9 @@ sqlite> .help
 ## 查询输出格式化
 
 
-
 ---
 
 ## 系统配置与调试
-
 
 
 ---
@@ -138,23 +133,20 @@ sqlite> .help
 ## 扩展与外部工具
 
 
-
 ---
 
 ## 会话与状态管理
 
 
-
 ---
 
-##  辅助工具与帮助
-
+## 辅助工具与帮助
 
 
 ---
 
 ## 参考
 
-1. https://sqlite.org/cli.html
-2. https://www.sqlitetutorial.net/sqlite-commands/
-3. https://www.w3resource.com/sqlite/sqlite-dot-commands.php
+1. [https://sqlite.org/cli.html](https://sqlite.org/cli.html)
+2. [https://www.sqlitetutorial.net/sqlite-commands/](https://www.sqlitetutorial.net/sqlite-commands/)
+3. [https://www.w3resource.com/sqlite/sqlite-dot-commands.php](https://www.w3resource.com/sqlite/sqlite-dot-commands.php)

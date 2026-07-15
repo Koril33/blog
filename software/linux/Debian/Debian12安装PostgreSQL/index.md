@@ -7,6 +7,12 @@ summary: "安装 PostgreSQL 以及设置密码开放远程连接"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 PostgreSQL 是一种开源关系数据库管理系统 （RDBMS），支持结构化查询语言 （SQL）。
@@ -39,7 +45,7 @@ dpkg -l | grep postgresql
 sudo apt install postgresql postgresql-contrib
 ```
 
-postgresql：PostgreSQL 数据库管理系统的主包，包含核心的数据库服务器和管理工具。安装这个包会提供 PostgreSQL 的基本功能，能够创建和管理数据库、处理 SQL 查询等。
+PostgreSQL：PostgreSQL 数据库管理系统的主包，包含核心的数据库服务器和管理工具。安装这个包会提供 PostgreSQL 的基本功能，能够创建和管理数据库、处理 SQL 查询等。
 
 postgresql-contrib：包含一些 PostgreSQL 提供的额外扩展和模块，这些功能不是 PostgreSQL 核心的一部分，但可以增强数据库的功能和灵活性。
 
@@ -99,8 +105,8 @@ psql 是 PostgreSQL 的交互式终端。
 
 需要配置两个文件：
 
-1. postgresql.conf
-2. pg_hba.conf
+1. `postgresql.conf`
+2. `pg_hba.conf`
 
 在 Debian 12 上，它们位于 `/etc/postgresql/15/main/` 目录下。
 
@@ -117,7 +123,7 @@ sudo cp postgresql.conf postgresql.conf.bak
 listen_addresses = '*'
 ```
 
-在 pg_hba.conf 文件中添加一条规则，允许特定 IP 地址段的用户远程连接。例如，允许 192.168.1.0/24 网段的用户使用用户名和密码进行连接，可以添加以下内容：
+在 `pg_hba.conf` 文件中添加一条规则，允许特定 IP 地址段的用户远程连接。例如，允许 192.168.1.0/24 网段的用户使用用户名和密码进行连接，可以添加以下内容：
 
 ```bash
 host    all             all             192.168.1.0/24            md5
@@ -137,12 +143,11 @@ host    all             all             192.168.1.0/24            md5
 host    all             all              0.0.0.0/0                       md5
 ```
 
-修改完配置文件后，不要忘记重启 postgresql，让配置生效：
+修改完配置文件后，不要忘记重启 PostgreSQL，让配置生效：
 
 ```bash
 sudo systemctl restart postgresql
 ```
-
 
 
 ---

@@ -7,6 +7,12 @@ summary: "安装 Redis 以及设置密码开放远程连接"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 本文介绍了如何在 Debian 12 上安装和启用 Redis 数据库服务器的访问控制。
@@ -41,7 +47,7 @@ redis-server -v
 
 ### Start 和 Enable Redis
 
-安装成功后，redis 默认是自动启动，可以检查下：
+安装成功后，Redis 默认是自动启动，可以检查下：
 
 ```bash
 sudo systemctl status redis
@@ -63,7 +69,7 @@ sudo systemctl enable redis
 
 ### 开放远程连接
 
-redis 默认只允许本地连接，开放远程连接，需要修改 /etc/redis/redis.conf
+Redis 默认只允许本地连接，开放远程连接，需要修改 `/etc/redis/redis.conf`
 
 ```sh
 # 备份
@@ -80,7 +86,7 @@ bind 0.0.0.0
 
 ### 设置密码
 
-开放远程连接后，如果不设置密码，还是没法远程连接，因为有个 redis.conf 有个参数是：
+开放远程连接后，如果不设置密码，还是没法远程连接，因为有个 `redis.conf` 有个参数是：
 
 ```
 protected-mode yes
@@ -88,7 +94,7 @@ protected-mode yes
 
 除非关闭（改成 no），否则仍然只能 localhost 访问，所以必须要设置密码。
 
-修改 /etc/redis/redis.conf
+修改 `/etc/redis/redis.conf`
 
 ```sh
 # 修改
@@ -100,7 +106,7 @@ sudo vim /etc/redis/redis.conf
 requirepass 123456
 ```
 
-修改完配置文件，重启 redis
+修改完配置文件，重启 Redis
 
 ```sh
 sudo systemctl restart redis

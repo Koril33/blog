@@ -26,11 +26,11 @@ Redis-Py: 6.2.0
 
 ## 初始化连接池
 
-redis-py 创建客户端的方式是实例化一个 Redis 对象（Redis 类存在于 client.py 中），构造器中的一个参数——connection_pool，就是用来指定连接池对象的，通过源码可以看到，如果不传递 connect_pool 对象，那么在构造函数中，会自动创建一个连接池对象。
+redis-py 创建客户端的方式是实例化一个 Redis 对象（Redis 类存在于 `client.py` 中），构造器中的一个参数——`connection_pool`，就是用来指定连接池对象的，通过源码可以看到，如果不传递 `connect_pool` 对象，那么在构造函数中，会自动创建一个连接池对象。
 
 也就是说，无论如何，只要创建了 Redis 实例对象，底层都会使用连接池。
 
-当程序体量很小的时候，我们不需要精确控制多个 redis 客户端对象，也不需要指定最大连接数，那么按照以下写法使用即可：
+当程序体量很小的时候，我们不需要精确控制多个 Redis 客户端对象，也不需要指定最大连接数，那么按照以下写法使用即可：
 
 ```python
 import redis
@@ -45,7 +45,7 @@ redis_client = redis.Redis(
 # 之后的所有代码使用上面的这个模块级别的实例对象即可
 ```
 
-但是，对于存在多个客户端对象，以及需要控制最大连接数的情况下，则需要显式创建 ConnectPool，然后把连接池实例传递给 connection_pool 参数，这里需要注意传参的正确性。
+但是，对于存在多个客户端对象，以及需要控制最大连接数的情况下，则需要显式创建 ConnectPool，然后把连接池实例传递给 `connection_pool` 参数，这里需要注意传参的正确性。
 
 错误的写法，显式创建连接池对象的情况下，把参数传递给了 Redis 构造器：
 
@@ -143,7 +143,7 @@ def main():
 
 ![](./images/1.png)
 
-可以看到，这种写法，导致 redis 客户端重复发送了密码验证，以及客户端信息，还有 TCP 的握手和挥手。
+可以看到，这种写法，导致 Redis 客户端重复发送了密码验证，以及客户端信息，还有 TCP 的握手和挥手。
 
 连接池创建了又销毁，销毁了又创建，性能自然很低下。
 
@@ -210,11 +210,11 @@ def get_some_data_3():
     return client.get('hello')
 ```
 
-与第一种方式的差异在于，这里传入的 redis_pool 是模块级变量（全局变量），所以虽然每一次进入函数，都会创建新的 Redis 对象，但是每一个 Redis 对象底层复用的是同一个连接池。
+与第一种方式的差异在于，这里传入的 `redis_pool` 是模块级变量（全局变量），所以虽然每一次进入函数，都会创建新的 Redis 对象，但是每一个 Redis 对象底层复用的是同一个连接池。
 
 所以，这种写法的性能和第二种是差不多的。
 
-还有性能更好的方式，当前的流程是大批量读取，redis 提供了 pipeline 可以批量向 redis-server 传递命令，减少网络来回的开销。
+还有性能更好的方式，当前的流程是大批量读取，Redis 提供了 pipeline 可以批量向 redis-server 传递命令，减少网络来回的开销。
 
 ```python
 def get_some_data_4(num):
@@ -250,7 +250,7 @@ wireshark 抓包如下：
 
 ## 多线程下的使用
 
-首先需要明确，如果我们不指定连接池最大连接数大小，那么默认的最大连接数是 MAX_INT：
+首先需要明确，如果我们不指定连接池最大连接数大小，那么默认的最大连接数是 `MAX_INT`：
 
 ```python
 max_connections = max_connections or 2**31
@@ -260,11 +260,11 @@ max_connections = max_connections or 2**31
 
 ### 线程安全
 
-ConnectionPool 的实现，是线程安全的，也就是说多个 redis 客户端实例共用一个相同的连接池是安全的。
+ConnectionPool 的实现，是线程安全的，也就是说多个 Redis 客户端实例共用一个相同的连接池是安全的。
 
-所以，一个应用中，只需要构建一个 ConnectionPool 的实例即可，其他所有的 redis 客户端共享该实例。
+所以，一个应用中，只需要构建一个 ConnectionPool 的实例即可，其他所有的 Redis 客户端共享该实例。
 
-那么在一个客户端中应该保持有多少个 redis 实例？频繁的创建销毁是否会影响性能？
+那么在一个客户端中应该保持有多少个 Redis 实例？频繁的创建销毁是否会影响性能？
 
 考虑下面两种写法，第一种：
 
@@ -306,21 +306,21 @@ def main():
             executor.submit(task)
 ```
 
-两种区别在于，第一种所有线程都使用同一个 redis 客户端对象，而第二种中的每一个线程都会新建一个线程内的 redis 客户端对象。
+两种区别在于，第一种所有线程都使用同一个 Redis 客户端对象，而第二种中的每一个线程都会新建一个线程内的 Redis 客户端对象。
 
 无论哪一种，底层的连接池都是共享的，并且连接池是线程安全的，这个没有区别。
 
-问题在于 redis 客户端实例是否也是线程安全的，这一点暂时没有测试出来，不同的资料和 AI 给的结论也不相同，只能看源码了，这里先不下定论。
+问题在于 Redis 客户端实例是否也是线程安全的，这一点暂时没有测试出来，不同的资料和 AI 给的结论也不相同，只能看源码了，这里先不下定论。
 
 ### Gunicorn
 
 在 Gunicorn + Flask 的环境下，如果指定了多个 Worker 的情况下，由于 Gunicorn 是多进程模型，每个 worker 是一个独立的 Python 进程，这就导致了多进程下的多个连接池的存在。
 
-虽然连接池对象在模块级是全局的，每个 worker 进程都有自己独立的内存空间。redis_pool 在每个进程中是完全独立的对象，但每个 Gunicorn worker 都会执行一次模块加载过程，所以最终最大的应用连接数 = max_connections * worker 数量。
+虽然连接池对象在模块级是全局的，每个 worker 进程都有自己独立的内存空间。`redis_pool` 在每个进程中是完全独立的对象，但每个 Gunicorn worker 都会执行一次模块加载过程，所以最终最大的应用连接数 = `max_connections` * worker 数量。
 
-假设 max_connect = m，worker = n：
+假设 `max_connect` = m，worker = n：
 
-n = 1，max_connect = 10 的性能会比 n = 10，max_connect = 1 的性能更好，更不容易出现以下的异常：
+n = 1，`max_connect` = 10 的性能会比 n = 10，`max_connect` = 1 的性能更好，更不容易出现以下的异常：
 
 ```
 redis.exceptions.ConnectionError: Too many connections
@@ -332,6 +332,6 @@ redis.exceptions.ConnectionError: Too many connections
 
 ## 参考
 
-1. https://redis.io/docs/latest/develop/clients/pools-and-muxing/
-1. https://fahadahammed.com/effective-use-of-redis-with-python-and-connection-pool/
-1. https://redis.io/kb/doc/2c9kbsv6bi/should-connection-pooling-be-used
+1. [https://redis.io/docs/latest/develop/clients/pools-and-muxing/](https://redis.io/docs/latest/develop/clients/pools-and-muxing/)
+1. [https://fahadahammed.com/effective-use-of-redis-with-python-and-connection-pool/](https://fahadahammed.com/effective-use-of-redis-with-python-and-connection-pool/)
+1. [https://redis.io/kb/doc/2c9kbsv6bi/should-connection-pooling-be-used](https://redis.io/kb/doc/2c9kbsv6bi/should-connection-pooling-be-used)

@@ -7,6 +7,12 @@ summary: "用 Redis 的 zset 来实现一个自动补全提示的功能"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 搜索框的提示词功能是个很常见的功能，第一反应是用字典树（Trie Tree）来实现，这里不赘述 Trie Tree 的原理，这个经典的数据结构有很多书本和网络的资料可以参考。
@@ -200,7 +206,7 @@ zadd word 0 c 0 ca 0 cat 0 d 0 cb 0 cau 0 cat*
 
 插入一个单词，所需要的所有成员数是 s = 2 * (len(word)) + 1。
 
-用 python 代码来表示这个过程：
+用 Python 代码来表示这个过程：
 
 ```python
 def save_word_in_sorted_set(set_name, word):
@@ -222,7 +228,7 @@ def save_word_in_sorted_set(set_name, word):
 
 ### 插入所有的城市口岸名称
 
-我把所有名称，写到了一个 json 文件中，格式如下：
+我把所有名称，写到了一个 JSON 文件中，格式如下：
 
 ```json
 ["Ali Shirzayi", "Bagram", "Bamian", "Bazar-E-Panjwai", "Bost", "Camp Bastion", "Camp Dwyer", "Camp Leatherneck", "Camp Salerno", "Camp Wolverine", ... ]
@@ -230,7 +236,7 @@ def save_word_in_sorted_set(set_name, word):
 
 总数是 106843 个。
 
-然后循环插入到 redis 中：
+然后循环插入到 Redis 中：
 
 ```python
 def save_cities_in_sorted_set(set_name):
@@ -258,7 +264,7 @@ zcard "quote:location" # 1171525
 memory usage "quote:location" # 110500016
 ```
 
-前缀占用的成员数量就有 100万+，空间占用了约 110 M，所以这种方法的缺点就是空间复杂度高。
+前缀占用的成员数量就有 100 万+，空间占用了约 110 M，所以这种方法的缺点就是空间复杂度高。
 
 ### 搜索
 
@@ -266,7 +272,7 @@ memory usage "quote:location" # 110500016
 
 1. 在 zset 中找到 ca 的 rank 值
 2. 在 zset 中找到 cb 的 rank 值
-3. zrange zset_name ca_rank cb_rank，就可以找到具体的区间（包含了前缀和有效单词）
+3. zrange `zset_name` `ca_rank` `cb_rank`，就可以找到具体的区间（包含了前缀和有效单词）
 4. 通过后缀 *，过滤出有效单词
 
 转换成 Python 代码：
@@ -300,7 +306,7 @@ def auto_complete(set_name, query):
 
 ## Spring Boot 接口
 
-下面用 Spring Boot 来编写一个后端 http 接口，来实现自动补全提示的功能。
+下面用 Spring Boot 来编写一个后端 HTTP 接口，来实现自动补全提示的功能。
 
 模型类，也就是最终返回结果：
 
@@ -440,7 +446,7 @@ RedisTemplate 配置以及其他工具类，这些细节就不在本文赘述了
 
 ## 总结
 
-这并不是一个很好的方案，因为占用空间大，但是搜索的效果还不错（本地测试，3-5毫秒），也很稳定，是一个简单直白的思路。
+这并不是一个很好的方案，因为占用空间大，但是搜索的效果还不错（本地测试，3-5 毫秒），也很稳定，是一个简单直白的思路。
 
 如果接口访问量极大，不想用关系型数据库的 Like 语句做匹配，也不想引入 ES 等其他较重的工具，可以考虑这个 Redis 的解决方案。
 
@@ -449,5 +455,5 @@ RedisTemplate 配置以及其他工具类，这些细节就不在本文赘述了
 ## 参考
 
 1. [Can Redis do prefix matching? - Stack Overflow](https://stackoverflow.com/questions/9348191/can-redis-do-prefix-matching)
-2. http://antirez.com/post/autocomplete-with-redis.html
+2. [http://antirez.com/post/autocomplete-with-redis.html](http://antirez.com/post/autocomplete-with-redis.html)
 3. [Two ways of using Redis to build a NoSQL autocomplete search index - Pat Shaughnessy](https://patshaughnessy.net/2011/11/29/two-ways-of-using-redis-to-build-a-nosql-autocomplete-search-index)

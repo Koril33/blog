@@ -4,6 +4,12 @@ date: 2026-05-24T09:52:08
 summary: "提高 Bash Shell 使用体验的快捷键"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 移动
 
 除了方向键这种，最简单的左右单字符移动外，在碰到单行长命令时，需要更高效的移动手段。
@@ -75,4 +81,3 @@ source /usr/share/doc/fzf/examples/completion.bash
 ```shell
 source ~/.bashrc
 ```
-

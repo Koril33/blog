@@ -7,6 +7,12 @@ summary: "带宽和宽带的区别，如何测量服务器的带宽"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 网站的访问速度依赖于服务器的带宽，而人们又常常将带宽、宽带、上下行速率、吞吐率之类的词汇混淆，本篇简单的描述这些名词的区别，仅供参考。
@@ -29,7 +35,7 @@ toc: true
 
 ## 宽带和窄带
 
-宽带是一个名词，指的是带宽比较宽，因为还有一个概念——窄带，从2010年世界电信日(5.17)开始，带宽不到 4M 一概称为窄带，只有 4M 或以上才能被称为宽带。
+宽带是一个名词，指的是带宽比较宽，因为还有一个概念——窄带，从 2010 年世界电信日(5.17)开始，带宽不到 4M 一概称为窄带，只有 4M 或以上才能被称为宽带。
 
 ---
 
@@ -108,13 +114,12 @@ toc: true
 ## iperf
 
 
-
 ---
 
 ## 参考
 
-1. https://mp.weixin.qq.com/s/QUfee69vzJJ4r5woWSP4sw?poc_token=HLDGwGWj7FB8A7_eEQD33WNv15iyAAepZpvSo8_2
-2. https://www.baeldung.com/linux/iperf-measure-network-performance
-3. https://www.linode.com/docs/guides/install-iperf-to-diagnose-network-speed-in-linux/
-4. https://developer.aliyun.com/article/946308
-5. https://help.aliyun.com/zh/ecs/user-guide/network-bandwidth
+1. [https://mp.weixin.qq.com/s/QUfee69vzJJ4r5woWSP4sw?poc_token=HLDGwGWj7FB8A7_eEQD33WNv15iyAAepZpvSo8_2](https://mp.weixin.qq.com/s/QUfee69vzJJ4r5woWSP4sw?poc_token=HLDGwGWj7FB8A7_eEQD33WNv15iyAAepZpvSo8_2)
+2. [https://www.baeldung.com/linux/iperf-measure-network-performance](https://www.baeldung.com/linux/iperf-measure-network-performance)
+3. [https://www.linode.com/docs/guides/install-iperf-to-diagnose-network-speed-in-linux/](https://www.linode.com/docs/guides/install-iperf-to-diagnose-network-speed-in-linux/)
+4. [https://developer.aliyun.com/article/946308](https://developer.aliyun.com/article/946308)
+5. [https://help.aliyun.com/zh/ecs/user-guide/network-bandwidth](https://help.aliyun.com/zh/ecs/user-guide/network-bandwidth)

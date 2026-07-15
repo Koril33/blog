@@ -1,7 +1,13 @@
 ---
 title: "DroidCam下载和使用"
 date: 2026-01-28T23:13:25
-summary: ""
+summary: "通过 USB 将手机摄像头作为 Linux 电脑的网络摄像头"
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## DroidCam
@@ -26,7 +32,7 @@ sudo apt install linux-headers-$(uname -r) v4l2loopback-dkms
 
 ## 下载
 
-手机安装好 DroidCam APP，电脑端则去 Github release 下载客户端：https://github.com/dev47apps/droidcam-linux-client/releases
+手机安装好 DroidCam APP，电脑端则去 GitHub release 下载客户端：[https://github.com/dev47apps/droidcam-linux-client/releases](https://github.com/dev47apps/droidcam-linux-client/releases)
 
 解压后，执行：
 
@@ -51,10 +57,9 @@ adb 确保手机 USB 正常连接：
 koril@DjhLaptop:/opt/droidcam$ sudo adb devices 
 List of devices attached
 2121156a	device
-
 ```
 
-加载 v4l2loopback 内核模块，并且手动创建 1 个虚拟摄像头，名字叫 DroidCam，设备文件是 /dev/video5：
+加载 v4l2loopback 内核模块，并且手动创建 1 个虚拟摄像头，名字叫 DroidCam，设备文件是 `/dev/video5`：
 
 ```sh
 sudo modprobe v4l2loopback devices=1 video_nr=5 card_label="DroidCam"
@@ -81,7 +86,7 @@ Client v2.1.4
 Video: /dev/video5
 ```
 
-手机摄像头会被拉起，现在视频流就被写入到了`/dev/video5`中。
+手机摄像头会被拉起，现在视频流就被写入到了 `/dev/video5` 中。
 
 ## opencv
 
@@ -117,7 +122,6 @@ cv2.destroyAllWindows()
 
 ## 参考
 
-1. https://droidcam.app/
-2. https://github.com/v4l2loopback/v4l2loopback
-3. https://github.com/dev47apps/droidcam-linux-client/
-
+1. [https://droidcam.app/](https://droidcam.app/)
+2. [https://github.com/v4l2loopback/v4l2loopback](https://github.com/v4l2loopback/v4l2loopback)
+3. [https://github.com/dev47apps/droidcam-linux-client/](https://github.com/dev47apps/droidcam-linux-client/)

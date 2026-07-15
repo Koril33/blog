@@ -3,23 +3,29 @@ title: "Docker部署SpringBoot应用"
 date: 2023-04-30T16:29:10+08:00
 tags: []
 featured_image: "images/background.jpg"
-summary: "使用 Docker 容器部署 SpringBoot 应用"
+summary: "使用 Docker 容器部署 Spring Boot 应用"
 toc: true
+---
+
+## 目录
+
+[TOC]
+
 ---
 
 ## 前言
 
-本文记录了如何使用 Docker 来部署 SpringBoot 应用。
+本文记录了如何使用 Docker 来部署 Spring Boot 应用。
 
 ---
 
-## 一个简单的 SpringBoot 项目
+## 一个简单的 Spring Boot 项目
 
 ### 简单的 API
 
 为了起步方便，我们暂时先引入 Spring Web 相关的依赖，编写一个 Hello World 级的 controller。
 
-pom.xml
+`pom.xml`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -82,7 +88,7 @@ pom.xml
 </project>
 ```
 
-HelloController.java
+`HelloController.java`
 
 ```java
 package cn.korilweb.demo.controller;
@@ -126,7 +132,7 @@ COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 ```
 
-然后，运行 docker build 命令
+然后，运行 Docker build 命令
 
 ```shell
 sudo docker build -t koril/my-springboot-app .
@@ -182,9 +188,9 @@ sudo docker stop 9e32ed4dd5c3
 
 ## 修改接口
 
-上一节简单介绍了如何在 Docker 容器中启动 SpringBoot，但是如果我想修改 /hello 接口，必须要将修改后的 jar 包，重新上传到服务器，然后重新 build 镜像，再用新的镜像去启动容器。
+上一节简单介绍了如何在 Docker 容器中启动 Spring Boot，但是如果我想修改 /hello 接口，必须要将修改后的 jar 包，重新上传到服务器，然后重新 build 镜像，再用新的镜像去启动容器。
 
-其实整个开发过程中，只有 jar 包一直在变化，所以可以使用 docker -v 将 Docker 主机下 jar 绑定到容器内部的 jar。
+其实整个开发过程中，只有 jar 包一直在变化，所以可以使用 Docker -v 将 Docker 主机下 jar 绑定到容器内部的 jar。
 
 修改 Dockerfile：
 
@@ -199,7 +205,7 @@ ENTRYPOINT ["java", "-jar", "/my-app/app.jar"]
 sudo docker run --name app -dp 80:8080 -v ./package/demo-0.0.1-SNAPSHOT.jar:/my-app/app.jar koril/my-springboot-app
 ```
 
-我将 Docker 主机当前目录（Dockerfile 所在的目录）下的 package 目录中的 demo-0.0.1-SNAPSHOT.jar 和容器内的 /my-app/app.jar 两个文件绑定在一起，之后修改代码，只需要重新打包，发送到 package 下面，再重启 Docker 容器即可。
+我将 Docker 主机当前目录（Dockerfile 所在的目录）下的 package 目录中的 `demo-0.0.1-SNAPSHOT.jar` 和容器内的 `/my-app/app.jar` 两个文件绑定在一起，之后修改代码，只需要重新打包，发送到 package 下面，再重启 Docker 容器即可。
 
 ```shell
 sudo docker restart app
@@ -209,5 +215,5 @@ sudo docker restart app
 
 ## 参考
 
-1. https://spring.io/guides/topicals/spring-boot-docker/
-2. https://www.baeldung.com/dockerizing-spring-boot-application
+1. [https://spring.io/guides/topicals/spring-boot-docker/](https://spring.io/guides/topicals/spring-boot-docker/)
+2. [https://www.baeldung.com/dockerizing-spring-boot-application](https://www.baeldung.com/dockerizing-spring-boot-application)

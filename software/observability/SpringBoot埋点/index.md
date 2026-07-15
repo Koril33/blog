@@ -4,9 +4,15 @@ date: 2026-07-01T16:36:41
 summary: "在 Spring Boot 应用中实现自定义的埋点"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
-springboot 通过引入 actuator 和 micrometer 可以实现对 Prometheus 暴露许多官方提供的 metrics（参考：[springboot接入prometheus](https://blog.djhx.site/software/prometheus/springboot%E6%8E%A5%E5%85%A5prometheus/index.html)）。
+Spring Boot 通过引入 actuator 和 micrometer 可以实现对 Prometheus 暴露许多官方提供的 metrics（参考：[springboot接入prometheus](https://blog.djhx.site/software/prometheus/springboot%E6%8E%A5%E5%85%A5prometheus/index.html)）。
 
 但是对于更加自定义的指标，则需要我们手动编写代码，这个过程就是“埋点”。
 
@@ -57,12 +63,11 @@ Prometheus 支持的 metrics 类型如下：
 - Histogram
 - Summary
 
-micrometer 和 prometheus 的类型没有一一对应，所以 micrometer 输出的指标会转换成 prometheus 的多个时间序列。
+micrometer 和 Prometheus 的类型没有一一对应，所以 micrometer 输出的指标会转换成 Prometheus 的多个时间序列。
 
 ### Timer
 
 用于统计一批已经完成的操作耗时，例如 HTTP 请求、SQL 查询、方法调用。
-
 
 
 ### Counter
@@ -125,9 +130,9 @@ LongTaskTimer：任务还没完成时就能看到已经运行多久
 
 ### FunctionCounter
 
-也是累计计数器，但它不是通过 counter.increment(); 主动更新，而是通过一个函数读取现有对象中的累计值，例如：
+也是累计计数器，但它不是通过 `counter.increment()`; 主动更新，而是通过一个函数读取现有对象中的累计值，例如：
 
-cache.stats().evictionCount()
+`cache.stats().evictionCount()`
 
 适合第三方对象已经维护了累计计数，而你只需要将它暴露为指标的情况。
 
@@ -142,14 +147,14 @@ cache.stats().evictionCount()
 
 例如某个缓存组件已经维护：
 
-getOperationCount
-totalGetLatency
+`getOperationCount`
+`totalGetLatency`
 
-此时可以用 FunctionTimer 直接适配，而不需要在每次调用时执行 timer.record()。
+此时可以用 FunctionTimer 直接适配，而不需要在每次调用时执行 `timer.record()`。
 两个函数都应该是单调递增的累计值。后端可以据此计算：
 
 吞吐量 = count 的增长速率
-平均耗时 = totalTime 增长速率 / count 增长速率
+平均耗时 = `totalTime` 增长速率 / count 增长速率
 
 ### TimeGauge
 
@@ -161,10 +166,8 @@ totalGetLatency
 当前延迟估计值
 
 Micrometer 会根据后端自动转换时间单位。例如输入 4000 ms，导出给 Prometheus 时会转换成：
-my_gauge_seconds 4.0
+`my_gauge_seconds` 4.0
 
 它与 Timer 的区别：
 TimeGauge：一个可以上下变化的当前时间值
 Timer：多次已完成操作的耗时统计
-
-

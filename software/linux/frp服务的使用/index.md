@@ -20,9 +20,9 @@ summary: "frp，一个好用的内网穿透工具"
 
 ## 下载
 
-在 Github release 页面下载最新的版本：
+在 GitHub release 页面下载最新的版本：
 
-https://github.com/fatedier/frp/releases
+[https://github.com/fatedier/frp/releases](https://github.com/fatedier/frp/releases)
 
 根据服务器系统，选择对应的压缩包，比如我下载的是：[frp_0.63.0_linux_amd64.tar.gz](https://github.com/fatedier/frp/releases/download/v0.63.0/frp_0.63.0_linux_amd64.tar.gz)
 
@@ -32,9 +32,9 @@ https://github.com/fatedier/frp/releases
 frpc  frpc.toml  frps  frps.toml  LICENSE
 ```
 
-frpc 和 frpc.toml 是客户端的程序和配置文件模板。
+frpc 和 `frpc.toml` 是客户端的程序和配置文件模板。
 
-frps 和 frps.toml 是服务器端的程序和配置文件模板。
+frps 和 `frps.toml` 是服务器端的程序和配置文件模板。
 
 ---
 
@@ -44,7 +44,7 @@ frps 和 frps.toml 是服务器端的程序和配置文件模板。
 
 服务器和客户端就是通过这个端口（官方默认是 7000）建立连接。
 
-把 frps 和 frps.toml 放置到服务器的目录下（比如：/opt/frp），然后修改配置文件 frps.toml：
+把 frps 和 `frps.toml` 放置到服务器的目录下（比如：`/opt/frp`），然后修改配置文件 `frps.toml`：
 
 ```toml
 # 必须要配置的
@@ -59,11 +59,11 @@ webServer.user = "admin"
 webServer.password = "your password"
 ```
 
-bindPort 就是服务器与客户端通信的端口，auth.token 表示连接的验证 token。
+`bindPort` 就是服务器与客户端通信的端口，`auth.token` 表示连接的验证 token。
 
-如果没有这个 token，任何人只要知道你的 frps 的公网 IP 和端口，就可以连接你的 frp 服务，所以一定要指定一个 auth.token。
+如果没有这个 token，任何人只要知道你的 frps 的公网 IP 和端口，就可以连接你的 frp 服务，所以一定要指定一个 `auth.token`。
 
-webServer 的配置，主要是给服务器端一个可以查看的 web dashboard 页面，可有可无。
+`webServer` 的配置，主要是给服务器端一个可以查看的 web dashboard 页面，可有可无。
 
 配置好文件后，这里可以把 frps 加入到 systemd 进行管理，官网的 systemd service 有些简单，没有指定用户和重启策略，我的版本是：
 
@@ -90,13 +90,13 @@ RestartSec=5
 WantedBy=multi-user.target
 ```
 
-这里我指定运行的用户和属组是 frp，所以还需要建立一个专门运行 frp 服务的系统级用户（和 nginx 的 www-data 类似）：
+这里我指定运行的用户和属组是 frp，所以还需要建立一个专门运行 frp 服务的系统级用户（和 Nginx 的 www-data 类似）：
 
 ```sh
 sudo useradd --system --no-create-home --shell /usr/sbin/nologin frp
 ```
 
-然后把 /opt/frp 的目录权限指定给 frp 用户：
+然后把 `/opt/frp` 的目录权限指定给 frp 用户：
 
 ```sh
 sudo chown -R frp:frp /opt/frp
@@ -115,7 +115,7 @@ sudo systemctl start frps.service
 
 ## 客户端部署
 
-客户端和服务器端的部署几乎一模一样，把 frpc 和 frpc.toml 放到 /opt/frp 下，然后配置 frpc.service：
+客户端和服务器端的部署几乎一模一样，把 frpc 和 `frpc.toml` 放到 `/opt/frp` 下，然后配置 `frpc.service`：
 
 ```ini
 # /etc/systemd/system/frpc.service
@@ -140,7 +140,7 @@ RestartSec=5
 WantedBy=multi-user.target
 ```
 
-然后创建 frp 用户，更改 /opt/frp 权限给 frp 用户，唯一不同的是 frpc.toml 的内容，如下：
+然后创建 frp 用户，更改 `/opt/frp` 权限给 frp 用户，唯一不同的是 `frpc.toml` 的内容，如下：
 
 ```toml
 serverAddr = "your frps server ip address"
@@ -155,11 +155,11 @@ localPort = 22
 remotePort = 7001
 ```
 
-serverAddr 就是部署了 frps 服务器的 ip 地址或者域名，serverPort 和 auth.token 和服务器 frps.toml 里面保持一致，下面的 [[proxies]] 小节就是专门配置代理本地的服务到公网去。
+`serverAddr` 就是部署了 frps 服务器的 IP 地址或者域名，`serverPort` 和 `auth.token` 和服务器 `frps.toml` 里面保持一致，下面的 [[proxies]] 小节就是专门配置代理本地的服务到公网去。
 
-这里的 proxies 配置是把内网机器的 ssh 的 22 端口映射到公网服务器的 7001 端口。
+这里的 proxies 配置是把内网机器的 SSH 的 22 端口映射到公网服务器的 7001 端口。
 
-配置好 frpc.toml 后，启动：
+配置好 `frpc.toml` 后，启动：
 
 ```sh
 sudo systemctl daemon-reload
@@ -167,7 +167,7 @@ sudo systemctl enable frpc.service
 sudo systemctl start frpc.service
 ```
 
-验证 ssh 是否可以连接，假设我这里的公网 ip 是 1.2.3.4，ssh 用户名是 alice，那么 ssh 命令如下：
+验证 SSH 是否可以连接，假设我这里的公网 IP 是 1.2.3.4，SSH 用户名是 alice，那么 SSH 命令如下：
 
 ```sh
 ssh -p 7001 alice@1.2.3.4
@@ -177,6 +177,6 @@ ssh -p 7001 alice@1.2.3.4
 
 ## 参考
 
-1. https://github.com/fatedier/frp
-2. https://gofrp.org/zh-cn/docs/features/common/ui/
-3. https://gofrp.org/zh-cn/docs/setup/systemd/
+1. [https://github.com/fatedier/frp](https://github.com/fatedier/frp)
+2. [https://gofrp.org/zh-cn/docs/features/common/ui/](https://gofrp.org/zh-cn/docs/features/common/ui/)
+3. [https://gofrp.org/zh-cn/docs/setup/systemd/](https://gofrp.org/zh-cn/docs/setup/systemd/)

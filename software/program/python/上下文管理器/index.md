@@ -4,11 +4,17 @@ date: 2025-12-09T16:35:05
 summary: "解决重复性的样板代码和防止资源泄露的有效工具"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 在持久运行的服务端系统，由编程错误导致的一个很常见的问题是资源泄露。
 
-资源可以指代很多东西（内存、CPU、磁盘、文件句柄、socket连接，数据库连接，锁等等），但它们都有一个共同特点，那就是有限性，在计算机里的资源几乎都存在硬件层面或者操作系统层面的限制。
+资源可以指代很多东西（内存、CPU、磁盘、文件句柄、socket 连接，数据库连接，锁等等），但它们都有一个共同特点，那就是有限性，在计算机里的资源几乎都存在硬件层面或者操作系统层面的限制。
 
 本文所介绍的上下文管理器主要处理两种场景：
 
@@ -22,18 +28,18 @@ summary: "解决重复性的样板代码和防止资源泄露的有效工具"
 
 ## 场景一：资源泄露
 
-资源泄露往往是编码过程的疏忽导致，我们编写了对资源取用的代码后，没有编写及时清理关闭的代码，导致长期运行的软件（比如：web服务端程序），不断地创建资源对象，却没有进行释放。
+资源泄露往往是编码过程的疏忽导致，我们编写了对资源取用的代码后，没有编写及时清理关闭的代码，导致长期运行的软件（比如：web 服务端程序），不断地创建资源对象，却没有进行释放。
 
-一个典型的案例是文件的资源泄露：https://realpython.com/why-close-file-python/
+一个典型的案例是文件的资源泄露：[https://realpython.com/why-close-file-python/](https://realpython.com/why-close-file-python/)
 
 处理资源开启和关闭的方案有两种：
 
 1. try...finally
 2. with
 
-第一种`try...finally`属于通用方案，适用于所有资源对象，因为在 finally 块的语句一定会执行（除了机器被直接断电或者 Python 进程非正常退出），所以几乎所有涉及资源管理的示例代码都采用了`try...finally`语句。
+第一种 `try...finally` 属于通用方案，适用于所有资源对象，因为在 finally 块的语句一定会执行（除了机器被直接断电或者 Python 进程非正常退出），所以几乎所有涉及资源管理的示例代码都采用了 `try...finally` 语句。
 
-`try...finally`的优点是通用性，不需要资源对象实现什么协议，缺点是冗长，以及存在忘记在 finally 块中调用资源清理代码的可能性。
+`try...finally` 的优点是通用性，不需要资源对象实现什么协议，缺点是冗长，以及存在忘记在 finally 块中调用资源清理代码的可能性。
 
 文件：
 
@@ -64,9 +70,9 @@ finally:
 
 在 try 块中无论遇到 return，break/continue，Exception，最终 finally 的 close() 都会执行。
 
-第二种的 with statement 就是本文的主角，它的优点是代码简洁，不会忘记执行 close 之类的清理代码（因为使用的时候，根本不用写，也就不会忘记了），缺点是需要对象实现一些固定的协议，不如`try...finally`那么通用。
+第二种的 with statement 就是本文的主角，它的优点是代码简洁，不会忘记执行 close 之类的清理代码（因为使用的时候，根本不用写，也就不会忘记了），缺点是需要对象实现一些固定的协议，不如 `try...finally` 那么通用。
 
-假设一个项目有 10 个地方需要用到资源处理，那么意味着要写 10 次 `try...finally`代码，每增加一次处理，都会增加泄露的风险。所以不如把释放和清理资源的代码提前写在某个地方（实现协议），后续的调用不用再考虑重复编写资源处理的代码。
+假设一个项目有 10 个地方需要用到资源处理，那么意味着要写 10 次 `try...finally` 代码，每增加一次处理，都会增加泄露的风险。所以不如把释放和清理资源的代码提前写在某个地方（实现协议），后续的调用不用再考虑重复编写资源处理的代码。
 
 file:
 
@@ -116,7 +122,6 @@ try:
 finally:
     # 在业务代码后执行 N
     N()
-
 ```
 
 资源处理（获取和释放）的成对操作只是其中一种，还有很多类似的操作：
@@ -141,10 +146,10 @@ finally:
 1. C++/Rust 的 SBRM、RAII，离开作用域就会自动释放资源
 2. C# 的 using，需要资源对象实现 IDisposable 接口
 3. Java 的 try-with-resource，需要资源对象实现 AutoCloseable 接口
-4. Python 的 with statement，需要实现`__enter`和`__exit__`方法
+4. Python 的 with statement，需要实现 `__enter` 和 `__exit__` 方法
 5. Kotlin 的 use 函数
 
-当大量的样板代码和业务代码混合起来，整体就显得很乱，而且每个地方都要重复编写，把这些通用的`try...finally`抽象出来，放在一个地方，整体就会清晰很多，我个人感觉，这种思想类似 AOP（Aspect-oriented programming）。
+当大量的样板代码和业务代码混合起来，整体就显得很乱，而且每个地方都要重复编写，把这些通用的 `try...finally` 抽象出来，放在一个地方，整体就会清晰很多，我个人感觉，这种思想类似 AOP（Aspect-oriented programming）。
 
 ---
 
@@ -162,7 +167,6 @@ finally:
 自定义的上下文管理器实际上就是一个实现了上下文管理协议的类。上下文管理协议要求类包含两个特殊的方法：
 
 ```
-
 object.__enter__(self)
 
 __enter__ 定义了进入上下文环境时要准备的事情，比如：打开文件、获取锁、开始事务、创建某些对象。
@@ -172,19 +176,18 @@ object.__exit__(self, exc_type, exc_value, traceback)
 
 __exit__ 定义了退出上下文环境要做的事情，比如：关闭文件，释放锁，提交或者回滚事务，清除某些对象。
 __exit__ 的三个入参和异常处理有关，如果退出上下文环境时没有引发异常，那么三个参数都是 None，如果引发了异常，但是想要抑制该异常，那么需要 __exit__ 返回 True。
-
 ```
 
 with statement 具体的执行步骤如下：
 
 1. 通过 with 语句中的表达式求值得到上下文管理器对象
-2. 加载上下文管理器对象的`__enter__`方法，供后续调用
-3. 加载上下文管理器对象的`__exit__`方法，供后续调用
-4. 调用`__enter__`方法
-5. 如果 with 表达式后面跟着 as 语句，as 指定的目标可以是单个名称，也可以是解包组合，会把`__enter__`的返回对象赋给 as 后面的目标
+2. 加载上下文管理器对象的 `__enter__` 方法，供后续调用
+3. 加载上下文管理器对象的 `__exit__` 方法，供后续调用
+4. 调用 `__enter__` 方法
+5. 如果 with 表达式后面跟着 as 语句，as 指定的目标可以是单个名称，也可以是解包组合，会把 `__enter__` 的返回对象赋给 as 后面的目标
 6. 执行 with 中的主体代码块
-7. 调用`__exit__`方法
-8. 如果在执行 with 主体代码块中发生异常，则把异常信息传递给`__exit__`，否则传递 (None, None, None)，并且`__exit__`返回 True 表示抑制异常，返回 False 则会重新向外抛出原异常
+7. 调用 `__exit__` 方法
+8. 如果在执行 with 主体代码块中发生异常，则把异常信息传递给 `__exit__`，否则传递 (None, None, None)，并且 `__exit__` 返回 True 表示抑制异常，返回 False 则会重新向外抛出原异常
 
 下面给出 with 语句翻译后的同等代码：
 
@@ -214,7 +217,7 @@ finally:
         exit(manager, None, None, None)
 ```
 
-with 是一种 try...finally 样板代码的语法糖，它保证了成对函数中，如果`__enter__`成功执行（意味着进入了上下文环境），那么`__exit__`一定会执行。
+with 是一种 try...finally 样板代码的语法糖，它保证了成对函数中，如果 `__enter__` 成功执行（意味着进入了上下文环境），那么 `__exit__` 一定会执行。
 
 下面以一个简单的案例来看下自定义上下文管理器如何编写。
 
@@ -249,13 +252,11 @@ class TaskTimer:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.stop = int(time.time() * 1000)
         print(f'Task<{self.name}> cost: {self.stop - self.start} ms')
-
 ```
 
 调用时，这些样板代码就无需重复书写了：
 
 ```python
-
 with TaskTimer(name='simple task'):
     print('some task start')
     time.sleep(2)
@@ -271,8 +272,8 @@ with TaskTimer(name='simple task'):
 
 ## 参考
 
-1. https://peps.python.org/pep-0343/
-2. https://realpython.com/python-with-statement/
-3. https://docs.python.org/3/library/contextlib.html
-4. https://docs.python.org/3/reference/datamodel.html#with-statement-context-managers
-5. https://docs.python.org/3/reference/compound_stmts.html#with
+1. [https://peps.python.org/pep-0343/](https://peps.python.org/pep-0343/)
+2. [https://realpython.com/python-with-statement/](https://realpython.com/python-with-statement/)
+3. [https://docs.python.org/3/library/contextlib.html](https://docs.python.org/3/library/contextlib.html)
+4. [https://docs.python.org/3/reference/datamodel.html#with-statement-context-managers](https://docs.python.org/3/reference/datamodel.html#with-statement-context-managers)
+5. [https://docs.python.org/3/reference/compound_stmts.html#with](https://docs.python.org/3/reference/compound_stmts.html#with)

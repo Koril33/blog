@@ -4,9 +4,15 @@ date: 2025-07-05T14:00:00+08:00
 summary: "PEP 282 – A Logging System 的中文版"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 原文
 
-https://peps.python.org/pep-0282/
+[https://peps.python.org/pep-0282/](https://peps.python.org/pep-0282/)
 
 该 PEP 主要描述日志系统的基本概念和标准。
 
@@ -14,11 +20,11 @@ https://peps.python.org/pep-0282/
 
 ## PEP 282 – 日志系统
 
-作者: Vinay Sajip, Trent Mick
-状态: Final
-类型: Standards Track
-创建时间: 04-Feb-2002
-Python 版本呢: 2.3
+作者： Vinay Sajip, Trent Mick
+状态： Final
+类型： Standards Track
+创建时间： 04-Feb-2002
+Python 版本呢： 2.3
 
 ### 摘要
 
@@ -28,7 +34,7 @@ Python 版本呢: 2.3
 
 维护一个以名字作为单例 logger 对象的注册表，有利于：
 
-1. 存在不同的逻辑日志流（或“通道”）（例如，一个用于“zope.zodb”内容，另一个用于“mywebsite”特定内容）。
+1. 存在不同的逻辑日志流（或“通道”）（例如，一个用于“`zope.zodb`”内容，另一个用于“mywebsite”特定内容）。
 2. 不必传递 Logger 对象引用。
 
 该系统在运行时可配置。这种配置机制允许人们在不修改应用程序本身的情况下，调整记录级别和类型。
@@ -48,16 +54,16 @@ Python 版本呢: 2.3
 
 该提案在研究了一下日志库后被提出：
 
-- java.util.logging in JDK 1.4
+- `java.util.logging` in JDK 1.4
 - log4j
 - the Syslog package from the Protomatter project
-- MAL’s mx.Log package
+- MAL’s `mx.Log` package
 
 ---
 
 ### 简单的示例
 
-这显示了一个非常简单的示例，说明了如何使用日志包来生成STDERR上的简单记录输出。
+这显示了一个非常简单的示例，说明了如何使用日志包来生成 STDERR 上的简单记录输出。
 
 ```python
 --------- mymodule.py -------------------------------
@@ -123,7 +129,7 @@ Doin' stuff...
 
 - "" 表示命名空间的根节点
 - "Zope" 是根节点的子节点
-- "Zope.ZODB" 是 "Zope" 的子节点
+- `"Zope.ZODB"` 是 "Zope" 的子节点
 
 这些 Logger 对象门会创建 **LogRecord** 对象，把他们传递给 **Handler** 对象进行输出。Loggers 和 Handlers 都可以使用日志级别和过滤器（可选）来确定它们是否对某条特定的 LogRecord 感兴趣。当有必要将 LogRecord 输出到外部时，Handler 可以在发送到 I/O 流之前，使用 Formatter（格式化器）进行本地化或者格式化消息。
 
@@ -154,7 +160,7 @@ def disable(lvl):
 - ERROR
 - CRITICAL
 
-术语 CRITICAL 是用来代替 FATAL 的，后者被 log4j 使用。这两个级别在概念上是相同的——即严重的或非常严重的错误。然而，FATAL意味着死亡，这在Python中意味着引发和未捕获的异常、跟踪和退出。由于日志模块并不强制要求 FATAL 级别的日志条目产生这样的结果，所以使用 CRITICAL 比 FATAL 更有意义。
+术语 CRITICAL 是用来代替 FATAL 的，后者被 log4j 使用。这两个级别在概念上是相同的——即严重的或非常严重的错误。然而，FATAL 意味着死亡，这在 Python 中意味着引发和未捕获的异常、跟踪和退出。由于日志模块并不强制要求 FATAL 级别的日志条目产生这样的结果，所以使用 CRITICAL 比 FATAL 更有意义。
 
 这些日志级别只是简单的 integer 常数，为了去比较它们之间的重要程度。经验表明，过多的级别可能会导致困惑，因为它们导致对任何特定日志请求的级别的主观解释。
 
@@ -181,7 +187,7 @@ def addLevelName(lvl, lvlName):
 
 每一个 Logger 对象都追踪它们感兴趣的级别的日志，并且丢弃那些比该级别低级的日志请求。
 
-一个 Manager 类的对象维护了以名称作为层次型命名空间的 Logger 对象门。根据句点分割名称来表示不同的层次：Logger "foo" 是 Logger "foo.bar" 和 "foo.baz" 的父级节点。
+一个 Manager 类的对象维护了以名称作为层次型命名空间的 Logger 对象门。根据句点分割名称来表示不同的层次：Logger "foo" 是 Logger `"foo.bar"` 和 `"foo.baz"` 的父级节点。
 
 Manager 类的实例其实是一个单例对象，并且不直接暴露给用户，用户使用各种模块级别的函数来和它交互。
 
@@ -205,16 +211,16 @@ class Logger:
     def critical(self, msg, *args, **kwargs): ...
 ```
 
-目前只识别一个关键字参数——"exc_info"。如果为真，调用者希望在日志输出中提供异常信息。只有当异常信息需要在任何日志级别提供时，才需要这种机制。在更常见的情况下，只有当错误发生时才需要将异常信息添加到日志中，即在ERROR 级别，那么就提供了另一个方便的方法：
+目前只识别一个关键字参数——`"exc_info"`。如果为真，调用者希望在日志输出中提供异常信息。只有当异常信息需要在任何日志级别提供时，才需要这种机制。在更常见的情况下，只有当错误发生时才需要将异常信息添加到日志中，即在 ERROR 级别，那么就提供了另一个方便的方法：
 
 ```python
 class Logger:
     def exception(self, msg, *args): ...
 ```
 
-这应该只在异常处理程序的上下文中调用，而且是表示希望在日志中获得异常信息的首选方式。其他的简便方法只有在不寻常的情况下才可以和 exc_info 一起调用，例如，你可能想在 INFO 消息的上下文中提供异常信息。
+这应该只在异常处理程序的上下文中调用，而且是表示希望在日志中获得异常信息的首选方式。其他的简便方法只有在不寻常的情况下才可以和 `exc_info` 一起调用，例如，你可能想在 INFO 消息的上下文中提供异常信息。
 
-上面显示的 "msg "参数通常是一个格式字符串；但是，它可以是 str(x) 返回格式字符串的任何对象 x。例如，这有利于使用一个对象为一个国际化/本地化的应用程序获取一个本地特定的消息，也许使用标准的gettext模块。一个简要的例子：
+上面显示的 "msg "参数通常是一个格式字符串；但是，它可以是 str(x) 返回格式字符串的任何对象 x。例如，这有利于使用一个对象为一个国际化/本地化的应用程序获取一个本地特定的消息，也许使用标准的 gettext 模块。一个简要的例子：
 
 ```python
 class Message:
@@ -230,7 +236,7 @@ class Message:
 logger.info(Message("abc"), ...)
 ```
 
-为一条日志消息收集和格式化数据可能会很昂贵，而且如果记录器无论如何都会丢弃该消息的话，那就是一种浪费。要想知道一个请求是否会被记录仪接受，可以使用isEnabledFor()方法。
+为一条日志消息收集和格式化数据可能会很昂贵，而且如果记录器无论如何都会丢弃该消息的话，那就是一种浪费。要想知道一个请求是否会被记录仪接受，可以使用 `isEnabledFor()`方法。
 
 ```python
 class Logger:
@@ -259,14 +265,14 @@ if log.isEnabledFor(logging.INFO):
     log.info(hamletStr)
 ```
 
-当创建新的 Logger 时，它们会以表示“无级别”（no level）的级别进行初始化。可以使用setlevel（）方法明确设置级别：
+当创建新的 Logger 时，它们会以表示“无级别”（no level）的级别进行初始化。可以使用 setlevel（）方法明确设置级别：
 
 ```python
 class Logger:
     def setLevel(self, lvl): ...
 ```
 
-如果未设置 Logger 的级别，系统会咨询其所有祖先，遍历其层次结构，直到找到明确的设置级别。这被认为是该 Logger  的“有效级别”，可以通过 getEffectiveLevel() 方法来查询：
+如果未设置 Logger 的级别，系统会咨询其所有祖先，遍历其层次结构，直到找到明确的设置级别。这被认为是该 Logger 的“有效级别”，可以通过 `getEffectiveLevel()` 方法来查询：
 
 ```python
 def getEffectiveLevel(self): ...
@@ -278,13 +284,13 @@ Loggers 永远都不该被直接实例化，相反，应该使用模块级别的
 def getLogger(name=None): ...
 ```
 
-如果未指定名称，则返回根 Logger，如果存在该名称的 Logger，则将其返回。如果没有找到该名称的 Logger，则将新的Logger 初始化并返回。在这里，“名称”是“频道名称”的代名词。 用户可以在实例化新记录器时指定系统使用的自定义子类：
+如果未指定名称，则返回根 Logger，如果存在该名称的 Logger，则将其返回。如果没有找到该名称的 Logger，则将新的 Logger 初始化并返回。在这里，“名称”是“频道名称”的代名词。 用户可以在实例化新记录器时指定系统使用的自定义子类：
 
 ```python
 def setLoggerClass(klass): ...
 ```
 
-被传递的类应该是 Logger 的子类，其`__init__` 方法应该调用 `Logger.__init__`。
+被传递的类应该是 Logger 的子类，其 `__init__` 方法应该调用 `Logger.__init__`。
 
 ---
 
@@ -299,28 +305,28 @@ Handlers 负责将给定的 LogRecord 进行一些有用的处理，下面是一
 - MemoryHandler: 在内存中缓冲日志记录，直到缓冲区满了或出现特定条件。
 - SMTPHandler: 通过 SMTP 协议发送邮件的 Handler。
 - SysLogHandler: 用于通过 UDP 向 Unix syslog 写入的 Handler。
-- NTEventLogHandler: 用于向Windows NT, 2000和XP的 event logs 写入的 Handler。
+- NTEventLogHandler: 用于向 Windows NT, 2000 和 XP 的 event logs 写入的 Handler。
 - HTTPHandler: 用于以 GET 或 POST 的方式向 Web 服务器写入信息的 Handler。
 
-Handler 还可以使用 setLevel() 方法为他们设置级别：
+Handler 还可以使用 `setLevel()` 方法为他们设置级别：
 
 ```python
 def setLevel(self, lvl): ...
 ```
 
-可以设置 FileHandler 以创建一组轮转的日志文件集。在这种情况下，传递给构造函数的文件名被视为“基础”文件名。旋转的其他文件名是通过附加.1，.2等来创建基本文件名的其他文件名，最高为最大值，如要求汇总时指定的最大值。 setRollover 方法用于指定日志文件的最大大小和轮转中的最大备份文件数量。
+可以设置 FileHandler 以创建一组轮转的日志文件集。在这种情况下，传递给构造函数的文件名被视为“基础”文件名。旋转的其他文件名是通过附加.1，.2 等来创建基本文件名的其他文件名，最高为最大值，如要求汇总时指定的最大值。 `setRollover` 方法用于指定日志文件的最大大小和轮转中的最大备份文件数量。
 
 ```python
 def setRollover(maxBytes, backupCount): ...
 ```
 
-如果将 maxBytes 指定为 0，则永远不会发生轮转，并且日志文件无限期地增长。如果指定了非 0 大小，则当该大小将超过该大小时，会发生轮转。轮转方法可确保基本文件名称始终是最新的，.1是次新的，.2是之后次新的，以此类推。 在提供[6]的测试/示例脚本中还实现了许多其他处理程序 - 例如，XMLHandler和Soaphandler。
+如果将 `maxBytes` 指定为 0，则永远不会发生轮转，并且日志文件无限期地增长。如果指定了非 0 大小，则当该大小将超过该大小时，会发生轮转。轮转方法可确保基本文件名称始终是最新的，.1 是次新的，.2 是之后次新的，以此类推。 在提供[6]的测试/示例脚本中还实现了许多其他处理程序 - 例如，XMLHandler 和 Soaphandler。
 
 ---
 
 ### LogRecords
 
-一个 LogRecord 用于表示一个 logging 事件的容器。它不仅仅只是一个字典，尽管它确实定义了 getMessage 函数用于将一个消息与可选的运行参数合并。
+一个 LogRecord 用于表示一个 logging 事件的容器。它不仅仅只是一个字典，尽管它确实定义了 `getMessage` 函数用于将一个消息与可选的运行参数合并。
 
 ---
 
@@ -331,7 +337,7 @@ def setRollover(maxBytes, backupCount): ...
 - Formatter：提供类似于 printf 的格式化器，使用 % 操作符。
 - BufferingFormatter：为多个消息提供格式化支持，并支持头部和尾部的格式化。
 
-在 Handlers 对象上调用 setFormatter()，可以将 Handler 和 Formatter 连接起来：
+在 Handlers 对象上调用 `setFormatter()`，可以将 Handler 和 Formatter 连接起来：
 
 ```python
 def setFormatter(self, form): ...
@@ -339,24 +345,24 @@ def setFormatter(self, form): ...
 
 Formatters 使用 % 来格式化日志信息。格式化字符串应该包含 `%(name)s`，这些 LogRecord 属性字典可以用来获取特定信息的数据，以下属性将被提供：
 
-| `%(name)s`            | Name of the logger (logging channel)                         |
+| `%(name)s` | Name of the logger (logging channel) |
 | --------------------- | ------------------------------------------------------------ |
-| `%(levelno)s`         | Numeric logging level for the message (DEBUG, INFO, WARN, ERROR, CRITICAL) |
-| `%(levelname)s`       | Text logging level for the message (“DEBUG”, “INFO”, “WARN”, “ERROR”, “CRITICAL”) |
-| `%(pathname)s`        | Full pathname of the source file where the logging call was issued (if available) |
-| `%(filename)s`        | Filename portion of pathname                                 |
-| `%(module)s`          | Module from which logging call was made                      |
-| `%(lineno)d`          | Source line number where the logging call was issued (if available) |
-| `%(created)f`         | Time when the LogRecord was created (`time.time()` return value) |
-| `%(asctime)s`         | Textual time when the LogRecord was created                  |
-| `%(msecs)d`           | Millisecond portion of the creation time                     |
+| `%(levelno)s` | Numeric logging level for the message (DEBUG, INFO, WARN, ERROR, CRITICAL) |
+| `%(levelname)s` | Text logging level for the message (“DEBUG”, “INFO”, “WARN”, “ERROR”, “CRITICAL”) |
+| `%(pathname)s` | Full pathname of the source file where the logging call was issued (if available) |
+| `%(filename)s` | Filename portion of pathname |
+| `%(module)s` | Module from which logging call was made |
+| `%(lineno)d` | Source line number where the logging call was issued (if available) |
+| `%(created)f` | Time when the LogRecord was created (`time.time()` return value) |
+| `%(asctime)s` | Textual time when the LogRecord was created |
+| `%(msecs)d` | Millisecond portion of the creation time |
 | `%(relativeCreated)d` | Time in milliseconds when the LogRecord was created, relative to the time the logging module was loaded (typically at application startup time) |
-| `%(thread)d`          | Thread ID (if available)                                     |
-| `%(message)s`         | The result of record.getMessage(), computed just as the record is emitted |
+| `%(thread)d` | Thread ID (if available) |
+| `%(message)s` | The result of `record.getMessage()`, computed just as the record is emitted |
 
-如果 formatter 看到格式字符串包括"(asctime)s"，创建时间就会被格式化为 LogRecord 的 asctime属 性。为了允许灵活地格式化日期，formatter 被初始化为整个消息的格式字符串，以及一个单独的日期/时间格式字符串。日期/时间格式字符串应该是time.strftime格式。消息格式的默认值是"%(message)s"。默认的日期/时间格式是ISO8601。
+如果 formatter 看到格式字符串包括"(asctime)s"，创建时间就会被格式化为 LogRecord 的 asctime 属 性。为了允许灵活地格式化日期，formatter 被初始化为整个消息的格式字符串，以及一个单独的日期/时间格式字符串。日期/时间格式字符串应该是 `time.strftime` 格式。消息格式的默认值是"%(message)s"。默认的日期/时间格式是 ISO8601。
 
-formatter 使用一个类属性 "converter"，以表明如何将时间从秒转换为元组。默认情况下，"converter "的值是 "time.localtime"。如果需要，可以在单个 formatter 实例上设置一个不同的转换器（例如 "time.gmtime"），或者改变类属性以影响所有 formatter 实例。
+formatter 使用一个类属性 "converter"，以表明如何将时间从秒转换为元组。默认情况下，"converter "的值是 `"time.localtime"`。如果需要，可以在单个 formatter 实例上设置一个不同的转换器（例如 `"time.gmtime"`），或者改变类属性以影响所有 formatter 实例。
 
 ---
 
@@ -374,7 +380,7 @@ class Filter:
         """
 ```
 
-默认行为允许使用 Logger 名称初始化 Filter。这将仅允许通过使用指定名称的 Logger 或其任何子 Logger 生成的事件。例如，使用“A.B”初始化的 Filter 将允许由“A.B”、“A.B.C”、“A.B.C.D”、“A.B.D”等 Logger 记录的事件，但不允许“A.BB”、“B.A.B”等 Logger 记录的事件。如果使用空字符串进行初始化，则 Filter 将允许所有事件通过。这种 Filter 行为在希望将注意力集中在应用程序的某个特定区域时非常有用；只需更改附加到根 Logger 的 Filter 即可更改关注点。
+默认行为允许使用 Logger 名称初始化 Filter。这将仅允许通过使用指定名称的 Logger 或其任何子 Logger 生成的事件。例如，使用“`A.B`”初始化的 Filter 将允许由“`A.B`”、“`A.B.C`”、“`A.B.C.D`”、“`A.B.D`”等 Logger 记录的事件，但不允许“`A.BB`”、“`B.A.B`”等 Logger 记录的事件。如果使用空字符串进行初始化，则 Filter 将允许所有事件通过。这种 Filter 行为在希望将注意力集中在应用程序的某个特定区域时非常有用；只需更改附加到根 Logger 的 Filter 即可更改关注点。
 
 在[6]中提供了许多 Filter 的示例。
 
@@ -382,27 +388,27 @@ class Filter:
 
 ### 配置
 
-此类日志系统的主要优势在于，无需更改应用程序的源代码，即可控制从应用程序获取的日志输出量和内容。因此，虽然可以通过日志 API 进行配置，但也必须能够在不更改应用程序的情况下更改日志配置。对于像 Zope 这样的长期运行程序，应该能够在程序运行时更改日志配置。 
+此类日志系统的主要优势在于，无需更改应用程序的源代码，即可控制从应用程序获取的日志输出量和内容。因此，虽然可以通过日志 API 进行配置，但也必须能够在不更改应用程序的情况下更改日志配置。对于像 Zope 这样的长期运行程序，应该能够在程序运行时更改日志配置。
 
 配置包括以下内容：
 
-- Logger 或 Handler 应该关注哪个日志级别。 
-- 哪些 Handler 应该附加到哪些 Logger 。 
+- Logger 或 Handler 应该关注哪个日志级别。
+- 哪些 Handler 应该附加到哪些 Logger 。
 - 哪些 Filter 应该附加到哪些 Handler 和 Logger。
--  指定特定于某些 Handler 和 Filter 的属性。
+- 指定特定于某些 Handler 和 Filter 的属性。
 
-一般来说，每个应用程序对于用户如何配置日志输出都有各自的要求。但是，每个应用程序都会通过标准机制向日志系统指定所需的配置。 
+一般来说，每个应用程序对于用户如何配置日志输出都有各自的要求。但是，每个应用程序都会通过标准机制向日志系统指定所需的配置。
 
-最简单的配置是将单个 Handler 附加到根 Logger，该 Handler 将日志信息写入 stderr。导入日志模块后，通过调用 basicConfig() 函数来设置此配置。
+最简单的配置是将单个 Handler 附加到根 Logger，该 Handler 将日志信息写入 stderr。导入日志模块后，通过调用 `basicConfig()` 函数来设置此配置。
 
 ```python
 def basicConfig(): ...
 ```
 
-对于更复杂的配置，本 PEP 未提出具体建议，原因如下： 
+对于更复杂的配置，本 PEP 未提出具体建议，原因如下：
 
 - 具体建议可能被视为规范性的。
--  如果没有 Python 社区的广泛实践经验，就无法判断任何给定的配置方法是否可行。这种做法只有在使用日志模块后才能真正实现，也就是说，只有在 Python 2.3 发布后才能实现。
+- 如果没有 Python 社区的广泛实践经验，就无法判断任何给定的配置方法是否可行。这种做法只有在使用日志模块后才能真正实现，也就是说，只有在 Python 2.3 发布后才能实现。
 - 不同类型的应用程序可能需要不同的配置方法，因此没有“一刀切”的方案。
 
 参考实现 [6] 有一个可用的配置文件格式，其实现旨在证明概念并提出一种可能的替代方案。可能会创建单独的扩展模块（不属于核心 Python 发行版），用于日志配置和日志查看、补充处理程序以及其他社区中大多数人不感兴趣的功能。
@@ -417,7 +423,7 @@ def basicConfig(): ...
 
 ### 模块级别的方法
 
-为了支持在短脚本和小型应用程序中使用日志记录机制，日志库提供了模块级函数 debug()、info()、warn()、error()、critical() 和 exception()。这些函数的工作方式与 Logger 中相应名称的方法相同——实际上，它们委托给根 Logger 上的相应方法。这些函数的另一个便利之处在于，如果尚未进行任何配置，则会自动调用 basicConfig()。
+为了支持在短脚本和小型应用程序中使用日志记录机制，日志库提供了模块级函数 debug()、info()、warn()、error()、critical() 和 exception()。这些函数的工作方式与 Logger 中相应名称的方法相同——实际上，它们委托给根 Logger 上的相应方法。这些函数的另一个便利之处在于，如果尚未进行任何配置，则会自动调用 `basicConfig()`。
 
 在应用程序退出时，可以通过调用以下函数刷新所有处理程序：
 
@@ -443,19 +449,19 @@ def shutdown(): ...
 
 ### 参考
 
-1. java.util.logging http://java.sun.com/j2se/1.4/docs/guide/util/logging/
-2. log4j: a Java logging package https://logging.apache.org/log4j/
-3. Protomatter’s Syslog http://protomatter.sourceforge.net/1.1.6/index.html http://protomatter.sourceforge.net/1.1.6/javadoc/com/protomatter/syslog/syslog-whitepaper.html
-4. MAL mentions his mx.Log logging module: https://mail.python.org/pipermail/python-dev/2002-February/019767.html
-5. Jeff Bauer’s Mr. Creosote http://starship.python.net/crew/jbauer/creosote/
-6. Vinay Sajip’s logging module. https://old.red-dove.com/python_logging.html
+1. `java.util.logging` [http://java.sun.com/j2se/1.4/docs/guide/util/logging/](http://java.sun.com/j2se/1.4/docs/guide/util/logging/)
+2. log4j: a Java logging package [https://logging.apache.org/log4j/](https://logging.apache.org/log4j/)
+3. Protomatter’s Syslog [http://protomatter.sourceforge.net/1.1.6/index.html](http://protomatter.sourceforge.net/1.1.6/index.html) [http://protomatter.sourceforge.net/1.1.6/javadoc/com/protomatter/syslog/syslog-whitepaper.html](http://protomatter.sourceforge.net/1.1.6/javadoc/com/protomatter/syslog/syslog-whitepaper.html)
+4. MAL mentions his `mx.Log` logging module: [https://mail.python.org/pipermail/python-dev/2002-February/019767.html](https://mail.python.org/pipermail/python-dev/2002-February/019767.html)
+5. Jeff Bauer’s Mr. Creosote [http://starship.python.net/crew/jbauer/creosote/](http://starship.python.net/crew/jbauer/creosote/)
+6. Vinay Sajip’s logging module. [https://old.red-dove.com/python_logging.html](https://old.red-dove.com/python_logging.html)
 
 ---
 
-### 版权 
+### 版权
 
-本文档已置于公共领域。 
+本文档已置于公共领域。
 
-来源：https://github.com/python/peps/blob/main/peps/pep-0282.rst 
+来源：[https://github.com/python/peps/blob/main/peps/pep-0282.rst](https://github.com/python/peps/blob/main/peps/pep-0282.rst)
 
 最后修改时间：[2025-02-01 08:55:40 GMT](https://github.com/python/peps/commits/main/peps/pep-0282.rst)

@@ -6,6 +6,12 @@ summary: "对结果进行排序"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 对于文本文件，乱序往往是毫无意义的，我们可以借助排序工具，对一行行的文本按照某种规则排列，从有序中能获取到更加有用的信息。
@@ -16,7 +22,7 @@ toc: true
 
 ### 默认排序
 
-sort 的默认使用字母顺序来进行升序排列，如果 locale 命令看到 LC_COLLATE="en_US.UTF-8"，那就是按照 ASCII 来排序了。
+sort 的默认使用字母顺序来进行升序排列，如果 locale 命令看到 `LC_COLLATE="en_US.UTF-8"`，那就是按照 ASCII 来排序了。
 
 ```
 # demo.txt 内容如下
@@ -31,7 +37,7 @@ far
 2book
 ```
 
-sort demo.txt 排序后
+sort `demo.txt` 排序后
 
 ```
 01see
@@ -76,7 +82,7 @@ abandon
 2. book
 ```
 
-sort num.txt，不加 -n 的话，按照字典排：
+sort `num.txt`，不加 -n 的话，按照字典排：
 
 ```
 11. function
@@ -86,7 +92,7 @@ sort num.txt，不加 -n 的话，按照字典排：
 9. world
 ```
 
-sort -n num.txt，加上 -n 按照数字排序：
+sort -n `num.txt`，加上 -n 按照数字排序：
 
 ```
 1. demo
@@ -118,27 +124,27 @@ sort demo.txt > sorted.txt
 
 -k 这个参数，我觉得是 sort 里面所有参数里，最灵活和复杂的，但是该参数要实现的目标很好理解。
 
-就像其他编程语言一样，-k 参数就是为了按照某个或者某几个字段进行排序，类似于 SQL 里面的 order by 多个字段，并且每个字段都可以定义升降序（desc，asc），python 中的 sort 函数的 key，Java 里的 stream().sorted(...).thenComparing(...) 都是实现了类似的多字段排序的效果。
+就像其他编程语言一样，-k 参数就是为了按照某个或者某几个字段进行排序，类似于 SQL 里面的 order by 多个字段，并且每个字段都可以定义升降序（desc，asc），Python 中的 sort 函数的 key，Java 里的 `stream().sorted(...).thenComparing(...)` 都是实现了类似的多字段排序的效果。
 
 节选 man sort 的 -k 参数解释：
 
-> -k, --key=KEYDEF
->               sort via a key; KEYDEF gives location and type
+> -k, `--key=KEYDEF`
+> sort via a key; KEYDEF gives location and type
 >
-> KEYDEF  is  F\[.C\]\[OPTS\][,F\[.C\]\[OPTS\]\] for start and stop position, where F is a
->        field number and C a character position in the field; both are origin 1, and the
->        stop  position  defaults  to the line's end.  If neither -t nor -b is in effect,
->        characters in a field are counted from the beginning  of  the  preceding  white‐
->        space.   OPTS is one or more single-letter ordering options [bdfgiMhnRrV], which
->        override global ordering options for that key.  If no key is given, use the  en‐
->        tire line as the key.  Use --debug to diagnose incorrect key usage.
+> KEYDEF is F\[.C\]\[OPTS\][,F\[.C\]\[OPTS\]\] for start and stop position, where F is a
+> field number and C a character position in the field; both are origin 1, and the
+> stop position defaults to the line's end. If neither -t nor -b is in effect,
+> characters in a field are counted from the beginning of the preceding white‐
+> space. OPTS is one or more single-letter ordering options [`bdfgiMhnRrV]`, which
+> override global ordering options for that key. If no key is given, use the en‐
+> tire line as the key. Use `--debug` to diagnose incorrect key usage.
 >
 > 译文：
 >
-> -k, --key=KEYDEF
->               通过一个 key 来排序，KEYDEF 给定了位置和类型
+> -k, `--key=KEYDEF`
+> 通过一个 key 来排序，KEYDEF 给定了位置和类型
 >
-> KEYDEF 的格式为 F\[.C\]\[OPTS\][,F\[.C\]\[OPTS\]\] 定义了开始和结束的位置，F 表示字段编号，C 表示在这个字段中的字符位置，都是从 1 开始，默认的结束位置是行尾。如果 -t 和 -b 没效果，那么字符从前导空格开始数，OPTS 代表一个或多个选项 [bdfgiMhnRrV]，会在该 key 上覆盖全局排序选项的效果，如果没有给定 key'，那么默认以整行为 key。可以使用 --debug 去诊断错误的 key 的用法。
+> KEYDEF 的格式为 F\[.C\]\[OPTS\][,F\[.C\]\[OPTS\]\] 定义了开始和结束的位置，F 表示字段编号，C 表示在这个字段中的字符位置，都是从 1 开始，默认的结束位置是行尾。如果 -t 和 -b 没效果，那么字符从前导空格开始数，OPTS 代表一个或多个选项 [`bdfgiMhnRrV]`，会在该 key 上覆盖全局排序选项的效果，如果没有给定 key'，那么默认以整行为 key。可以使用 `--debug` 去诊断错误的 key 的用法。
 
 -k 由两部分组成，每一部分又分为三个内容。
 
@@ -153,7 +159,7 @@ sort demo.txt > sorted.txt
 * C-end：在该字段内第几个字符结束
 * OPTS：一些选项
 
---debug 可以很好的看出 sort 命令是在用什么样的字段，进行排序。
+`--debug` 可以很好的看出 sort 命令是在用什么样的字段，进行排序。
 
 一个简单的案例来说明 -k 的具体用法，下面是一张成绩单，第一个字段是 name，第二个到第四个字段，分别是语文、数学、英语的成绩：
 
@@ -192,7 +198,7 @@ john 78 88 65
 
 通过指定多个 -k 参数，可以对多个字段进行排序。
 
-如果排序结果有任何疑问，--debug 参数很清楚的展示了排序所用的字段。
+如果排序结果有任何疑问，`--debug` 参数很清楚的展示了排序所用的字段。
 
 ### 按照月份排序
 

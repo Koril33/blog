@@ -7,6 +7,12 @@ summary: "Web 开发中最常用的两个组件"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 过滤器（Filter）和拦截器（Interceptor）是 Web 开发中最常用也是最重要的两个组件，本文将先从各自的使用方式和示例程序入手，然后再比较二者的特点和使用场景。
@@ -15,7 +21,7 @@ toc: true
 
 ## 过滤器
 
-过滤器（Filter）是 Java EE 的 Servlet 规范中的一个组件，位于`javax.servlet`包下，它的作用就是，一个 HTTP 请求到达 Servlet 组件前，提供一些处理机制，并且多个过滤器可以组成一条过滤器链，分别不执行不同的过滤逻辑。
+过滤器（Filter）是 Java EE 的 Servlet 规范中的一个组件，位于 `javax.servlet` 包下，它的作用就是，一个 HTTP 请求到达 Servlet 组件前，提供一些处理机制，并且多个过滤器可以组成一条过滤器链，分别不执行不同的过滤逻辑。
 
 换句话说，过滤器比 Servlet 更早的拿到 Request 的内容，能够对其中的内容进行校验或者修改，然后把处理好的 Request 传递给下一个（如果还有的话）过滤器，最终在所有过滤器都处理结束后，将最终的 Request 交付到 Servlet 手上。
 
@@ -27,7 +33,7 @@ toc: true
 
 ### Filter 接口
 
-想要实现一个 Filter 类，我们需要先了解`javax.servlet.Filter`这个接口，它的源码如下：
+想要实现一个 Filter 类，我们需要先了解 `javax.servlet.Filter` 这个接口，它的源码如下：
 
 ```java
 /*
@@ -135,7 +141,6 @@ public interface Filter {
     default void destroy() {
     }
 }
-
 ```
 
 先说说这个接口的文档中的一些要点：
@@ -144,9 +149,9 @@ public interface Filter {
 2. 过滤的对象包括了请求（Request）以及响应（Response）。
 3. 请求的目标和响应的来源，叫资源（Resource），资源可以是 Servlet，也可以是静态内容（Static Content）。
 4. 一个 Filter 可以仅仅对请求做过滤处理，也可以仅仅对响应做过滤处理，也可以对请求和响应都做处理。
-5. 包含三个方法：init，doFilter，destroy。
+5. 包含三个方法：init，`doFilter`，destroy。
 6. init 方法必须在 Filter 执行过滤任务前被 Web 容器成功执行。
-7. doFilter 方法是真正执行过滤任务代码的地方，方法参数包含一个 FilterChain，可以选择传递给下一个过滤器，也可以不传递，在当前的过滤器中终止请求。
+7. `doFilter` 方法是真正执行过滤任务代码的地方，方法参数包含一个 FilterChain，可以选择传递给下一个过滤器，也可以不传递，在当前的过滤器中终止请求。
 8. destroy 方法类似于 init 方法，由 Web 容器调用，表示从服务中移除该过滤器。
 
 接下来，实现我们的第一个过滤器，MyFilter1：
@@ -181,7 +186,6 @@ public class MyFilter1 implements Filter {
         log.info("my filter 1 destroy()");
     }
 }
-
 ```
 
 为了查看过滤器的三个方法在 Web 应用中调用的顺序，每个方法都加了日志。
@@ -221,24 +225,24 @@ public class HomeController {
 }
 ```
 
-启动 SpringBoot 程序，可以在日志中看到，MyFilter1 的 init 方法首先被 Web 容器调用了
+启动 Spring Boot 程序，可以在日志中看到，MyFilter1 的 init 方法首先被 Web 容器调用了
 
 ![](./images/init.jpg)
 
 依次使用 curl 访问一下接口：
 
-1. curl.exe localhost:8080/admin/page
-2. curl.exe localhost:8080/home/page
-3. curl.exe localhost:8080/admin/login
-4. curl.exe localhost:8080/other/page
+1. `curl.exe` localhost:8080/admin/page
+2. `curl.exe` localhost:8080/home/page
+3. `curl.exe` localhost:8080/admin/login
+4. `curl.exe` localhost:8080/other/page
 
 可以看到日志中，出现 8 条记录：
 
 ![](./images/doFilter.jpg)
 
-可以看到尽管我们没有编写 /other/page 这个路径对应的的 controller，Filter 依然执行了，它并不关心藏在过滤器链末尾的资源是 servlet 还是静态资源，也不关心它们是否存在，都会执行过滤任务。
+可以看到尽管我们没有编写 /other/page 这个路径对应的的 controller，Filter 依然执行了，它并不关心藏在过滤器链末尾的资源是 Servlet 还是静态资源，也不关心它们是否存在，都会执行过滤任务。
 
-在 doFilter 方法中，执行了 filterChain.doFilter 方法，并且传递了 request 和 response 对象，表示交给过滤器链的下一个过滤器处理，如果我们想在某个过滤器中终止请求，不调用 filterChain.doFilter 方法即可，比如：如果请求头不包含 access 或者 access 的值不为 true，就禁止访问，可以这么写：
+在 `doFilter` 方法中，执行了 `filterChain.doFilter` 方法，并且传递了 request 和 response 对象，表示交给过滤器链的下一个过滤器处理，如果我们想在某个过滤器中终止请求，不调用 `filterChain.doFilter` 方法即可，比如：如果请求头不包含 access 或者 access 的值不为 true，就禁止访问，可以这么写：
 
 ```java
 @Override
@@ -262,11 +266,11 @@ public void doFilter(ServletRequest servletRequest, ServletResponse servletRespo
 
 访问以下接口：
 
-1. curl.exe localhost:8080/admin/login
-2. curl.exe -H "access: false" localhost:8080/admin/login
-3. curl.exe -H "access: true" localhost:8080/admin/login
+1. `curl.exe` localhost:8080/admin/login
+2. `curl.exe` -H "access: false" localhost:8080/admin/login
+3. `curl.exe` -H "access: true" localhost:8080/admin/login
 
-可以看到，只有最后一次请求，成功返回了响应内容，第一个和第二个请求都被禁止了，换句话说，Filter 就像门卫，过滤掉那些不符合条件的请求，如果都满足要求，那么可以执行 filterChain.doFilter 进行放行处理（移交到下一个过滤器）。
+可以看到，只有最后一次请求，成功返回了响应内容，第一个和第二个请求都被禁止了，换句话说，Filter 就像门卫，过滤掉那些不符合条件的请求，如果都满足要求，那么可以执行 `filterChain.doFilter` 进行放行处理（移交到下一个过滤器）。
 
 ### 多个过滤器
 
@@ -305,12 +309,11 @@ public class MyFilter2 implements Filter {
         log.info("my filter 2 destroy()");
     }
 }
-
 ```
 
 代码和 MyFilter1 基本一致，这里多个过滤器就存在一个顺序问题，谁先谁后？
 
-如果要定义它们的顺序，需要使用 @Order 注解，数字越小，优先级越高，比如我希望 MyFilter1 先于 MyFilter2 执行：
+如果要定义它们的顺序，需要使用 `@Order` 注解，数字越小，优先级越高，比如我希望 MyFilter1 先于 MyFilter2 执行：
 
 ```java
 @Component
@@ -330,15 +333,15 @@ public class MyFilter2 implements Filter {
 
 ![](./images/order.jpg)
 
-### @WebFilter + @ServletComponentScan
+### `@WebFilter` + `@ServletComponentScan`
 
-@Component 虽然使用简单，但是有很大的局限性，那就是它会注册成一个 url pattern 为 "/*" 的过滤器，也就是说，每一个路径接口都会执行你自定义的过滤器。
+`@Component` 虽然使用简单，但是有很大的局限性，那就是它会注册成一个 URL pattern 为 "/*" 的过滤器，也就是说，每一个路径接口都会执行你自定义的过滤器。
 
-但很多时候，我们希望控制的粒度更细些，比如：/home/page 不走过滤器，而 /admin/* 的所有接口都要经过过滤器校验。
+但很多时候，我们希望控制的粒度更细些，比如：`/home/page` 不走过滤器，而 /admin/* 的所有接口都要经过过滤器校验。
 
-这时候可以使用 @WebFilter 注解，里面的 urlPatterns 参数，可以定义那些访问路径需要走这个过滤器。
+这时候可以使用 `@WebFilter` 注解，里面的 `urlPatterns` 参数，可以定义那些访问路径需要走这个过滤器。
 
-除了 @WebFilter，还需要在 SpringBoot 启动类上增加 @ServletComponentScan 注解，才能生效。
+除了 `@WebFilter`，还需要在 Spring Boot 启动类上增加 `@ServletComponentScan` 注解，才能生效。
 
 比如，现在希望所有请求都经过 MyFilter2，但 /admin/* 的请求在经过 MyFilter2 前还需要额外经过 MyFilter1，可以这么写：
 
@@ -367,17 +370,17 @@ public class DemoFilterInterceptorApplication {
 
 执行以下接口：
 
-1. curl.exe localhost:8080/admin/login
-2. curl.exe localhost:8080/admin/page
-3. curl.exe localhost:8080/home/page
+1. `curl.exe` localhost:8080/admin/login
+2. `curl.exe` localhost:8080/admin/page
+3. `curl.exe` localhost:8080/home/page
 
 结果显示，前两个会先调用 MyFilter1，然后调用 MyFilter2，最后一个接口，仅仅调用 MyFilter2。
 
-@Component + @Order 可以定义顺序，但是无法使用 url pattern，而 @WebFilter + @ServletComponentScan 虽然可以使用 url pattern 定义那些接口走特定的过滤器，但是又无法准确定义顺序了。
+`@Component` + `@Order` 可以定义顺序，但是无法使用 URL pattern，而 `@WebFilter` + `@ServletComponentScan` 虽然可以使用 URL pattern 定义那些接口走特定的过滤器，但是又无法准确定义顺序了。
 
 ### FilterRegistrationBean
 
-以上的两种方式各有优缺点，如果希望控制顺序，定义命名，设置 url pattern，最好使用 FilterRegistrationBean 的方式，首先删除 MyFilter1 和 MyFilter2 以及启动类上之前加过的 @Component、@WebFilter、@Order、@ServletComponentScan 等注解。
+以上的两种方式各有优缺点，如果希望控制顺序，定义命名，设置 URL pattern，最好使用 FilterRegistrationBean 的方式，首先删除 MyFilter1 和 MyFilter2 以及启动类上之前加过的 `@Component`、`@WebFilter`、`@Order`、`@ServletComponentScan` 等注解。
 
 然后，定义一个配置类：
 
@@ -420,15 +423,15 @@ public class FilterConfig {
 
 总结一下过滤器的三种使用方式的特点：
 
-1. @Component + @Order：可以定义过滤器顺序，但无法定义 url pattern。
-2. @WebFilter + @ServletComponentScan：可以定义 url pattern，但无法定义顺序。
-3. FilterRegistrationBean：过滤器顺序和 url pattern 都可以定义。
+1. `@Component` + `@Order`：可以定义过滤器顺序，但无法定义 URL pattern。
+2. `@WebFilter` + `@ServletComponentScan`：可以定义 URL pattern，但无法定义顺序。
+3. FilterRegistrationBean：过滤器顺序和 URL pattern 都可以定义。
 
 ---
 
 ## 拦截器
 
-拦截器的作用跟过滤器很相似，但是也有很多不同的地方，比如：过滤器是 Servlet API 的组件，而拦截器是 SpringMVC 的组件，过滤器的执行要先于拦截器。
+拦截器的作用跟过滤器很相似，但是也有很多不同的地方，比如：过滤器是 Servlet API 的组件，而拦截器是 Spring MVC 的组件，过滤器的执行要先于拦截器。
 
 ### HandlerInterceptor
 
@@ -588,10 +591,9 @@ public interface HandlerInterceptor {
 	}
 
 }
-
 ```
 
-拦截器提供了三个方法，preHandler 是在进入具体的 Controller 代码前执行，postHandler 是在 Controller 代码结束后，返回 ModelAndView 的时候执行，而 afterCompletion 用于请求结束后的一些操作，比如资源的清理和日志的记录。
+拦截器提供了三个方法，`preHandler` 是在进入具体的 Controller 代码前执行，`postHandler` 是在 Controller 代码结束后，返回 ModelAndView 的时候执行，而 `afterCompletion` 用于请求结束后的一些操作，比如资源的清理和日志的记录。
 
 接下来，定义两个拦截器，MyInterceptor1：
 
@@ -624,7 +626,6 @@ public class MyInterceptor1 implements HandlerInterceptor {
         log.info("my interceptor 1 afterCompletion() {}", request.getRequestURL());
     }
 }
-
 ```
 
 MyInterceptor2：
@@ -681,9 +682,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 }
 ```
 
-拦截器的顺序就取决于配置类中 addInterceptor 的顺序。
+拦截器的顺序就取决于配置类中 `addInterceptor` 的顺序。
 
-接下来访问接口：curl.exe localhost:8080/admin/page
+接下来访问接口：`curl.exe` localhost:8080/admin/page
 
 日志如下：
 
@@ -691,7 +692,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 可以看到，interceptor 包裹着 controller 的代码，而 filter 又包裹着 interceptor。
 
-在配置文件中，可以指定路径匹配（path pattern），类似过滤器的 url pattern。
+在配置文件中，可以指定路径匹配（path pattern），类似过滤器的 URL pattern。
 
 ```java
 @Configuration
@@ -719,7 +720,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 在框架上，过滤器属于 Servlet API 组件，拦截器属于 Spring 框架的组件。
 
-在接口上，过滤器需要实现 javax.servlet.Filter 接口，而拦截器需要实现 org.springframework.web.servlet.HandlerInterceptor。
+在接口上，过滤器需要实现 `javax.servlet.Filter` 接口，而拦截器需要实现 `org.springframework.web.servlet.HandlerInterceptor`。
 
 ### 执行顺序
 
@@ -740,7 +741,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
 ## 总结
 
-Spring Interceptor 和 Servlet Filters 都用于拦截 Web 应用进程中的Request 和 Response。
+Spring Interceptor 和 Servlet Filters 都用于拦截 Web 应用进程中的 Request 和 Response。
 
 拦截器在 Controller 级别运行，而过滤器在 Servlet 级别运行。
 

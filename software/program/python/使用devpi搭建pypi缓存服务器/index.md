@@ -12,14 +12,14 @@ summary: "除了镜像源，我们也许还需要一个缓存服务器"
 
 ## 前言
 
-由于 GFW 存在的原因，导致很多仓库无法正常下载，所以一旦涉及到包的下载问题，第一件事情通常就去搜索国内的镜像源,比如：apt、maven、pypi、docker等等。
+由于 GFW 存在的原因，导致很多仓库无法正常下载，所以一旦涉及到包的下载问题，第一件事情通常就去搜索国内的镜像源，比如：apt、maven、PyPI、Docker 等等。
 
-使用了镜像源之后，我们在开发过程中才不至于捶胸顿足，不过使用Python 的 pypi 的过程中，我发现以下两个问题：
+使用了镜像源之后，我们在开发过程中才不至于捶胸顿足，不过使用 Python 的 PyPI 的过程中，我发现以下两个问题：
 
-1. pip 没有像maven 一样，有很完善的缓存机制
-2. 大厂镜像源也有可能会被请喝茶（比如：docker）
+1. pip 没有像 maven 一样，有很完善的缓存机制
+2. 大厂镜像源也有可能会被请喝茶（比如：Docker）
 
-那么在个人服务器搭建一个pypi的缓存服务器就很有必要了。
+那么在个人服务器搭建一个 PyPI 的缓存服务器就很有必要了。
 
 ---
 
@@ -31,7 +31,7 @@ summary: "除了镜像源，我们也许还需要一个缓存服务器"
 
 ### 安装 devpi-server
 
-根据官方文档，可以使用传统的 pip 安装[devpi-server](https://pypi.org/project/devpi-server/)，但是考虑到它作为服务器端的服务，需要在shell里使用相关的命令，我使用 uv tool 安装 devpi-server
+根据官方文档，可以使用传统的 pip 安装[devpi-server](https://pypi.org/project/devpi-server/)，但是考虑到它作为服务器端的服务，需要在 shell 里使用相关的命令，我使用 uv tool 安装 devpi-server
 
 ```shell
 uv tool install devpi-server
@@ -49,7 +49,7 @@ devpi-init
 devpi-gen-config
 ```
 
-官方使用的是supervisord 管理服务，不过我一般是用systemctl，生成的配置文件里有官方提供的 service 文件，所以直接拷贝到 /etc/systemd/system 下即可：
+官方使用的是 supervisord 管理服务，不过我一般是用 systemctl，生成的配置文件里有官方提供的 service 文件，所以直接拷贝到 `/etc/systemd/system` 下即可：
 
 ```
 sudo cp gen-config/devpi.service /etc/systemd/system/
@@ -64,13 +64,13 @@ sudo systemctl start devpi.service
 sudo systemctl status devpi.service
 ```
 
-默认状态下，devpi 监听本地的 3141，如果想要使用的时候不加端口号，可以考虑申请个子域名，比如 mirror.yourdomain.com
+默认状态下，devpi 监听本地的 3141，如果想要使用的时候不加端口号，可以考虑申请个子域名，比如 `mirror.yourdomain.com`
 
-把 gen-config 下的nginx-devpi.conf 复制到 /etc/nginx/conf.d 下，然后修改其中的server\_name, 改成自己的域名即可。
+把 gen-config 下的 `nginx-devpi.conf` 复制到 `/etc/nginx/conf.d` 下，然后修改其中的 `server_name`，改成自己的域名即可。
 
-到此为止，devpi-server 的 systemd 和 nginx 就配置好了，接下来需要使用 devpi-client 来修改上游的源。
+到此为止，devpi-server 的 systemd 和 Nginx 就配置好了，接下来需要使用 devpi-client 来修改上游的源。
 
-### 安装devpi-client
+### 安装 devpi-client
 
 使用 uv tool 安装 devpi-client:
 
@@ -78,7 +78,7 @@ sudo systemctl status devpi.service
 uv tool install devpi-client
 ```
 
-如果不修改上游源，默认 devpi-server 是去拉取 pypi.org 的官方源。
+如果不修改上游源，默认 devpi-server 是去拉取 `pypi.org` 的官方源。
 
 devpi-client 登录：
 
@@ -94,7 +94,7 @@ devpi use -l
 devpi use root/pypi
 ```
 
-修改mirror地址为阿里云的源
+修改 mirror 地址为阿里云的源
 
 ```shell
 devpi index root/pypi mirror_url=https://mirrors.aliyun.com/pypi/simple/
@@ -104,7 +104,6 @@ devpi index root/pypi mirror_web_url_fmt=https://mirrors.aliyun.com/pypi/simple/
 修改完后，请求页面可以看到修改成功了：
 
 ```shell
-
 koril@ali-djhx-debian:~$ curl localhost:3141
 {
   "result": {
@@ -124,7 +123,6 @@ koril@ali-djhx-debian:~$ curl localhost:3141
   },
   "type": "list:userconfig"
 }
-
 ```
 
 配置好后就可以使用了，本地测试一下：
@@ -144,4 +142,4 @@ koril@ali-djhx-debian:~$ ls ~/.devpi/server/
 
 ## 参考
 
-1. https://zhuanlan.zhihu.com/p/477358157
+1. [https://zhuanlan.zhihu.com/p/477358157](https://zhuanlan.zhihu.com/p/477358157)

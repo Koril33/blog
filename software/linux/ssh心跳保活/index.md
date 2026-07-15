@@ -1,7 +1,7 @@
 ---
 title: "ssh心跳保活"
 date: 2025-02-06T20:03:00+08:00
-summary: "解决 ssh 连接会断开的问题"
+summary: "解决 SSH 连接会断开的问题"
 ---
 
 ## 目录
@@ -22,7 +22,7 @@ OpenSSH 提供了心跳保活的功能，可以在服务端设置，也可以在
 
 ### 服务端设置
 
-在`/etc/ssh/sshd_config`中添加下面两行：
+在 `/etc/ssh/sshd_config` 中添加下面两行：
 
 ```
 ClientAliveInterval 60
@@ -36,7 +36,7 @@ ClientAliveCountMax 3
 
 大多数情况下，我们没有修改服务器 sshd 的权限，在客户端设置心跳发送，也可以达到保活的效果。
 
-如果你只是想防止 ssh 连接超时，建议在 客户端 的 ~/.ssh/config 里加：
+如果你只是想防止 SSH 连接超时，建议在 客户端 的 ~/.SSH/config 里加：
 
 ```
 Host *
@@ -48,6 +48,6 @@ Host *
 
 ## 服务端 or 客户端？
 
-客户端设置 (ServerAliveInterval) 更适合主动维护连接，从家里 ssh 登录远程服务器，希望防止 NAT/防火墙导致的连接断开。适用于无权限修改服务器配置的情况。
+客户端设置 (ServerAliveInterval) 更适合主动维护连接，从家里 SSH 登录远程服务器，希望防止 NAT/防火墙导致的连接断开。适用于无权限修改服务器配置的情况。
 
-服务器设置 (ClientAliveInterval) 更适合检测客户端是否存活，服务器上 sshd 需要及时清理失效的 ssh 连接（防止长期占用资源）。适用于管理员有权限修改服务器配置的情况。
+服务器设置 (ClientAliveInterval) 更适合检测客户端是否存活，服务器上 sshd 需要及时清理失效的 SSH 连接（防止长期占用资源）。适用于管理员有权限修改服务器配置的情况。

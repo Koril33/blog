@@ -7,13 +7,19 @@ summary: "叙利亚战损风贫民窟级小台钻"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 之前就想试着自己整个台钻玩玩，但是一开始就上铝型材之类的，怕出问题，就先拿木板练练手。
 
 ## 效果
 
-使用实际体验放在了B站：
+使用实际体验放在了 B 站：
 
-https://www.bilibili.com/video/BV1dx4y1g7Xv/
+[https://www.bilibili.com/video/BV1dx4y1g7Xv/](https://www.bilibili.com/video/BV1dx4y1g7Xv/)
 
 ---
 

@@ -17,9 +17,9 @@ summary: "Linux 的文件层次结构，根目录以及二级目录的作用"
 
 ## 参考
 
-1. https://people.ubuntu.com/~happyaron/docs/FHS.zh_CN.pdf
-2. https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.html
-3. https://www.geeksforgeeks.org/linux-file-hierarchy-structure/
-4. https://linuxhandbook.com/linux-directory-structure/
-5. https://www.linuxfordevices.com/tutorials/linux/linux-filesystem-hierarchy
-6. https://coderepublics.com/blog/redhat/linux-file-system/
+1. [https://people.ubuntu.com/~happyaron/docs/FHS.zh_CN.pdf](https://people.ubuntu.com/~happyaron/docs/FHS.zh_CN.pdf)
+2. [https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.html](https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.html)
+3. [https://www.geeksforgeeks.org/linux-file-hierarchy-structure/](https://www.geeksforgeeks.org/linux-file-hierarchy-structure/)
+4. [https://linuxhandbook.com/linux-directory-structure/](https://linuxhandbook.com/linux-directory-structure/)
+5. [https://www.linuxfordevices.com/tutorials/linux/linux-filesystem-hierarchy](https://www.linuxfordevices.com/tutorials/linux/linux-filesystem-hierarchy)
+6. [https://coderepublics.com/blog/redhat/linux-file-system/](https://coderepublics.com/blog/redhat/linux-file-system/)

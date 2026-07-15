@@ -4,6 +4,12 @@ date: 2026-06-06T10:09:03
 summary: "表连接的概念，类型，使用时机"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 刚毕业做 CRUD boy 的时候，曾听前辈说最好不要使用关系型数据库的表连接，也就是多表的 JOIN，这个问题困扰了我很长时间，因为大部分时间都花在了编写实现公司业务逻辑的代码上，所以也就随波逐流，没有深究。
@@ -52,13 +58,11 @@ comment on column user_product_order.number is '购买数量';
 comment on column user_product_order.product_price is '单价';
 comment on column user_product_order.total_price is '总价';
 comment on column user_product_order.created_at is '订单创建时间';
-
 ```
 
 示例数据：
 
 ```
-
 ```
 
 这种单表存储所有数据（包括了两个实体类的信息数据），有一些问题：
@@ -66,4 +70,4 @@ comment on column user_product_order.created_at is '订单创建时间';
 1. 实体类没有主键字段，无法唯一的在数据库系统标志一个用户，主键是唯一且不能改变的。
 2. 如果实体类更改了信息，比如用户 alice 修改了手机号，商品价格发生变动，我们需要扫描整张订单表去修改相关的数据，因为所有的实体类信息都被冗余存储了，alice 下了 1000 次订单，那么她的个人信息就在这张表里出现了 1000 次，她修改了手机号就需要把 1000 条订单记录都修改一遍。
 3. 会出现删除异常的问题，假如用户 alice 的所有订单都被删除了，那么她作为用户本身也消失了。
-4. 
+4.

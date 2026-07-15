@@ -4,6 +4,12 @@ date: 2025-12-12T11:24:20
 summary: "独立于各个 Auth 框架之外的抽象概念"
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 在所有涉及安全性的系统中，用户登录、注册相关的功能在许多概念上，具有独立于框架或系统的部分。
@@ -144,10 +150,10 @@ RBAC 是非常常用的模型，因为它的配置很直观，将对资源访问
 
 ## 参考
 
-1. https://www.permit.io/blog/planning-authorization-model-and-architecture-full-2025-guide
-2. https://www.twingate.com/blog/other/access-control-models
-3. https://developer.huawei.com/consumer/cn/blog/topic/03200764394012152
-4. https://www.acresecurity.com/blog/rule-based-access-control-rubac-the-complete-guide
-5. https://auth0.com/intro-to-iam
-6. https://www.geeksforgeeks.org/system-design/designing-authentication-system-system-design/
-7. https://www.cerbos.dev/blog/designing-an-authorization-model-for-an-enterprise
+1. [https://www.permit.io/blog/planning-authorization-model-and-architecture-full-2025-guide](https://www.permit.io/blog/planning-authorization-model-and-architecture-full-2025-guide)
+2. [https://www.twingate.com/blog/other/access-control-models](https://www.twingate.com/blog/other/access-control-models)
+3. [https://developer.huawei.com/consumer/cn/blog/topic/03200764394012152](https://developer.huawei.com/consumer/cn/blog/topic/03200764394012152)
+4. [https://www.acresecurity.com/blog/rule-based-access-control-rubac-the-complete-guide](https://www.acresecurity.com/blog/rule-based-access-control-rubac-the-complete-guide)
+5. [https://auth0.com/intro-to-iam](https://auth0.com/intro-to-iam)
+6. [https://www.geeksforgeeks.org/system-design/designing-authentication-system-system-design/](https://www.geeksforgeeks.org/system-design/designing-authentication-system-system-design/)
+7. [https://www.cerbos.dev/blog/designing-an-authorization-model-for-an-enterprise](https://www.cerbos.dev/blog/designing-an-authorization-model-for-an-enterprise)

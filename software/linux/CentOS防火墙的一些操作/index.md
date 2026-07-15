@@ -1,12 +1,18 @@
 ---
 title: "CentOS防火墙的一些操作"
 date: 2021-05-07T16:23:29+08:00
-summary: "CentOS查看防火墙状态，开启，关闭防火墙"
+summary: "CentOS 查看防火墙状态，开启，关闭防火墙"
 featured_image: "images/background.jpg"
 toc: true
 ---
 
-## 使用systemctl管理firewalld
+## 目录
+
+[TOC]
+
+---
+
+## 使用 systemctl 管理 firewalld
 
 ### 防火墙的状态
 
@@ -40,7 +46,7 @@ systemctl disable firewalld.service
 
 ---
 
-## 使用firewall-cmd进行防火墙的配置
+## 使用 firewall-cmd 进行防火墙的配置
 
 ### 查看防火墙状态
 
@@ -76,7 +82,7 @@ firewall-cmd --zone=public --remove-port=80/tcp --permanent
 
 　　–zone #作用域
 
-　　–add-port=80/tcp #添加端口，格式为：端口/通讯协议
+　　–add-port=80/TCP #添加端口，格式为：端口/通讯协议
 
 　　–permanent #永久生效，没有此参数重启后失效
 
@@ -84,4 +90,4 @@ firewall-cmd --zone=public --remove-port=80/tcp --permanent
 
 ## 注意
 
-当我们修改了某些配置之后，firewall并不会立即生效。可以通过两种方式来激活最新配置`systemctl restart firewalld`和`firewall-cmd --reload`两种方式，前一种是重启firewalld服务，建议使用后一种“重载配置文件”。重载配置文件之后不会断掉正在连接的tcp会话，而重启服务则会断开tcp会话。
+当我们修改了某些配置之后，firewall 并不会立即生效。可以通过两种方式来激活最新配置 `systemctl restart firewalld` 和 `firewall-cmd --reload` 两种方式，前一种是重启 firewalld 服务，建议使用后一种“重载配置文件”。重载配置文件之后不会断掉正在连接的 TCP 会话，而重启服务则会断开 TCP 会话。

@@ -1,7 +1,7 @@
 ---
 title: "Python解释器的-m参数"
 date: 2025-09-13T09:11:00+08:00
-summary: "-m参数到底做了什么事情？"
+summary: "-m 参数到底做了什么事情？"
 ---
 
 ## 目录
@@ -25,13 +25,13 @@ python -m pip install requests
 
 ## 核心概念
 
-python 的 -m 参数，后面是模块的名称，该参数告诉解释器，在 sys.path 中搜索用户指定的模块，把该模块当作脚本来执行。
+Python 的 -m 参数，后面是模块的名称，该参数告诉解释器，在 `sys.path` 中搜索用户指定的模块，把该模块当作脚本来执行。
 
 ---
 
 ## 与普通脚本的区别
 
-假设现在一个脚本，路径是：/home/koril/Desktop/project/script/main.py
+假设现在一个脚本，路径是：`/home/koril/Desktop/project/script/main.py`
 
 ```python
 import sys from pprint import pprint
@@ -73,17 +73,17 @@ python -m script.main
  '/usr/lib/python3/dist-packages']
 ```
 
-可以看出，以脚本文件的方式运行，添加到 sys.path 的路径是 /home/koril/Desktop/project/script，也就是脚本文件的父级目录，而以模块方式执行的结果显示，添加到 sys.path 的路径是 /home/koril/Desktop/project，表示模块的父级目录（也就是当前shell的所在目录）。
+可以看出，以脚本文件的方式运行，添加到 `sys.path` 的路径是 `/home/koril/Desktop/project/script`，也就是脚本文件的父级目录，而以模块方式执行的结果显示，添加到 `sys.path` 的路径是 `/home/koril/Desktop/project`，表示模块的父级目录（也就是当前 shell 的所在目录）。
 
-所以，除了添加到 sys.path 开头的路径不同之外，二者是很相似的。
+所以，除了添加到 `sys.path` 开头的路径不同之外，二者是很相似的。
 
 ---
 
 ## 包
 
-如果传入的参数不是模块，而是一个包名，那么 python 会尝试运行包下的 `__main__.py`（如果存在的话）。
+如果传入的参数不是模块，而是一个包名，那么 Python 会尝试运行包下的 `__main__.py`（如果存在的话）。
 
-在 /home/koril/Desktop/project/script 下，编写 `__main__.py`:
+在 `/home/koril/Desktop/project/script` 下，编写 `__main__.py:`
 
 ```python
 print('this is __main__')
@@ -113,7 +113,7 @@ import uuid
 print(uuid.uuid4())
 ```
 
-通过 uuid 的源码可以看到，uuid 提供了 if  __name__ == '__main__' 块，意味着它可以作为脚本执行，并且代码里通过 argparse 解析用户传入的参数：
+通过 uuid 的源码可以看到，uuid 提供了 if __name__ == '__main__' 块，意味着它可以作为脚本执行，并且代码里通过 argparse 解析用户传入的参数：
 
 ```sh
 koril@ThinkBook:~/Desktop/project$ python3 -m uuid -h
@@ -132,7 +132,6 @@ options:
 
 koril@ThinkBook:~/Desktop/project$ python3 -m uuid -u uuid4
 772b97d4-89a5-4802-9fab-6a2b3911f335
-
 ```
 
 由于 -u 有默认值（uuid4），所以直接可以在命令行中非常简单的获取一个随机的 uuid4 值：
@@ -141,7 +140,7 @@ koril@ThinkBook:~/Desktop/project$ python3 -m uuid -u uuid4
 python -m uuid
 ```
 
-除了 uuid 之外，http.server 也很实用，它可以快速在当前目录运行一个 http 服务器：
+除了 uuid 之外，`http.server` 也很实用，它可以快速在当前目录运行一个 HTTP 服务器：
 
 ```sh
 python -m http.server
@@ -184,32 +183,31 @@ my_project/
 └── scripts/
     ├── __init__.py
     └── runner.py
-
 ```
 
-runner.py 中导入了 main_module.py 中的内容：
+`runner.py` 中导入了 `main_module.py` 中的内容：
 
 ```python
 from main_package import main_module
 ```
 
-假设 shell 处于 my_project 目录下，直接执行 python scripts/runner.py，会爆出 main_package 找不到的错误，因为 python 把 runner.py 的父级目录 my_project/scripts 添加到了 sys.path 中，而 main_package 显然不在 scripts 目录下，所以无法找到。
+假设 shell 处于 `my_project` 目录下，直接执行 Python `scripts/runner.py`，会爆出 `main_package` 找不到的错误，因为 Python 把 `runner.py` 的父级目录 `my_project/scripts` 添加到了 `sys.path` 中，而 `main_package` 显然不在 scripts 目录下，所以无法找到。
 
-这时候就可以使用 -m 参数：python -m scripts.runner。
+这时候就可以使用 -m 参数：Python -m `scripts.runner`。
 
--m 参数模拟了真实的导入环境，之前甚至看到同事想要测试 runner.py，为了以脚本方式执行，绕开 ModuleNotFoundError 的问题，直接把整个 main_package 复制到了 scripts 目录下，执行成功，最后他来一句：别管歪门邪道，你就说，它成没成功吧。。。
+-m 参数模拟了真实的导入环境，之前甚至看到同事想要测试 `runner.py`，为了以脚本方式执行，绕开 ModuleNotFoundError 的问题，直接把整个 `main_package` 复制到了 scripts 目录下，执行成功，最后他来一句：别管歪门邪道，你就说，它成没成功吧。。。
 
 ---
 
 ## 小结
 
-本文主要是为了针对 python -m 的知识进行查漏补缺，作为日常最常用的参数，知其然更要知其所以然。
+本文主要是为了针对 Python -m 的知识进行查漏补缺，作为日常最常用的参数，知其然更要知其所以然。
 
 ---
 
 ## 参考
 
-1. https://docs.python.org/3.13/using/cmdline.html#cmdoption-m
-2. https://stackoverflow.com/questions/50821312/what-is-the-effect-of-using-python-m-pip-instead-of-just-pip
-3. https://blog.dailydoseofds.com/p/python-m-the-coolest-python-flag
-4. https://snarky.ca/why-you-should-use-python-m-pip/
+1. [https://docs.python.org/3.13/using/cmdline.html#cmdoption-m](https://docs.python.org/3.13/using/cmdline.html#cmdoption-m)
+2. [https://stackoverflow.com/questions/50821312/what-is-the-effect-of-using-python-m-pip-instead-of-just-pip](https://stackoverflow.com/questions/50821312/what-is-the-effect-of-using-python-m-pip-instead-of-just-pip)
+3. [https://blog.dailydoseofds.com/p/python-m-the-coolest-python-flag](https://blog.dailydoseofds.com/p/python-m-the-coolest-python-flag)
+4. [https://snarky.ca/why-you-should-use-python-m-pip/](https://snarky.ca/why-you-should-use-python-m-pip/)

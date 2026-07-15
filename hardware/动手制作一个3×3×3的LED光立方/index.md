@@ -7,11 +7,17 @@ summary: "用 Arduino Nano 来制作一个光立方"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
-光立方是个入门级的电路项目，而 3×3×3的 LED 光立方又是其中最为简单的一个。本文用 Arduino Nano 作为控制器，来控制 27 个LED 进行各种模式的闪烁。了解原理的同时，也是为了后面制作 8×8×8 LED 光立方打下基础。
+光立方是个入门级的电路项目，而 3×3×3 的 LED 光立方又是其中最为简单的一个。本文用 Arduino Nano 作为控制器，来控制 27 个 LED 进行各种模式的闪烁。了解原理的同时，也是为了后面制作 8×8×8 LED 光立方打下基础。
 
-采用 3×3×3的 LED 光立方，有以下的几个目的：
+采用 3×3×3 的 LED 光立方，有以下的几个目的：
 
 1. 复杂度较小，先以了解原理为主。
 2. LED 数量少，不太需要担心供电电压， LED 电流和功率的问题。
@@ -21,17 +27,17 @@ toc: true
 
 ## 效果
 
-仿真效果和实际效果的视频上传到了B站：
+仿真效果和实际效果的视频上传到了 B 站：
 
-https://www.bilibili.com/video/BV1544y1972A/
+[https://www.bilibili.com/video/BV1544y1972A/](https://www.bilibili.com/video/BV1544y1972A/)
 
 ---
 
 ## 项目代码
 
-该项目有关的代码托管在了 Github 上：
+该项目有关的代码托管在了 GitHub 上：
 
-https://github.com/Koril33/ArduinoProject/tree/main/led_cube_3%C3%973%C3%973
+[https://github.com/Koril33/ArduinoProject/tree/main/led_cube_3%C3%973%C3%973](https://github.com/Koril33/ArduinoProject/tree/main/led_cube_3%C3%973%C3%973)
 
 ---
 
@@ -47,16 +53,16 @@ https://github.com/Koril33/ArduinoProject/tree/main/led_cube_3%C3%973%C3%973
 
 ## 材料
 
-| 名称                                | 数量 | 单价（单位：元） |
+| 名称 | 数量 | 单价（单位：元） |
 | ----------------------------------- | ---- | ---------------- |
-| 发光二极管                          | 27   | 0.036            |
-| 200Ω 电阻                           | 3    | 0.202            |
-| Arduino Nano                        | 1    | 18               |
-| 母对母杜邦线                        | 12   | 0.051            |
-| 单排针                              | 若干 |                  |
-| 导线                                | 若干 |                  |
-| 5×7 cm 万用板                       | 2    | 1.335            |
-| 20 × 20 cm 瓦楞纸（快递盒剪下来的） | 若干 |                  |
+| 发光二极管 | 27 | 0.036 |
+| 200Ω 电阻 | 3 | 0.202 |
+| Arduino Nano | 1 | 18 |
+| 母对母杜邦线 | 12 | 0.051 |
+| 单排针 | 若干 | |
+| 导线 | 若干 | |
+| 5×7 cm 万用板 | 2 | 1.335 |
+| 20 × 20 cm 瓦楞纸（快递盒剪下来的） | 若干 | |
 
 ![](images/材料.jpg)
 
@@ -95,7 +101,7 @@ https://github.com/Koril33/ArduinoProject/tree/main/led_cube_3%C3%973%C3%973
 
 ![](images/弯折LED.jpg)
 
-然后将负极与负极进行焊接，第三个LED同样如此操作，就得到了第一层第一行的 3 个焊接好的 LED 串：
+然后将负极与负极进行焊接，第三个 LED 同样如此操作，就得到了第一层第一行的 3 个焊接好的 LED 串：
 
 ![](images/LED串.jpg)
 
@@ -267,6 +273,6 @@ void lightenInOrder(unsigned long ms) {
 
 ## 参考
 
-1. https://www.instructables.com/4x4x4-LED-Cube-Arduino-Uno/
-2. https://www.instructables.com/Arduino-LED-Cube-3x3x3/
-3. https://circuitdigest.com/microcontroller-projects/making-3X3X3-led-cube-with-arduino
+1. [https://www.instructables.com/4x4x4-LED-Cube-Arduino-Uno/](https://www.instructables.com/4x4x4-LED-Cube-Arduino-Uno/)
+2. [https://www.instructables.com/Arduino-LED-Cube-3x3x3/](https://www.instructables.com/Arduino-LED-Cube-3x3x3/)
+3. [https://circuitdigest.com/microcontroller-projects/making-3X3X3-led-cube-with-arduino](https://circuitdigest.com/microcontroller-projects/making-3X3X3-led-cube-with-arduino)

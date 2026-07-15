@@ -7,6 +7,12 @@ summary: "一个没什么功能的手表"
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 本文实现了一个比较粗糙的手表原型，其中的很多代码，只是实现了功能，我对单片机的了解不深入，最佳实践更不清楚，仅作为后续自己的参考，如果后面学的更加深入了，回过来再改正。
@@ -15,36 +21,36 @@ toc: true
 
 ## 项目代码
 
-该项目有关的代码托管在了 Github 上：
+该项目有关的代码托管在了 GitHub 上：
 
-https://github.com/Koril33/ArduinoProject/tree/main/OLED_watch
+[https://github.com/Koril33/ArduinoProject/tree/main/OLED_watch](https://github.com/Koril33/ArduinoProject/tree/main/OLED_watch)
 
 ---
 
 ## 材料
 
-| 名称              | 数量 | 单价（单位：元） |
+| 名称 | 数量 | 单价（单位：元） |
 | ----------------- | ---- | ---------------- |
-| Arduino Nano      | 1    | 18               |
-| 母对母杜邦线      | 10   | 0.051            |
-| SSD1306 OLED 屏幕 | 1    | 13.5             |
-| DHT11             | 1    | 8                |
-| 按键              | 2    | 0.1              |
+| Arduino Nano | 1 | 18 |
+| 母对母杜邦线 | 10 | 0.051 |
+| SSD1306 OLED 屏幕 | 1 | 13.5 |
+| DHT11 | 1 | 8 |
+| 按键 | 2 | 0.1 |
 
 ---
 
-## OLED展示图片
+## OLED 展示图片
 
-Adafruit 库有一个函数`drawBitmap`用于绘制 OLED 的图像，bitmap 就是位图（或称为像素图，点阵图）存储了 OLED 每一个像素点上的信息。
+Adafruit 库有一个函数 `drawBitmap` 用于绘制 OLED 的图像，bitmap 就是位图（或称为像素图，点阵图）存储了 OLED 每一个像素点上的信息。
 
 免费图标的下载地址：
 
-https://www.flaticon.com/
+[https://www.flaticon.com/](https://www.flaticon.com/)
 
 生成位图使用的工具是 image2cpp：
 
-* Github：https://github.com/javl/image2cpp
-* 在线转换网站：http://javl.github.io/image2cpp/
+* GitHub：[https://github.com/javl/image2cpp](https://github.com/javl/image2cpp)
+* 在线转换网站：[http://javl.github.io/image2cpp/](http://javl.github.io/image2cpp/)
 
 这里我的大小选择 128 × 48，是因为我的 OLED 是蓝黄双色，我把上面 16 个像素用来显示标题文字，剩下 48 的高度用于显示页面图片。
 
@@ -65,7 +71,6 @@ https://www.flaticon.com/
 页面的展示和选择，使用一个按钮来控制，按下以后，切换到下一个功能页面。我想到最简单的办法是使用一个变量记录当前选择的页面，每按一次按钮，变量值加一，循环的时候不断检测这个变量值来判断应该绘制哪一个页面（有点像轮询，但我想这肯定不是好的办法）。
 
 ```c
-
 void loop() {
   watch_app();
 }
@@ -160,4 +165,4 @@ void enterInterface(int n) {
 
 ## 功能逻辑代码
 
-暂时省略，项目代码在 Github 上更新。
+暂时省略，项目代码在 GitHub 上更新。

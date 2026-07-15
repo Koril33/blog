@@ -7,13 +7,19 @@ summary: "一个照片处理的小应用为例子，在容器中部署 Flask 应
 toc: true
 ---
 
+## 目录
+
+[TOC]
+
+---
+
 ## 前言
 
 Python 在做网络爬虫，自动化运维，大数据，人工智能，图像处理等领域时，拥有着丰富的资源和完善的社区，往往在一个大型应用中，我们希望 Python 能够提供这些服务，暴露 API 供其他服务端调用，本文以 Flask 这个 Python Web 框架举例子，结合 Pillow 图像处理库，编写一个简单的应用，并将其部署于容器中。
 
 本文额外使用的库仅包含：Flask，Pillow，Gunicorn。
 
-requirements.txt 如下：
+`requirements.txt` 如下：
 
 ```
 blinker==1.6.2
@@ -69,7 +75,7 @@ if __name__ == '__main__':
     app.run()
 ```
 
-服务很简单，接受客户端的一张图片，返回 size 和 mode 信息的 Json 格式数据。
+服务很简单，接受客户端的一张图片，返回 size 和 mode 信息的 JSON 格式数据。
 
 ---
 
@@ -77,7 +83,7 @@ if __name__ == '__main__':
 
 Flask 是一个 web 应用框架，它本身并不包括 Web Server，为了开发和测试的方便，Flask 内置了一个 Werkzeug wsgi server，但是这个 server 并不高效，仅仅用于开发环境， 如果是在生产环境下部署的话， 就需要用 Gunicorn 去替代掉这个内置的 Wsgi Server。
 
-gunicorn_config.py 配置文件
+`gunicorn_config.py` 配置文件
 
 ```python
 bind = "0.0.0.0:5000"
@@ -123,5 +129,5 @@ docker run --name flask-app -dp 5000:5000 koril/my-flask-app
 
 ## 参考
 
-1. https://blog.entirely.digital/docker-gunicorn-and-flask/
-2. https://medium.com/thedevproject/setup-flask-project-using-docker-and-gunicorn-4dcaaa829620
+1. [https://blog.entirely.digital/docker-gunicorn-and-flask/](https://blog.entirely.digital/docker-gunicorn-and-flask/)
+2. [https://medium.com/thedevproject/setup-flask-project-using-docker-and-gunicorn-4dcaaa829620](https://medium.com/thedevproject/setup-flask-project-using-docker-and-gunicorn-4dcaaa829620)

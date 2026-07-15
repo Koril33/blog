@@ -32,37 +32,37 @@ summary: "使用 Python + HTML + CSS 完成一个简单的 markdown 转静态页
 
 另一个就是样式要简单，感觉已经过了想要花里胡哨装点自己的年纪，看的清楚（无广告的老年模式）对我而言比较重要，当然更多原因是我的前端学的太烂了，不如用这些大佬简陋的 UI 来作为自己的挡箭牌吧～
 
-- Redis 作者 Salvatore Sanfilippo：https://www.antirez.com/
-- PostgreSQL 贡献者 Bruce Momjian：http://momjian.us/main/blogs/
-- MySQL 之父 Monty Widenius：http://monty-says.blogspot.com/
-- Flask 作者 Armin Ronacher：https://lucumr.pocoo.org/
-- Django 共同创始人 Jacob Kaplan-Moss：https://jacobian.org/
-- Ruby on Rails 作者 David Heinemeier Hansson (DHH) ：https://dhh.dk/
-- Donald Knuth (算法大师,《计算机程序设计艺术》作者) ：https://www-cs-faculty.stanford.edu/~knuth/
-- Dijkstra 手稿：https://www.cs.utexas.edu/~EWD/
-- C++ 之父 Bjarne Stroustrup：https://www.stroustrup.com/
+- Redis 作者 Salvatore Sanfilippo：[https://www.antirez.com/](https://www.antirez.com/)
+- PostgreSQL 贡献者 Bruce Momjian：[http://momjian.us/main/blogs/](http://momjian.us/main/blogs/)
+- MySQL 之父 Monty Widenius：[http://monty-says.blogspot.com/](http://monty-says.blogspot.com/)
+- Flask 作者 Armin Ronacher：[https://lucumr.pocoo.org/](https://lucumr.pocoo.org/)
+- Django 共同创始人 Jacob Kaplan-Moss：[https://jacobian.org/](https://jacobian.org/)
+- Ruby on Rails 作者 David Heinemeier Hansson (DHH) ：[https://dhh.dk/](https://dhh.dk/)
+- Donald Knuth (算法大师，《计算机程序设计艺术》作者) ：[https://www-cs-faculty.stanford.edu/~knuth/](https://www-cs-faculty.stanford.edu/~knuth/)
+- Dijkstra 手稿：[https://www.cs.utexas.edu/~EWD/](https://www.cs.utexas.edu/~EWD/)
+- C++ 之父 Bjarne Stroustrup：[https://www.stroustrup.com/](https://www.stroustrup.com/)
 
 就目前而言，我觉得重要的还是内容，能够经年累月的产出高质量的文章比花哨的样式更有价值。
 
 ### 方便
 
-设定好博客原始 markdown 目录的位置之后，通过脚本，一键完成目标 html 目录的生成，再一键完成部署到指定服务器的指定位置。
+设定好博客原始 markdown 目录的位置之后，通过脚本，一键完成目标 HTML 目录的生成，再一键完成部署到指定服务器的指定位置。
 
 尽可能的减少编写一篇新博客文章的心智负担。
 
 ### 性能
 
-性能上，其实没有太多的要求，因为静态博客的生成无非就是文本的转换和目录的创建，生成几十篇博客的 html 根本耗不了多少时间，太多的奇技淫巧（比如缓存）在这里施展不开拳脚。
+性能上，其实没有太多的要求，因为静态博客的生成无非就是文本的转换和目录的创建，生成几十篇博客的 HTML 根本耗不了多少时间，太多的奇技淫巧（比如缓存）在这里施展不开拳脚。
 
 ---
 
 ## 需求
 
-1. 所有博客采用 markdown 格式编写，最后转换成 html 文件。
+1. 所有博客采用 markdown 格式编写，最后转换成 HTML 文件。
 2. 支持文章内插入图片，一篇文章的文本文件和图片文件存放到一个目录下，方便后期归档。
-3. 文章的元信息（文章标题，时间，简介），以 yaml 格式放在 markdown 的开头（参考了 hugo）。
+3. 文章的元信息（文章标题，时间，简介），以 YAML 格式放在 markdown 的开头（参考了 hugo）。
 4. 整个博客目录以树形结构组织。
-5. 树形结构的树节点有两种类型：分类节点（category node）和文章节点（article node），它们俩在文件系统层面都是目录，区别是分类节点下存储的可能包含子分类目录或者文章目录，文章节点也是目录，其下仅能存储一个index.md（文章的markdown文件）以及一个 images（存储图片的目录）。
+5. 树形结构的树节点有两种类型：分类节点（category node）和文章节点（article node），它们俩在文件系统层面都是目录，区别是分类节点下存储的可能包含子分类目录或者文章目录，文章节点也是目录，其下仅能存储一个 `index.md`（文章的 markdown 文件）以及一个 images（存储图片的目录）。
 6. 分类节点和文章节点的样式要做区分。
 
 ---
@@ -96,9 +96,9 @@ blog(根节点)
  
 ```
 
-规则很简单：分类节点可以嵌套分类节点或者文章节点，但是文章节点仅能包含一个 index.md 和 images 目录。
+规则很简单：分类节点可以嵌套分类节点或者文章节点，但是文章节点仅能包含一个 `index.md` 和 images 目录。
 
-生成的结果 html 目录，组织结构如下：
+生成的结果 HTML 目录，组织结构如下：
 
 ```
 public(根节点)
@@ -125,10 +125,9 @@ public(根节点)
  |             |-index.html
  |             |-images
  |
-
 ```
 
-每个目录下一定包含一个 index.html，如果是分类目录，index.html 则包含了指向这个目录下的子分类目录或者文章目录的连接，如果是文章目录，则 index.html 就是原来的 markdown 转换后的 html 文件。
+每个目录下一定包含一个 `index.html`，如果是分类目录，`index.html` 则包含了指向这个目录下的子分类目录或者文章目录的连接，如果是文章目录，则 `index.html` 就是原来的 markdown 转换后的 HTML 文件。
 
 ---
 
@@ -148,7 +147,7 @@ public(根节点)
 
 ### 项目结构
 
-除了 main.py 外，还需要 css 样式和 template html 模板文件，目录结构如下：
+除了 `main.py` 外，还需要 CSS 样式和 template HTML 模板文件，目录结构如下：
 
 ```
 blogger
@@ -162,7 +161,7 @@ blogger
      |-category.html
 ```
 
-因为 index.html 总共有两种类型——文章和分类，所以这里分别有两个 css 和 html 模板文件。
+因为 `index.html` 总共有两种类型——文章和分类，所以这里分别有两个 CSS 和 HTML 模板文件。
 
 ### 主函数逻辑
 
@@ -172,7 +171,6 @@ blogger
 2. 根据节点树，生成目标目录
 
 ```python
-
 def main():
     blog_dir_path_str = '/home/koril/project/djhx.site/blog'
     destination_blog_dir_name = 'public'
@@ -183,7 +181,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 ```
 
 ### node 类
@@ -191,8 +188,6 @@ if __name__ == '__main__':
 可以把源目录下的每个目录抽象成一个 node 节点，构造成一个树结构。
 
 ```python
-
-
 class Node:
     cache_map = {}
     def __init__(self, source_path, destination_path, node_type):
@@ -214,13 +209,11 @@ class Node:
 
     def __str__(self):
         return f'path={self.source_path}'
-
 ```
 
 ### 遍历源目录
 
 ```python
-
 def walk_dir(dir_path_str: str, destination_blog_dir_name: str) -> Node:
     """
     遍历目录，构造树结构
@@ -272,13 +265,11 @@ def walk_dir(dir_path_str: str, destination_blog_dir_name: str) -> Node:
     logger.info(f'构造树耗时: {end - start} ms')
 
     return root
-
 ```
 
 ### 生成目标目录
 
 ```python
-
 def gen_blog_dir(root: Node):
     """
     根据目录树构造博客目录
@@ -334,13 +325,11 @@ def gen_blog_dir(root: Node):
 
     end = int(time.time() * 1000)
     logger.info(f'生成目标目录耗时: {end - start} ms')
-
 ```
 
 ### 其他辅助函数
 
 ```python
-
 def md_to_html(md_file_path: Path) -> str:
     """
     markdown -> html
@@ -445,14 +434,13 @@ def parse_metadata(metadata):
             key, value = map(str.strip, line.split(':', 1))
             meta_dict[key] = value
     return meta_dict
-
 ```
 
 ---
 
 ## 样式
 
-article.css
+`article.css`
 
 ```css
 * {
@@ -622,14 +610,12 @@ nav .nav-links a:hover {
     align-items: center;
     margin-bottom: 10px;
 }
-
 ```
 
 
-category.css
+`category.css`
 
 ```css
-
 * {
     margin: 0;
     padding: 0;
@@ -738,7 +724,6 @@ nav .nav-links a:hover {
 .article-metadata {
   color: #00c6e9;
 }
-
 ```
 
 ---
@@ -746,5 +731,3 @@ nav .nav-links a:hover {
 ## 总结
 
 编写个人网站的过程完全是自由的（除了不能发布法律不允许的范围的信息之外，境外服务器另说），制造工具的过程本身，更能体会到这个工具为了解决的目标问题的含义。
-
-

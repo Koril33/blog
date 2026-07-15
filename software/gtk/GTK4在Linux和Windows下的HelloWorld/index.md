@@ -1,7 +1,7 @@
 ---
 title: "GTK4在Linux和Windows下的HelloWorld"
 date: 2025-04-13T09:01:00+08:00
-summary: "GTK4的开发环境安装和示例代码"
+summary: "GTK4 的开发环境安装和示例代码"
 ---
 
 ## 目录
@@ -18,9 +18,9 @@ summary: "GTK4的开发环境安装和示例代码"
 
 ## 示例代码
 
-示例代码从官方文档获取：https://www.gtk.org/docs/getting-started/hello-world/
+示例代码从官方文档获取：[https://www.gtk.org/docs/getting-started/hello-world/](https://www.gtk.org/docs/getting-started/hello-world/)
 
-hello.c 代码如下：
+`hello.c` 代码如下：
 
 ```c
 #include <gtk/gtk.h>
@@ -78,7 +78,7 @@ sudo apt install build-essential
 sudo apt install libgtk-4-dev
 ```
 
-把示例代码保存，文件名为 hello.c，编译和运行：
+把示例代码保存，文件名为 `hello.c`，编译和运行：
 
 ```sh
 # 编译
@@ -95,11 +95,11 @@ gcc $(pkg-config --cflags gtk4) hello.c $(pkg-config --libs gtk4)
 
 ## Windows
 
-windows 下开发 GTK4 稍微麻烦些，根据官方推荐：https://www.gtk.org/docs/installations/windows/
+windows 下开发 GTK4 稍微麻烦些，根据官方推荐：[https://www.gtk.org/docs/installations/windows/](https://www.gtk.org/docs/installations/windows/)
 
-这里使用 MSYS2 的开发环境，官方下载教程：https://www.msys2.org/docs/installer/
+这里使用 MSYS2 的开发环境，官方下载教程：[https://www.msys2.org/docs/installer/](https://www.msys2.org/docs/installer/)
 
-在 Github 上找到下载文件，https://github.com/msys2/msys2-installer/releases/tag/nightly-x86_64
+在 GitHub 上找到下载文件，[https://github.com/msys2/msys2-installer/releases/tag/nightly-x86_64](https://github.com/msys2/msys2-installer/releases/tag/nightly-x86_64)
 
 ![](./images/2.png)
 

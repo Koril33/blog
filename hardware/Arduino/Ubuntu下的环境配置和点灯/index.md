@@ -12,7 +12,7 @@ summary: "Arduino 的环境配置是很简单的"
 
 ## 前言
 
-本文介绍  Arduino 在 Ubuntu 下的基本用法。
+本文介绍 Arduino 在 Ubuntu 下的基本用法。
 
 ---
 
@@ -44,7 +44,6 @@ Arduino 官方给了很多示例，包括 LED 闪烁的代码示例：
 Arduino 的优势在于其对产品线的板子作了很大的软件封装，所以代码很精简：
 
 ```c
-
 /*
   Blink
 
@@ -82,7 +81,6 @@ void loop() {
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
   delay(1000);                       // wait for a second
 }
-
 ```
 
 LED\_BUILTIN 表示板载的 LED PIN，烧录好程序后，板载的 LED 就会闪烁。
@@ -90,4 +88,3 @@ LED\_BUILTIN 表示板载的 LED PIN，烧录好程序后，板载的 LED 就会
 烧录时，要确保板子类型和端口都要正确：
 
 ![](./images/4.png)
-

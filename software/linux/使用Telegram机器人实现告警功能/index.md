@@ -20,7 +20,7 @@ summary: "Telegram Bot——方便简单的私人告警"
 
 ## BotFather
 
-首先需要建立一个机器人，在 @BotFather 下按一下顺序建立好机器人：
+首先需要建立一个机器人，在 `@BotFather` 下按一下顺序建立好机器人：
 
 ```
 1. /start
@@ -39,7 +39,7 @@ summary: "Telegram Bot——方便简单的私人告警"
 GET https://api.telegram.org/bot{填写你刚刚获取的token}/getUpdates
 ```
 
-获取到机器人的 token 以及个人的 chatId 就可以用机器人给自己发消息了：
+获取到机器人的 token 以及个人的 `chatId` 就可以用机器人给自己发消息了：
 
 ```
 POST application/json
@@ -51,7 +51,6 @@ https://api.telegram.org/bot{token}/sendMessage
     "text": "Hello, telegram bot!",
     "parse_mode": "HTML"
 }
-
 ```
 
 ---
@@ -126,12 +125,11 @@ if __name__ == '__main__':
 
 ### 回调函数
 
-回调函数的性能比轮询更好，节省资源，但缺点是需要配置了 https 的公网域名。
+回调函数的性能比轮询更好，节省资源，但缺点是需要配置了 HTTPS 的公网域名。
 
 下面是 FastAPI 的示例代码，提供给 telegram 一个 webhook，也就是回调接口，一旦 bot 收到用户信息，telegram 就会触发该接口：
 
 ```python
-
 import os
 from datetime import datetime
 
@@ -192,16 +190,15 @@ async def startup():
     await tg_app.bot.set_webhook(webhook_url)
 
     print("Webhook 已设置:", webhook_url)
-
 ```
 
-这里的 webhook 需要准备 https 和公网能访问到的域名，启动：
+这里的 webhook 需要准备 HTTPS 和公网能访问到的域名，启动：
 
 ```shell
 uvicorn app:app --host 0.0.0.0 --port 8080
 ```
 
-nginx 需要配置好反向代理：
+Nginx 需要配置好反向代理：
 
 ```
 server {
@@ -233,5 +230,5 @@ server {
 
 ## 参考
 
-1. https://www.cnblogs.com/xhzhang/p/19371452
-2. https://pypi.org/project/python-telegram-bot/
+1. [https://www.cnblogs.com/xhzhang/p/19371452](https://www.cnblogs.com/xhzhang/p/19371452)
+2. [https://pypi.org/project/python-telegram-bot/](https://pypi.org/project/python-telegram-bot/)

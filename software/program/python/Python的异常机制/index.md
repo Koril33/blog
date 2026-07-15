@@ -25,7 +25,6 @@ summary: "Python 如何处理，抛出异常？以及异常的体系和机制"
 例如：
 
 ```sh
-
 >>> print())
   File "<stdin>", line 1
     print())
@@ -51,7 +50,6 @@ SyntaxError: invalid syntax
 
     ^
 SyntaxError: expected 'except' or 'finally' block
-
 ```
 
 Python 是一种解释型语言，解释器在执行代码之前会先对代码进行语法检查，如果代码语法违法了 Python 语言的规则，就会抛出 SyntaxError。
@@ -148,7 +146,7 @@ Exception: number: 1 <= 10
 
 ## 捕获以及处理异常
 
-如果对于程序的异常没有做任何处理，那么，Python 会自动调用 sys.exit() 来终止程序的执行。
+如果对于程序的异常没有做任何处理，那么，Python 会自动调用 `sys.exit()` 来终止程序的执行。
 
 但很多时候，我们碰到异常情况也许可以做一些补救或者记录性的事情，这时候就需要在程序的某个地方捕获异常。
 
@@ -390,7 +388,7 @@ finally
 由于 try 中有 return，else 子句不可达，但是 finally 子句一定会执行，并且最后的返回值是 3，try 的 return a 被 finally 中的 return a * 3 覆盖了。
 
 
-finally 最有用的地方在于处理文件句柄，磁盘、网络IO的资源清理和关闭，如果这些代码不放在 finally 中，那么一旦碰到未处理的异常，这些清理性质的代码可能永远也不会执行，这会造成句柄，连接，内存的泄露。
+finally 最有用的地方在于处理文件句柄，磁盘、网络 IO 的资源清理和关闭，如果这些代码不放在 finally 中，那么一旦碰到未处理的异常，这些清理性质的代码可能永远也不会执行，这会造成句柄，连接，内存的泄露。
 
 ---
 
@@ -470,8 +468,8 @@ ValueError: value err b
 
 ## 参考
 
-1. https://docs.python.org/zh-cn/3.13/library/exceptions.html#bltin-exceptions
-2. https://docs.python.org/zh-cn/3.13/tutorial/errors.html
-3. https://realpython.com/python-exceptions/
-4. https://docs.python.org/zh-cn/3.13/reference/executionmodel.html#exceptions
-5. https://docs.python.org/zh-cn/3.13/reference/compound_stmts.html#try
+1. [https://docs.python.org/zh-cn/3.13/library/exceptions.html#bltin-exceptions](https://docs.python.org/zh-cn/3.13/library/exceptions.html#bltin-exceptions)
+2. [https://docs.python.org/zh-cn/3.13/tutorial/errors.html](https://docs.python.org/zh-cn/3.13/tutorial/errors.html)
+3. [https://realpython.com/python-exceptions/](https://realpython.com/python-exceptions/)
+4. [https://docs.python.org/zh-cn/3.13/reference/executionmodel.html#exceptions](https://docs.python.org/zh-cn/3.13/reference/executionmodel.html#exceptions)
+5. [https://docs.python.org/zh-cn/3.13/reference/compound_stmts.html#try](https://docs.python.org/zh-cn/3.13/reference/compound_stmts.html#try)

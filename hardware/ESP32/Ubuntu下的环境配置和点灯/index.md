@@ -31,18 +31,18 @@ summary: "ESP32 的环境配置"
 
 ESP32 可以使用 Arduino IDE 进行开发，安装好相应的库即可，本文介绍的是官方推荐的 ESP32 IDF 框架。
 
-ESP IDF 的文档和 Github：
+ESP IDF 的文档和 GitHub：
 
-- https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html
-- https://github.com/espressif/esp-idf
+- [https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/index.html)
+- [https://github.com/espressif/esp-idf](https://github.com/espressif/esp-idf)
 
-安装过程参考 Github 的 README。
+安装过程参考 GitHub 的 README。
 
 ---
 
 ## 示例
 
-为了使用这个工具，我们需要 source 一个 export.sh，export.sh 位于你安装的 esp-idf 目录下：
+为了使用这个工具，我们需要 source 一个 `export.sh`，`export.sh` 位于你安装的 esp-idf 目录下：
 
 ```shell
 source ~/tool/esp/esp-idf/export.sh
@@ -53,7 +53,6 @@ source ~/tool/esp/esp-idf/export.sh
 编写一个简单的 LED 闪烁代码：
 
 ```c
-
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include <portmacro.h>
@@ -71,7 +70,6 @@ void app_main(void)
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
 }
-
 ```
 
 编译：
@@ -83,4 +81,3 @@ idf.py build
 ```
 idf.py flash
 ```
-
