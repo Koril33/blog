@@ -60,7 +60,7 @@ toc: true
 @Entity
 ```
 
-使用 @ 符号向编译器表明跟随在这个符号后面的是一个注解，下面这个例子中，注解的名称是 `@Override`：
+使用 @ 符号向编译器表明跟随在这个符号后面的是一个注解，下面这个例子中，注解的名称是 `Override`：
 
 ```java
 @Override
@@ -109,7 +109,7 @@ class MyClass { ... }
 class MyClass { ... }
 ```
 
-Java 平台提供了一些官方注解，定义在 `java.lang` 包和 `java.lang.annotation` 包中。在之前的实例中，`@Override` 和 `@SuppressWarnings` 都属于官方注解。当然也可以定义自己的注解，前面示例中的 `@Author` 和 `@EBook` 就属于自定义注解类型。
+Java 平台提供了一些官方注解，定义在 `java.lang` 包和 `java.lang.annotation` 包中。在之前的实例中，`Override` 和 `SuppressWarning` 都属于官方注解。当然也可以定义自己的注解，前面示例中的 `Author` 和 `EBook` 就属于自定义注解类型。
 
 ### 声明注解
 
