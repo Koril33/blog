@@ -158,6 +158,196 @@ cachetools 是 Python 生态中最常用的缓存库，它提供基于不同缓�
 
 ### FIFOCache
 
+FIFOCache 按照进入缓存空间的时间，仅缓存最近进入的 N 条数据，在实际业务中使用的比较少：
+
+```python
+
+from cachetools import FIFOCache
+
+c = FIFOCache(maxsize=3)
+
+def main():
+    c['a'] = 1
+    c['b'] = 2
+    c['c'] = 3
+    print(c)
+    print(f'cache len is {len(c)}')
+
+    c['d'] = 4
+    print(c)
+
+    item = c.popitem()
+    print(f'pop item is: {item}, cache: {c}')
+    
+    c.clear()
+    print(c)
+    print(f'cache len is {len(c)}')
+
+if __name__ == "__main__":
+    main()
+
+```
+
+FIFO 不关心热点数据，只是一个先进先出的队列结构，可以用在一些无关访问频率次数的场景里：
+
+- 异步后台任务每隔一段时间的运算或者执行，会产生一个临时的中间数据，想要对近 N 分钟的中间数据做缓存。
+
+### LFUCache
+
+LFUCache 在缓存满了以后，优先淘汰“历史访问次数最少”的数据。
+
+```python
+
+from cachetools import LFUCache
+
+c = LFUCache(maxsize=3)
+
+def main():
+    c['a'] = 1
+    c['b'] = 2
+    c['c'] = 3
+    print(c)
+    print(f'cache len is {len(c)}')
+
+    _ = c['c']
+    _ = c['a']
+
+    c['d'] = 4
+    print(c)
+
+    item = c.popitem()
+    print(f'pop item is: {item}, cache: {c}')
+    
+    c.clear()
+    print(c)
+    print(f'cache len is {len(c)}')
+
+if __name__ == "__main__":
+    main()
+
+```
+
+这里 key=a 和 key=c 各被访问一次，key=b 由于没有被访问所以被淘汰。
+
+LFU 适合的场景是：数据访问存在明显的“热点”，而且热点数据会持续被访问，比如商品详情缓存，有些商品特别热门，访问量远高于其他冷门产品，就很适合做 LFU 缓存。
+
+LFU 碰到以下场景，就可能不太合适了：
+
+- 历史数据热点，但是并非会被持续访问，比如去年的某个产品特别热门，今年几乎没有访问量，但因为历史访问量非常大，导致一直占据在缓存空间中。
+- 数据没有明显热点，所有 key 历史访问次数较为平均，那么 LFU 的优势就无法体现了。
+
+### LRUCache
+
+LRUCache 会在缓存满了以后，淘汰“最近最久没有被使用”的数据，和 LFU 关注热点数据，但是 LRU 是从时间维度来体现的。
+
+```python
+
+from cachetools import LRUCache
+
+c = LRUCache(maxsize=3)
+
+def main():
+    c['a'] = 1
+    c['b'] = 2
+    c['c'] = 3
+    print(c)
+    print(f'cache len is {len(c)}')
+
+    _ = c['c']
+    _ = c['a']
+    _ = c['b']
+    _ = c['c']
+
+    c['d'] = 4
+    print(c)
+
+if __name__ == "__main__":
+    main()
+
+```
+
+这里访问顺序是 c->a->b->c，c 是最近一次访问到的，所以属于“热点”数据，a 是距离现在最早被访问的，所以 a 会被淘汰。
+
+LFU 能应用的场景，LRU 也可以应用，都是为了缓存热点数据而存在的，但 LFU 是从历史访问频次来体现数据的热点程度，LRU 更关心的是数据最近被访问的时间，LRU 更适合热点频繁变动的场景。
+
+假设去年的某个产品被访问了 100 万次，对于 LFU 而言 ，该产品可能非常重要（历史访问次数远远大于其他产品）。
+
+但是对于 LRU 而言，因为今年这个产品没有被访问过了（最后一次访问时间是在去年），那么该产品的重要性就远远低于一个刚刚被访问的冷问产品（历史访问次数可能非常少）。
+
+LRU 不关心历史访问次数，所以比 LFU 更快地适应热点变化。
+
+### RRCache
+
+RRCache 比 LRUCache/LFUCache 简单多了，就是在缓存满了以后，随机选择一个已有的 Key 淘汰。
+
+```python
+
+from cachetools import RRCache
+
+c = RRCache(maxsize=3)
+
+def main():
+    c['a'] = 1
+    c['b'] = 2
+    c['c'] = 3
+    print(c)
+    print(f'cache len is {len(c)}')
+
+    c['d'] = 4
+    print(c)
+
+if __name__ == "__main__":
+    main()
+
+```
+
+在缓存满了以后，每次执行都是随机一个 key 被替换掉，这种机制适合一些无法判断什么数据属于热点的场景，或者一些访问非常平均的场景。
+
+### TTLCache
+
+TTLCache 和以上的淘汰策略相比，它关心的是数据的生存时间，所以更准确的称呼应该是：过期策略。
+
+```python
+
+from cachetools import TTLCache
+import time
+c = TTLCache(maxsize=3, ttl=10)
+
+def main():
+    c['a'] = 1
+    c['b'] = 2
+    c['c'] = 3
+    print(c)
+    print(f'cache len is {len(c)}')
+
+    time.sleep(5)
+    c['d'] = 4
+    print(c)
+    
+    time.sleep(5)
+    print(c)
+
+    time.sleep(5)
+    print(c)
+
+if __name__ == "__main__":
+    main()
+
+```
+
+TTLCache 的 ttl 是针对每个元素的，上面的代码表示 TTLCache 最多容纳 3 个元素，每个元素的生存时间是 10 秒（从放入缓存的时间开始计时）。
+
+TTL 没有热点的概念，不管某个产品数据最近是否被频繁访问，历史访问频次是否最多，一旦 TTL 到期了，就会被删除，这种特性适合一些拥有固定生命周期的缓存数据，比如验证码之类的。
+
+TTLCache 缓存满了的情况下，如果没有过期的缓存项需要移除，则会优先丢弃最近最少使用的缓存项以腾出空间（LRU）。
+
+### TLRUCache
+
+TLRUCache 可以看成是 TTLCache 的一个更灵活版本，TTLCache 是所有缓存项统一 TTL时间，而在 TLRUCache 中，每个缓存项可以根据自己的情况决定什么时候过期。
+
+
+
+### getsizeof
 
 
 ---
@@ -165,3 +355,4 @@ cachetools 是 Python 生态中最常用的缓存库，它提供基于不同缓�
 ## 参考
 
 1. https://magicliang.github.io/2026/05/14/%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%85%A8%E6%99%AF/index.html
+2. https://cachetools.readthedocs.io/en/stable/
