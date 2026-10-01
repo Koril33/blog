@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "sqlite命令行下的命令解释"
 date: 2025-06-01T10:44:00+08:00
 summary: "SQLite 的命令作用解释"

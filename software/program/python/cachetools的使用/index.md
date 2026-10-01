@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "cachetools的使用"
 date: 2026-08-09T14:12:17
 summary: "缓存工具的一些使用场景"

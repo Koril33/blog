@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "FHS文件系统规范"
 date: 2025-02-01T15:36:00+08:00
 summary: "Linux 的文件层次结构，根目录以及二级目录的作用"

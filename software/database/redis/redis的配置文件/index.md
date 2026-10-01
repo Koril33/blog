@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "redis的配置文件"
 date: 2025-06-21T11:13:00+08:00
 summary: "Redis 配置文件的各个字段释义"

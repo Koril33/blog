@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "redis的string类型"
 date: 2025-06-21T11:13:00+08:00
 summary: "介绍 Redis String 类型的二进制安全特性和常用命令"

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "角色、用户和权限"
 date: 2026-01-19T15:01:21
 summary: "管理 PG 数据库的基本功能"

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "RabbitMQ的基本概念和使用"
 date: 2026-02-13T11:46:55
 summary: "RabbitMQ 的 Hello World"

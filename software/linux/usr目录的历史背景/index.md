@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "usr目录的历史背景"
 date: 2025-02-01T15:19:00+08:00
 summary: "为什么现在/bin 指向了/usr/bin"

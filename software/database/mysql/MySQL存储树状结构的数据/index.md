@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "MySQL存储树状结构的数据"
 date: 2023-04-04T19:51:05+08:00
 tags: []

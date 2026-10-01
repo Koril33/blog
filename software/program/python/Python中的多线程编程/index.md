@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Python中的多线程编程"
 date: 2024-11-24T09:12:14+08:00
 featured_image: "images/background.jpg"

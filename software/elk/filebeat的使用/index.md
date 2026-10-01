@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "filebeat的使用"
 date: 2026-03-08T14:16:52
 summary: "Filebeat 的安装和使用"

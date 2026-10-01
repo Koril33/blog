@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Elasticsearch的基本概念"
 date: 2026-03-04T09:48:44
 summary: "Elasticsearch 的历史，解决方案和各个组件的概念"

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "QueryDSL基础"
 date: 2026-04-04T19:37:08
 summary: "介绍 Elasticsearch Query DSL 的常用查询上下文与查询类型"

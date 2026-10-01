@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Java基础之文件操作"
 date: 2023-02-18T14:55:48+08:00
 tags: []
@@ -28,7 +29,7 @@ toc: true
 | Modifier and Type | Method | Description |
 | :---------------- | ----------------------------------- | ------------------------------------------------------------ |
 | `static Path` | `get(String first, String... more)` | Converts a path string, or a sequence of strings that when joined form a path string, to a `Path`. |
-| `static Path` | `get(URI uri)` | Converts the given URI to a [`Path`](Path.html) object. |
+| `static Path` | `get(URI uri)` | Converts the given URI to a [`Path`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html) object. |
 
 本文只关注第一个方法，其实 get 的源码相当简单：
 

@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "创建数据库、模式和表"
 date: 2026-05-02T20:49:38
 summary: "介绍 PostgreSQL 数据库、模式和表的创建、修改与删除"
