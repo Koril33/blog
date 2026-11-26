@@ -2,7 +2,7 @@
 title: Linux用户被删除后uid的归属问题
 date: '2026-10-22T17:37:44+08:00'
 summary: '后来新建的用户可能会继承之前的，已被删除的用户的权限'
-draft: true
+draft: false
 ---
 
 ## UID 复用

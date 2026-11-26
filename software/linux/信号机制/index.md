@@ -2,7 +2,7 @@
 title: 信号机制
 date: '2026-11-03T10:15:14+08:00'
 summary: 'Linux 如何通知进程，如何给进程发送信号？'
-draft: true
+draft: false
 ---
 
 ## 前言
